@@ -13,13 +13,13 @@ public class MovingWall : InteractableMechanism {
 
     IEnumerator Slide() {
         while(AtOpenedPosition() == false) {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, openedPosition, Time.deltaTime * speed);
+            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, openedPosition, Time.deltaTime * speed);
             yield return null;
         }
     }
 
     bool AtOpenedPosition() {
-        if(this.transform.position == this.openedPosition) {
+        if(this.transform.localPosition == this.openedPosition) {
             return true;
         } else {
             return false;
