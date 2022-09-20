@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8fca279ad94543aa631ad94319ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openedPosition: {x: 8, y: 0, z: 5.5}
+  alternatePosition: {x: 0, y: 0, z: 0}
   speed: 1
 --- !u!65 &564363413
 BoxCollider:
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8fca279ad94543aa631ad94319ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openedPosition: {x: 9.5, y: 0, z: -4.5}
+  alternatePosition: {x: 0, y: 0, z: 0}
   speed: 1
 --- !u!65 &844799717
 BoxCollider:
@@ -1783,7 +1783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8fca279ad94543aa631ad94319ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openedPosition: {x: 9.5, y: 0, z: 7.5}
+  alternatePosition: {x: 0, y: 0, z: 0}
   speed: 1
 --- !u!65 &1450862666
 BoxCollider:
@@ -2382,7 +2382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8fca279ad94543aa631ad94319ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openedPosition: {x: -1.5, y: 0, z: -0.5}
+  alternatePosition: {x: 0, y: 0, z: 0}
   speed: 1
 --- !u!65 &1782463180
 BoxCollider:

@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 public class TriggerObject : MonoBehaviour {
-	[SerializeField] private GameObject objectToActivate;
+	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
 	private void Update() {
 		
@@ -8,7 +9,9 @@ public class TriggerObject : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if(other.gameObject.tag == "Player") {
-			objectToActivate.GetComponent<InteractableMechanism>().Activate();
+			foreach(GameObject objectToActivate in objectsToActivate) {
+				objectToActivate.GetComponent<InteractableMechanism>().Activate();
+			}
 			/*Debug.Log("bingo");*/
 		}
 	}

@@ -232,7 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe66f9002d08cd4ba1e580cd6d7bdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToActivate: {fileID: 1495994817}
+  objectsToActivate:
+  - {fileID: 1495994817}
 --- !u!108 &902544538
 Light:
   m_ObjectHideFlags: 0
@@ -385,7 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe66f9002d08cd4ba1e580cd6d7bdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToActivate: {fileID: 1495994817}
+  objectsToActivate:
+  - {fileID: 1495994817}
 --- !u!108 &1126555223
 Light:
   m_ObjectHideFlags: 0
@@ -565,6 +567,10 @@ PrefabInstance:
     - target: {fileID: 6882232818105031091, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472752916285374732, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
+      propertyPath: near clip plane
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 8472752916285374735, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -802,6 +808,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1495994822, guid: 55222b19ba47b1541bcfb2cc10a5374e, type: 3}
+      propertyPath: alternatePosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1495994822, guid: 55222b19ba47b1541bcfb2cc10a5374e, type: 3}
+      propertyPath: alternatePosition.z
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4358386460097635092, guid: 55222b19ba47b1541bcfb2cc10a5374e, type: 3}
       propertyPath: m_Name
       value: Test Dungeon
