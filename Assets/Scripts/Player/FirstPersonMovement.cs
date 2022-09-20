@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 [RequireComponent(typeof(CharacterController))]
 
@@ -32,6 +33,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void Update()
     {
+
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -59,7 +61,7 @@ public class FirstPersonMovement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // Move the controller
+        // Move the controller     
         characterController.Move(moveDirection * Time.deltaTime);
 
         // Player and Camera rotation
