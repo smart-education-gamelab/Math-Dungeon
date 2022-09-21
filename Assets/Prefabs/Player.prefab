@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8472752916285374735}
   - component: {fileID: 8472752916285374732}
   - component: {fileID: 8472752916285374733}
+  - component: {fileID: 5043331375816475568}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -84,6 +85,39 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8472752916285374770}
   m_Enabled: 1
+--- !u!114 &5043331375816475568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472752916285374770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineThickness: 1
+  lineIntensity: 0.5
+  fillAmount: 0.2
+  lineColor0: {r: 0.8679245, g: 0.289854, b: 0.80705094, a: 1}
+  lineColor1: {r: 0.78015035, g: 0.9056604, b: 0.09740115, a: 1}
+  lineColor2: {r: 0.35322177, g: 0.74698126, b: 0.7735849, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 1
+  fillColor: {r: 0.7396226, g: 0.7396226, b: 1, a: 1}
+  useFillColor: 0
+  cornerOutlines: 0
+  addLinesBetweenColors: 0
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 0}
+  autoEnableOutlines: 0
+  outlineCamera: {fileID: 0}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 0}
+  extraRenderTexture: {fileID: 0}
 --- !u!1 &8472752916567889920
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +329,10 @@ PrefabInstance:
     - target: {fileID: 3541754002163558908, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
       propertyPath: m_Name
       value: Jammo_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757836856755875625, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
+      propertyPath: eyeState
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4757836856755875626, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
       propertyPath: m_Enabled
