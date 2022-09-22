@@ -13,6 +13,9 @@ public class NetworkCommandLine : MonoBehaviour
 
     [SerializeField]
     private GameObject canvas;
+
+    [SerializeField]
+    private GameObject gameToSpawn;
     
 
     void Start()
@@ -27,6 +30,7 @@ public class NetworkCommandLine : MonoBehaviour
     public void Host()
     {
         canvas.SetActive(false);
+        gameToSpawn.SetActive(true);
         NetworkManager.Singleton.ConnectionApprovalCallback = ApprovalCheck;
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(passwordInputField.text);
         NetworkManager.Singleton.StartHost();
@@ -36,6 +40,7 @@ public class NetworkCommandLine : MonoBehaviour
     public void Client()
     {
         canvas.SetActive(false);
+        gameToSpawn.SetActive(true);
         NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(passwordInputField.text);
         NetworkManager.Singleton.StartClient();
     }

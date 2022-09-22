@@ -118,8 +118,8 @@ namespace cakeslice
 			return m;
 		}
 
-		private void Awake()
-		{
+		//private void Awake()
+		void Start(){
 			if (Instance != null)
 			{
 				Destroy(this);
@@ -127,10 +127,10 @@ namespace cakeslice
 			}
 
 			Instance = this;
-		}
+		/*}
 
 		void Start()
-		{
+		{*/
 			CreateMaterialsIfNeeded();
 			UpdateMaterialsPublicProperties();
 

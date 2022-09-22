@@ -1,35 +1,37 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class TriggerObject : MonoBehaviour {
+public class TriggerObject : InteractableMechanism {
 	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 	[SerializeField] private GameObject keyHintImage;
-
-	private bool playerIsNear = false;
 
 	private void Start() {
 
 	}
 
-	private void Update() {
+	public override void Activate() {
+		base.Activate();
+		Debug.Log("check");
 		foreach(GameObject objectToActivate in objectsToActivate) {
-			if(Input.GetButton("Activate") && playerIsNear) {
-				Debug.Log("check");
-				objectToActivate.GetComponent<InteractableMechanism>().Activate();
-			}
+			objectToActivate.GetComponent<InteractableMechanism>().Activate();
 		}
 	}
 
+	private void Update() {
+
+	}
+
 	private void OnTriggerEnter(Collider other) {
-		if(other.gameObject.CompareTag("Player")) {
+		if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<LocalPlayerManager>().IsLocalPlayer) {
 			keyHintImage.SetActive(true);
-			playerIsNear = true;
+			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = true;
+			other.gameObject.GetComponent<PlayerActions>().BallThatIsNear = this.gameObject;
 		}
 	}
 
 	private void OnTriggerExit(Collider other) {
-		if(other.gameObject.CompareTag("Player")) {
+		if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<LocalPlayerManager>().IsLocalPlayer) {
 			keyHintImage.SetActive(false);
-			playerIsNear = false;
+			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = false;
 		}
 	}
 }
