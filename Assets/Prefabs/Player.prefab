@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineThickness: 1
-  lineIntensity: 0.5
-  fillAmount: 0.2
+  lineIntensity: 0.1
+  fillAmount: 0.1
   lineColor0: {r: 0.8679245, g: 0.289854, b: 0.80705094, a: 1}
   lineColor1: {r: 0.78015035, g: 0.9056604, b: 0.09740115, a: 1}
   lineColor2: {r: 0.35322177, g: 0.74698126, b: 0.7735849, a: 1}

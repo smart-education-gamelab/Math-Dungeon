@@ -651,23 +651,6 @@ Transform:
   m_Father: {fileID: 19146739}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &488398375 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8472752916567889920, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
-  m_PrefabInstance: {fileID: 1762258550}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &488398379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488398375}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eaadbbff6450b84aa3a39718aaf6093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &675325799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1562,10 +1545,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3216545808482082662, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
-      propertyPath: eyeState
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8472752916567889920, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
       propertyPath: m_Name
       value: PlayerOne
@@ -1573,10 +1552,6 @@ PrefabInstance:
     - target: {fileID: 8472752916567889920, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8472752916567889922, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8472752916567889923, guid: bc0a1ab349911d8469ab79f105571fae, type: 3}
       propertyPath: m_RootOrder

@@ -450,7 +450,7 @@ namespace cakeslice
 			outlineCamera.backgroundColor = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			outlineCamera.clearFlags = CameraClearFlags.SolidColor;
 			outlineCamera.rect = new Rect(0, 0, 1, 1);
-			outlineCamera.cullingMask = 0;
+			outlineCamera.cullingMask = 1;
 			outlineCamera.targetTexture = renderTexture;
 			outlineCamera.enabled = false;
 #if UNITY_5_6_OR_NEWER
