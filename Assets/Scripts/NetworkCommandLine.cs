@@ -1,10 +1,19 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using TMPro;
+using Unity.Netcode.Samples;
 
-public class NetworkCommandLine : MonoBehaviour
+public class NetworkCommandLine : NetworkBehaviour
 {
     private NetworkManager netManager;
+
+    [SerializeField]
+    private TMP_InputField passwordInputField;
+
+    [SerializeField]
+    private GameObject canvas;
+    
 
     void Start()
     {
@@ -12,43 +21,55 @@ public class NetworkCommandLine : MonoBehaviour
 
         if (Application.isEditor) return;
 
-        var args = GetCommandlineArgs();
-
-        if (args.TryGetValue("-mlapi", out string mlapiValue))
-        {
-            switch (mlapiValue)
-            {
-                case "server":
-                    netManager.StartServer();
-                    break;
-                case "host":
-                    netManager.StartHost();
-                    break;
-                case "client":
-
-                    netManager.StartClient();
-                    break;
-            }
-        }
+        
     }
 
-    private Dictionary<string, string> GetCommandlineArgs()
+    public void Host()
     {
-        Dictionary<string, string> argDictionary = new Dictionary<string, string>();
+        canvas.SetActive(false);
+        NetworkManager.Singleton.ConnectionApprovalCallback = ApprovalCheck;
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(passwordInputField.text);
+        NetworkManager.Singleton.StartHost();
 
-        var args = System.Environment.GetCommandLineArgs();
+    }
 
-        for (int i = 0; i < args.Length; ++i)
+    public void Client()
+    {
+        canvas.SetActive(false);
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = System.Text.Encoding.ASCII.GetBytes(passwordInputField.text);
+        NetworkManager.Singleton.StartClient();
+    }
+
+    private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+        response.Pending = false;
+        // The client identifier to be authenticated
+        var clientId = request.ClientNetworkId;
+
+        // Additional connection data defined by user code
+        var connectionData = request.Payload;
+        
+
+        // Your approval logic determines the following values
+
+        string password = System.Text.Encoding.ASCII.GetString(connectionData);
+
+        response.Approved = password == passwordInputField.text;
+        response.CreatePlayerObject = true;
+
+        response.PlayerPrefabHash = null;
+
+        if (IsClient)
         {
-            var arg = args[i].ToLower();
-            if (arg.StartsWith("-"))
-            {
-                var value = i < args.Length - 1 ? args[i + 1].ToLower() : null;
-                value = (value?.StartsWith("-") ?? false) ? null : value;
-
-                argDictionary.Add(arg, value);
-            }
+            response.Position = new Vector3(10, 10, 10);
+            response.Rotation = Quaternion.identity;
         }
-        return argDictionary;
+        else
+        {
+            response.Position = new Vector3(0, 0, 0);
+            response.Rotation = Quaternion.identity;
+        }
+
+        Debug.Log("password = " + password);
     }
 }
