@@ -30,6 +30,17 @@ public class LocalPlayerManager : NetworkBehaviour
             }
             
         }
+
+        if (IsOwnedByServer)
+        {
+            this.gameObject.transform.position = new Vector3(15, 1, 15);
+            this.gameObject.transform.rotation = Quaternion.identity;
+        }
+        else
+        {
+            this.gameObject.transform.position = new Vector3(0, 1, 0);
+            this.gameObject.transform.rotation = Quaternion.identity;
+        }
     }
     void OnDisable()
     {

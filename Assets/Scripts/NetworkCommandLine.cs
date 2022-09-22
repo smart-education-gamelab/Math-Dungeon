@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using Unity.Netcode.Samples;
 
-public class NetworkCommandLine : NetworkBehaviour
+public class NetworkCommandLine : MonoBehaviour
 {
     private NetworkManager netManager;
 
@@ -58,17 +58,6 @@ public class NetworkCommandLine : NetworkBehaviour
         response.CreatePlayerObject = true;
 
         response.PlayerPrefabHash = null;
-
-        if (IsClient)
-        {
-            response.Position = new Vector3(10, 10, 10);
-            response.Rotation = Quaternion.identity;
-        }
-        else
-        {
-            response.Position = new Vector3(0, 0, 0);
-            response.Rotation = Quaternion.identity;
-        }
 
         Debug.Log("password = " + password);
     }
