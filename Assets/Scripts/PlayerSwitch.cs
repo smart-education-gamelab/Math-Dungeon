@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSwitch : MonoBehaviour
-{
+public class PlayerSwitch : MonoBehaviour {
+    [SerializeField] private GameObject otherPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +12,9 @@ public class PlayerSwitch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.X)) {
+            otherPlayer.SetActive(true);
+            this.gameObject.SetActive(false);
+        }
     }
 }

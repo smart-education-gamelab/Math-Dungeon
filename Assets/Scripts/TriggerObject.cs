@@ -21,8 +21,10 @@ public class TriggerObject : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other) {
 		if(other.gameObject.CompareTag("Player")) {
-			keyHintImage.SetActive(true);
-			playerIsNear = true;
+			while(other.gameObject.activeSelf) {
+				keyHintImage.SetActive(true);
+				playerIsNear = true;
+			}
 		}
 	}
 
