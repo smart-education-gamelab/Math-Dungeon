@@ -2,33 +2,34 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TriggerObject : MonoBehaviour {
 	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
-	[SerializeField] private GameObject KeyHintImage;
+	[SerializeField] private GameObject keyHintImage;
+
+	private bool playerIsNear = false;
 
 	private void Start() {
-		//KeyHintImage = GameObject.FindWithTag("Key Hint");
-		//KeyHintImage.SetActive(false);
+
 	}
 
 	private void Update() {
-		
+		foreach(GameObject objectToActivate in objectsToActivate) {
+			if(Input.GetButton("Activate") && playerIsNear) {
+				Debug.Log("check");
+				objectToActivate.GetComponent<InteractableMechanism>().Activate();
+			}
+		}
 	}
 
 	private void OnTriggerEnter(Collider other) {
-		if(other.gameObject.tag == "Player") {
-			foreach(GameObject objectToActivate in objectsToActivate) {
-				if(Input.GetButtonDown("Activate")) {
-					objectToActivate.GetComponent<InteractableMechanism>().Activate();
-				}
-
-				KeyHintImage.SetActive(true);
-			}
-			/*Debug.Log("bingo");*/
+		if(other.gameObject.CompareTag("Player")) {
+			keyHintImage.SetActive(true);
+			playerIsNear = true;
 		}
 	}
 
 	private void OnTriggerExit(Collider other) {
-		if(other.gameObject.tag == "Player") {
-			KeyHintImage.SetActive(false);
+		if(other.gameObject.CompareTag("Player")) {
+			keyHintImage.SetActive(false);
+			playerIsNear = false;
 		}
 	}
 }
