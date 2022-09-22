@@ -10,6 +10,12 @@ public class LocalPlayerManager : NetworkBehaviour
 
     [SerializeField]
     Camera sceneCamera;
+
+    [SerializeField]
+    private Vector3 spawnPositionPlayerOne;
+
+    [SerializeField]
+    private Vector3 spawnPositionPlayerTwo;
     
     // Start is called before the first frame update
     void Start()
@@ -33,12 +39,12 @@ public class LocalPlayerManager : NetworkBehaviour
 
         if (IsOwnedByServer)
         {
-            this.gameObject.transform.position = new Vector3(15, 1, 15);
+            this.gameObject.transform.position = spawnPositionPlayerOne;
             this.gameObject.transform.rotation = Quaternion.identity;
         }
         else
         {
-            this.gameObject.transform.position = new Vector3(0, 1, 0);
+            this.gameObject.transform.position = spawnPositionPlayerTwo;
             this.gameObject.transform.rotation = Quaternion.identity;
         }
     }
