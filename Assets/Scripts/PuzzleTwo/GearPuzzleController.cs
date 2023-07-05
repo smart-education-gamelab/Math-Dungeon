@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class GearPuzzleController : MonoBehaviour {
     [SerializeField] private List<GameObject> smallGearList = new List<GameObject>();
     [SerializeField] private List<GameObject> bigGearList = new List<GameObject>();
 
-    [SerializeField] private int minimumValueSmallGear = 0;
-    [SerializeField] private int maximumValueSmallGear = 10;
-
-    private List<int> smallGearValues = new List<int>();
+    private Dictionary<string, float[]> formulasAndSolutionsControllerCopy;
 
     // Start is called before the first frame update
     void Start() {
@@ -18,12 +17,30 @@ public class GearPuzzleController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        /*for(int i = 0; i <= smallGearList.Count; i++) {
-            smallGearValues[i] = Random.Range(minimumValueSmallGear, maximumValueSmallGear);
+        formulasAndSolutionsControllerCopy = this.gameObject.GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
+
+        if(formulasAndSolutionsControllerCopy == null) {
+            Debug.LogError("Formulas and solutions not generated!");
+            return;
         }
 
-		for(int j = 0; j < smallGearList.Count; j++) {
+        // Loop door alle grote tandwielen
+        for(int i = 0; i < bigGearList.Count; i++) {
+            GameObject bigGear = bigGearList[i];
+            TextMeshProUGUI tmp = bigGear.GetComponentInChildren<TextMeshProUGUI>();
 
-		}*/
+            // Controleer of er een TMP-component is gevonden
+            if(tmp != null) {
+                // Haal de formule op uit de dictionary
+                KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
+                string formula = formulaEntry.Key;
+
+                // Pas de formule toe op de tekst van het TMP-object
+                tmp.text = formula;
+            } else {
+                Debug.LogError("TextMeshPro component not found on big gear!");
+            }
+        }
+
     }
 }

@@ -877,6 +877,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &187018420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 1261124464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &191942086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4421285054525458541, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
@@ -1184,6 +1189,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4073965379409207389, guid: 63a9e1797275db44ebc210493ec5a184, type: 3}
   m_PrefabInstance: {fileID: 333377268}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &345075270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 1226276243244340884}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &400338853
 PrefabInstance:
@@ -1564,6 +1574,11 @@ Transform:
   m_Father: {fileID: 2085347762}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &495558055 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 1918724805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &641805208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1630,11 +1645,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 3x + 5
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear (4)
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder
@@ -2223,6 +2242,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8453642502393860992, guid: a7d2b5c6826a47245937d9544333948c, type: 3}
   m_PrefabInstance: {fileID: 722026428}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &727424352 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 642623637}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &727588611
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,6 +2503,11 @@ Transform:
   m_Father: {fileID: 1566492282}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &886045570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 1488610850}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &910466963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2927,11 +2956,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 10x + 16
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear (1)
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder
@@ -3279,11 +3312,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 3x + 5
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear (3)
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder
@@ -3845,11 +3882,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 13x + 40
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear (2)
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder
@@ -4692,6 +4733,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3c5c7e886b902f4bb91460a545dcbd6, type: 3}
+--- !u!1 &1866354222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+  m_PrefabInstance: {fileID: 1101542578}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1871527309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6384770100897738929, guid: c3c5c7e886b902f4bb91460a545dcbd6, type: 3}
@@ -4842,11 +4888,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 3x + 5
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear (5)
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder
@@ -5790,9 +5840,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smallGearList: []
-  bigGearList: []
-  minimumValueSmallGear: 0
-  maximumValueSmallGear: 10
+  bigGearList:
+  - {fileID: 345075270}
+  - {fileID: 1866354222}
+  - {fileID: 886045570}
+  - {fileID: 187018420}
+  - {fileID: 727424352}
+  - {fileID: 495558055}
 --- !u!114 &2129633307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5805,9 +5859,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6592c2a6a7d0bf3428c1eb9603cddb14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minCoefficient: -5
-  maxCoefficient: 5
-  formulaCount: 3
+  minCoefficient: -10
+  maxCoefficient: 10
+  formulaCount: 6
 --- !u!1001 &2132041014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5900,11 +5954,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6951854794817553118, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_text
-      value: x^2 + 3x + 5
+      value: Test
       objectReference: {fileID: 0}
     - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_Name
-      value: gear
+      value: Big gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
+      propertyPath: m_TagString
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 7526910690144203947, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
       propertyPath: m_RootOrder

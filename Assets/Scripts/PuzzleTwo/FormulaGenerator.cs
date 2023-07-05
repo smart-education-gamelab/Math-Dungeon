@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FormulaGenerator : MonoBehaviour {
@@ -5,11 +6,20 @@ public class FormulaGenerator : MonoBehaviour {
     public int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
     public int formulaCount = 3; // Aantal formules dat gegenereerd moet worden
 
+    private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden
+
+    public Dictionary<string, float[]> GetFormulasAndSolutions() {
+        return formulasAndSolutions;
+    }
+
+
     private void Start() {
         GenerateFormulas();
     }
 
     public void GenerateFormulas() {
+        formulasAndSolutions = new Dictionary<string, float[]>();
+
         for(int i = 0; i < formulaCount; i++) {
             int a, b, c;
             bool hasIntegerSolutions;
@@ -25,10 +35,12 @@ public class FormulaGenerator : MonoBehaviour {
             } while(!hasIntegerSolutions);
 
             string equation = BuildEquation(a, b, c);
+            float[] solutions = SolveEquation(a, b, c);
+
+            formulasAndSolutions.Add(equation, solutions);
 
             Debug.Log($"Formula {i + 1}:");
             Debug.Log("Equation: " + equation);
-            float[] solutions = SolveEquation(a, b, c);
 
             if(solutions.Length == 0) {
                 Debug.Log("No solutions");
