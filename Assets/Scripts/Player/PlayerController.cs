@@ -2,25 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
-    private float lookSensetivity = 3f;
+    private float lookSensitivity = 3f;
 
     private PlayerMotor motor;
 
-    void Start()
-    {
+    private Vector2 mouseDelta = Vector2.zero;
+    private bool isCollidingWithWall = false;
+
+    private Camera mainCamera;
+    private RaycastHit wallHit;
+
+    void Start() {
         motor = GetComponent<PlayerMotor>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        mainCamera = Camera.main;
     }
 
-  
-    void Update()
-    {
+    void Update() {
         float _xMov = Input.GetAxisRaw("Horizontal");
         float _zMov = Input.GetAxisRaw("Vertical");
 
@@ -32,15 +36,38 @@ public class PlayerController : MonoBehaviour
         motor.Move(_velocity);
 
         float _yRot = Input.GetAxisRaw("Mouse X");
-
-        Vector3 _rotation = new Vector3(0f, _yRot, 0f) * lookSensetivity;
-
+        Vector3 _rotation = new Vector3(0f, _yRot, 0f) * lookSensitivity;
         motor.Rotate(_rotation);
 
         float _xRot = Input.GetAxisRaw("Mouse Y");
 
-        Vector3 _cameraRotation = new Vector3(_xRot, 0f, 0f) * lookSensetivity;
+        mouseDelta = new Vector2(_yRot, _xRot) * lookSensitivity;
 
-        motor.RotateCamera(_cameraRotation);
+        if(Mathf.Abs(mouseDelta.magnitude) < 0.01f) {
+            motor.RotateCamera(Vector3.zero);
+        } else {
+            if(!isCollidingWithWall) {
+                motor.RotateCamera(new Vector3(-mouseDelta.y, 0f, 0f));
+            }
+        }
+    }
+
+    void FixedUpdate() {
+        CheckWallCollision();
+    }
+
+    void CheckWallCollision() {
+        if(mainCamera != null) {
+            Vector3 cameraPosition = mainCamera.transform.position;
+            Vector3 cameraDirection = mainCamera.transform.forward;
+
+            if(Physics.Raycast(cameraPosition, cameraDirection, out wallHit, Mathf.Infinity)) {
+                if(wallHit.collider.CompareTag("Wall")) {
+                    isCollidingWithWall = true;
+                }
+            } else {
+                isCollidingWithWall = false;
+            }
+        }
     }
 }

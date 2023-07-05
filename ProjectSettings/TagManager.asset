@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerEyes
   - Key Hint
+  - Wall
   layers:
   - Default
   - TransparentFX

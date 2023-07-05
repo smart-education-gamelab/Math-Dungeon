@@ -13,17 +13,17 @@ public class GearPuzzleController : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        
+
     }
 
     // Update is called once per frame
     void Update() {
-        for(int i = 0; i <= smallGearList.Count; i++) {
-            smallGearValues[smallGearValues[i]] = Random.Range(minimumValueSmallGear, maximumValueSmallGear);
+        /*for(int i = 0; i <= smallGearList.Count; i++) {
+            smallGearValues[i] = Random.Range(minimumValueSmallGear, maximumValueSmallGear);
         }
 
 		for(int j = 0; j < smallGearList.Count; j++) {
 
-		}
+		}*/
     }
 }

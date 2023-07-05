@@ -5805,6 +5805,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6592c2a6a7d0bf3428c1eb9603cddb14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minCoefficient: -5
+  maxCoefficient: 5
+  formulaCount: 3
 --- !u!1001 &2132041014
 PrefabInstance:
   m_ObjectHideFlags: 0
