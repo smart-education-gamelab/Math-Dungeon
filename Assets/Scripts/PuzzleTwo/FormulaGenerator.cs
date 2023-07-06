@@ -4,14 +4,13 @@ using UnityEngine;
 public class FormulaGenerator : MonoBehaviour {
     public int minCoefficient = -10; // Minimumwaarde voor de coëfficiënten in de vergelijking
     public int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
-    public int formulaCount = 3; // Aantal formules dat gegenereerd moet worden
+    public int formulaCount = 6; // Aantal formules dat gegenereerd moet worden
 
     private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden
 
     public Dictionary<string, float[]> GetFormulasAndSolutions() {
         return formulasAndSolutions;
     }
-
 
     private void Start() {
         GenerateFormulas();
@@ -37,17 +36,25 @@ public class FormulaGenerator : MonoBehaviour {
             string equation = BuildEquation(a, b, c);
             float[] solutions = SolveEquation(a, b, c);
 
-            formulasAndSolutions.Add(equation, solutions);
-
-            Debug.Log($"Formula {i + 1}:");
-            Debug.Log("Equation: " + equation);
-
-            if(solutions.Length == 0) {
-                Debug.Log("No solutions");
+            // Controleer of de sleutel al bestaat in de dictionary
+            if(formulasAndSolutions.ContainsKey(equation)) {
+                // Sleutel bestaat al, genereer een nieuwe formule
+                Debug.Log("CHECK");
+                i--; //Zodat hij niet te weinig formules maakt
+                continue;
             } else {
-                Debug.Log("Solutions:");
-                foreach(float solution in solutions) {
-                    Debug.Log(solution);
+                formulasAndSolutions.Add(equation, solutions);
+
+                Debug.Log($"Formula {i + 1}:");
+                Debug.Log("Equation: " + equation);
+
+                if(solutions.Length == 0) {
+                    Debug.Log("No solutions");
+                } else {
+                    Debug.Log("Solutions:");
+                    foreach(float solution in solutions) {
+                        Debug.Log(solution);
+                    }
                 }
             }
         }
