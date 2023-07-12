@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6842803029202646312}
   - component: {fileID: 4515856198181071712}
   - component: {fileID: 6978022132468726332}
+  - component: {fileID: 8823982244727431476}
   m_Layer: 0
   m_Name: Network_Player
   m_TagString: Player
@@ -158,6 +159,8 @@ MonoBehaviour:
   - {fileID: 1848603044821747296}
   - {fileID: 6842803029202646312}
   sceneCamera: {fileID: 0}
+  spawnPositionPlayerOne: {x: 0, y: 0, z: 0}
+  spawnPositionPlayerTwo: {x: 0, y: 0, z: 0}
 --- !u!54 &769720603533527089
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -200,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  lookSensetivity: 10
+  lookSensitivity: 3
 --- !u!136 &4515856198181071712
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -241,6 +244,22 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &8823982244727431476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848603045072019309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e7ca0c74285f2468e1e5178f4e25ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectHolder: {fileID: 0}
+  pickupLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1848603045500897278
 GameObject:
   m_ObjectHideFlags: 0
