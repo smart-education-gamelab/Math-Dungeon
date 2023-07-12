@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
         float _xRot = Input.GetAxisRaw("Mouse Y");
 
-        mouseDelta = new Vector2(_yRot, _xRot) * lookSensitivity;
+        mouseDelta = new Vector2(_yRot, _xRot) * -lookSensitivity;
 
         if(Mathf.Abs(mouseDelta.magnitude) < 0.01f) {
             motor.RotateCamera(Vector3.zero);
