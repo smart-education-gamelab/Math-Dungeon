@@ -18,7 +18,12 @@ public class GearWindow : MonoBehaviour {
         passedGears = new List<GameObject>();
 
         tmps = new List<TextMeshProUGUI>();
-        
+
+        // Voeg de TextMeshProUGUI-componenten van de children toe aan de lijst tmps
+        TextMeshProUGUI[] textComponents = GetComponentsInChildren<TextMeshProUGUI>();
+        tmps.AddRange(textComponents);
+
+        UpdateWindowValue();
     }
 
     // Update is called once per frame
@@ -52,7 +57,10 @@ public class GearWindow : MonoBehaviour {
 
     private void UpdateWindowValue() {
         // TODO: Implementeer de logica om de tekst op het raam bij te werken
-        
+        foreach(TextMeshProUGUI tmp in tmps) {
+            // Pas de tekst van de TextMeshProUGUI-componenten aan met de nieuwe waarde
+            tmp.text = currentValue.ToString();
+        }
     }
 
     private void ResetPuzzle() {

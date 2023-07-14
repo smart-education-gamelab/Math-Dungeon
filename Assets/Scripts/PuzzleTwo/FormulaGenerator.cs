@@ -19,86 +19,90 @@ public class FormulaGenerator : MonoBehaviour {
     public void GenerateFormulas() {
         formulasAndSolutions = new Dictionary<string, float[]>();
 
+        float[] previousSolutions = null; // Vorige oplossingen om te vergelijken
+
         for(int i = 0; i < formulaCount; i++) {
-            int a, b, c;
-            bool hasIntegerSolutions;
+            float[] solutions;
 
-            // Genereren van formules met gehele getallen als oplossingen
-            do {
-                //a = Random.Range(minCoefficient, maxCoefficient + 1);
-                a = 1;
-                b = Random.Range(minCoefficient, maxCoefficient + 1);
-                c = Random.Range(minCoefficient, maxCoefficient + 1);
-
-                hasIntegerSolutions = CheckIntegerSolutions(a, b, c);
-            } while(!hasIntegerSolutions);
-
-            string equation = BuildEquation(a, b, c);
-            float[] solutions = SolveEquation(a, b, c);
-
-            // Controleer of de sleutel al bestaat in de dictionary
-            if(formulasAndSolutions.ContainsKey(equation)) {
-                // Sleutel bestaat al, genereer een nieuwe formule
-                Debug.Log("CHECK");
-                i--; //Zodat hij niet te weinig formules maakt
-                continue;
+            // Genereren van de oplossingen
+            if(i == 0 || i == 1 || i == 2) {
+                solutions = GenerateSolutions();
+            } else if(i == 3) {
+                solutions = GenerateSolutions(previousSolutions, i);
+            } else if(i == 4 || i == 5) {
+                solutions = GenerateSolutions(previousSolutions, i);
             } else {
-                formulasAndSolutions.Add(equation, solutions);
+                solutions = GenerateSolutions();
+            }
 
-                Debug.Log($"Formula {i + 1}:");
-                Debug.Log("Equation: " + equation);
+            string equation = BuildEquationFromSolutions(solutions);
 
-                if(solutions.Length == 0) {
-                    Debug.Log("No solutions");
-                } else {
-                    Debug.Log("Solutions:");
-                    foreach(float solution in solutions) {
-                        Debug.Log(solution);
-                    }
+            formulasAndSolutions.Add(equation, solutions);
+
+            Debug.Log($"Formula {i + 1}:" + " " + "Equation: " + equation);
+
+            if(solutions.Length == 0) {
+                Debug.Log("No solutions");
+            } else {
+                Debug.Log("Solutions:");
+                foreach(float solution in solutions) {
+                    Debug.Log(solution);
+                }
+            }
+
+            // Bewaar de oplossingen voor vergelijking met volgende formules
+            previousSolutions = solutions;
+        }
+    }
+
+    private float[] GenerateSolutions() {
+        float x1 = Random.Range(minCoefficient, maxCoefficient + 1);
+        float x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+        return new float[] { x1, x2 };
+    }
+
+    private float[] GenerateSolutions(float[] previousSolutions, int solutionIndex) {
+        float x1;
+        float x2;
+
+        if(solutionIndex == 2) { //TODO: Nog ont-hardcoden
+            x1 = previousSolutions[0]; // Neem de eerste oplossing van de vorige formule
+            x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+
+            // Zorg ervoor dat x2 niet hetzelfde is als de vorige oplossing
+            //TODO MOET DIT WEL?
+            while(x2 == x1) {
+                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+            }
+        } else {
+            if(previousSolutions == null) {
+                x1 = Random.Range(minCoefficient, maxCoefficient + 1);
+                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+            } else {
+                x1 = previousSolutions[1]; // Neem de tweede oplossing van de vorige formule
+                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+
+                // Zorg ervoor dat x2 niet hetzelfde is als de vorige oplossing
+                //TODO MOET DIT WEL?
+                while(x2 == x1) {
+                    x2 = Random.Range(minCoefficient, maxCoefficient + 1);
                 }
             }
         }
+
+        return new float[] { x1, x2 };
     }
 
-    private bool CheckIntegerSolutions(int a, int b, int c) {
-        // Controleert of de vergelijking gehele getallen heeft als oplossingen
-        int discriminant = b * b - 4 * a * c;
+    private string BuildEquationFromSolutions(float[] solutions) {
+        float x1 = solutions[0];
+        float x2 = solutions[1];
 
-        // Als de discriminant geen perfect vierkant is, heeft de vergelijking geen gehele oplossingen
-        if(!IsPerfectSquare(discriminant)) {
-            return false;
-        }
+        int a = 1;
+        int b = -((int) x1 + (int) x2);
+        int c = (int) (x1 * x2);
 
-        // Controleert of de oplossingen gehele getallen zijn
-        float x1 = (-b + Mathf.Sqrt(discriminant)) / (2f * a);
-        float x2 = (-b - Mathf.Sqrt(discriminant)) / (2f * a);
-
-        return Mathf.Round(x1) == x1 && Mathf.Round(x2) == x2;
-    }
-
-    private bool IsPerfectSquare(int number) {
-        int sqrt = (int) Mathf.Sqrt(number);
-        return sqrt * sqrt == number;
-    }
-
-    private float[] SolveEquation(int a, int b, int c) {
-        float discriminant = b * b - 4 * a * c;
-
-        // Als de discriminant negatief is, heeft de vergelijking geen snijpunten met de x-as
-        if(discriminant < 0) {
-            return new float[0];
-        }
-        // Als de discriminant gelijk aan nul is, heeft de vergelijking één snijpunt met de x-as
-        else if(discriminant == 0) {
-            float x = -b / (2f * a);
-            return new float[] { x };
-        }
-        // Als de discriminant positief is, heeft de vergelijking twee snijpunten met de x-as
-        else {
-            float x1 = (-b + Mathf.Sqrt(discriminant)) / (2f * a);
-            float x2 = (-b - Mathf.Sqrt(discriminant)) / (2f * a);
-            return new float[] { x1, x2 };
-        }
+        string equation = BuildEquation(a, b, c);
+        return equation;
     }
 
     private string BuildEquation(int a, int b, int c) {
