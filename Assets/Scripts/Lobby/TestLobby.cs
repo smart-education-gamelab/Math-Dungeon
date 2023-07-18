@@ -8,6 +8,7 @@ using Unity.Netcode;
 
 public class TestLobby : MonoBehaviour
 {
+    [SerializeField]
     public static TestLobby Instance { get; private set; }
 
     private Lobby joinedLobby;
@@ -16,8 +17,9 @@ public class TestLobby : MonoBehaviour
     {
         if (Instance != null)
         {
-            Destroy(Instance.gameObject);
+            Destroy(gameObject);
         }
+        Instance = this;
         DontDestroyOnLoad(this);
 
         InitializeUnityAuthentication();
@@ -40,7 +42,7 @@ public class TestLobby : MonoBehaviour
     {
         try
         {
-            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, 2, null);
+            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, 2);
 
             NetworkManager.Singleton.StartHost();
             Loader.LoadNetwork(Loader.Scene.SecondDungeonMockup);
