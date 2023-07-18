@@ -9,7 +9,6 @@ public class FormulaGenerator : MonoBehaviour {
     [SerializeField] 
     private int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
 
-    //private int correctFormulaCountPuzzleOne = 5; // Aantal formules dat gegenereerd moet worden
     private int solutionCountPuzzleOne = 6; //Aantal oplossingen verdeeld over de formules
     private int[] solutions;
 
@@ -74,7 +73,24 @@ public class FormulaGenerator : MonoBehaviour {
     }
 
     private int GenerateSolution() {
-        int x = Random.Range(minCoefficient, maxCoefficient + 1);
+        int x;
+        bool isDuplicate;
+
+        do {
+            x = Random.Range(minCoefficient, maxCoefficient + 1);
+            isDuplicate = false;
+
+            // Controleer of x al eerder is gegenereerd
+            for(int i = 0; i < solutionCountPuzzleOne; i++) {
+                if(solutions[i] == x) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+        } while(isDuplicate);
+
+        //Voor nu op deze manier, maar later gewoon checken of de formules niet anders zijn ipv dit want sommige solutions kunnen wel dubbel zijn en alsnog unieke formules maken
+
         return x;
     }
 
@@ -96,11 +112,11 @@ public class FormulaGenerator : MonoBehaviour {
         // Opbouwen van de vergelijking
         if(a != 0) {
             if(a == 1) {
-                equation += "x^2";
+                equation += "x²";
             } else if(a == -1) {
-                equation += "-x^2";
+                equation += "-x²";
             } else {
-                equation += $"{a}x^2";
+                equation += $"{a}x²";
             }
         }
 
