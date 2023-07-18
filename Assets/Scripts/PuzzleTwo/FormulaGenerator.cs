@@ -1,96 +1,81 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static GearPuzzleController;
 
 public class FormulaGenerator : MonoBehaviour {
-    public int minCoefficient = -10; // Minimumwaarde voor de coëfficiënten in de vergelijking
-    public int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
-    public int formulaCount = 6; // Aantal formules dat gegenereerd moet worden
+    [SerializeField] 
+    private int minCoefficient = -10; // Minimumwaarde voor de coëfficiënten in de vergelijking
+    
+    [SerializeField] 
+    private int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
 
-    private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden
+    //private int correctFormulaCountPuzzleOne = 5; // Aantal formules dat gegenereerd moet worden
+    private int solutionCountPuzzleOne = 6; //Aantal oplossingen verdeeld over de formules
+    private int[] solutions;
+
+    private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden.
+
 
     public Dictionary<string, float[]> GetFormulasAndSolutions() {
         return formulasAndSolutions;
     }
 
+    private PuzzleOptions chosenPuzzle;
+
     private void Start() {
         GenerateFormulas();
     }
 
-    public void GenerateFormulas() {
+	private void Update() {
+        
+    }
+
+	public void GenerateFormulas() {
+        chosenPuzzle = this.gameObject.GetComponent<GearPuzzleController>().selectedPuzzle;
+        Debug.Log("Selected option: " + chosenPuzzle);
+
         formulasAndSolutions = new Dictionary<string, float[]>();
+        solutions = new int[solutionCountPuzzleOne];
 
-        float[] previousSolutions = null; // Vorige oplossingen om te vergelijken
-
-        for(int i = 0; i < formulaCount; i++) {
-            float[] solutions;
-
-            // Genereren van de oplossingen
-            if(i == 0 || i == 1 || i == 2) {
-                solutions = GenerateSolutions();
-            } else if(i == 3) {
-                solutions = GenerateSolutions(previousSolutions, i);
-            } else if(i == 4 || i == 5) {
-                solutions = GenerateSolutions(previousSolutions, i);
-            } else {
-                solutions = GenerateSolutions();
-            }
-
-            string equation = BuildEquationFromSolutions(solutions);
-
-            formulasAndSolutions.Add(equation, solutions);
-
-            Debug.Log($"Formula {i + 1}:" + " " + "Equation: " + equation);
-
-            if(solutions.Length == 0) {
-                Debug.Log("No solutions");
-            } else {
-                Debug.Log("Solutions:");
-                foreach(float solution in solutions) {
-                    Debug.Log(solution);
-                }
-            }
-
-            // Bewaar de oplossingen voor vergelijking met volgende formules
-            previousSolutions = solutions;
+        if(chosenPuzzle == PuzzleOptions.Option1) {
+            PuzzleOne();
         }
     }
 
-    private float[] GenerateSolutions() {
-        float x1 = Random.Range(minCoefficient, maxCoefficient + 1);
-        float x2 = Random.Range(minCoefficient, maxCoefficient + 1);
-        return new float[] { x1, x2 };
-    }
+    private void PuzzleOne() {
+        for(int i = 0; i < solutionCountPuzzleOne; i++) {
+            solutions[i] = GenerateSolution();
+            //Ervoor zorgen dat er niks dubbel komt
+        }
 
-    private float[] GenerateSolutions(float[] previousSolutions, int solutionIndex) {
-        float x1;
-        float x2;
+        string equationOne = BuildEquationFromSolutions(new float[] { solutions[0], solutions[1] });
+        formulasAndSolutions.Add(equationOne, new float[] { solutions[0], solutions[1] });
 
-        if(solutionIndex == 2) { //TODO: Nog ont-hardcoden
-            x1 = previousSolutions[0]; // Neem de eerste oplossing van de vorige formule
-            x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+        string equationTwo = BuildEquationFromSolutions(new float[] { solutions[0], solutions[2] });
+        formulasAndSolutions.Add(equationTwo, new float[] { solutions[0], solutions[2] });
 
-            // Zorg ervoor dat x2 niet hetzelfde is als de vorige oplossing
-            //TODO MOET DIT WEL?
-            while(x2 == x1) {
-                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
-            }
-        } else {
-            if(previousSolutions == null) {
-                x1 = Random.Range(minCoefficient, maxCoefficient + 1);
-                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
-            } else {
-                x1 = previousSolutions[1]; // Neem de tweede oplossing van de vorige formule
-                x2 = Random.Range(minCoefficient, maxCoefficient + 1);
+        string equationThree = BuildEquationFromSolutions(new float[] { solutions[0], solutions[3] });
+        formulasAndSolutions.Add(equationThree, new float[] { solutions[0], solutions[3] });
 
-                // Zorg ervoor dat x2 niet hetzelfde is als de vorige oplossing
-                //TODO MOET DIT WEL?
-                while(x2 == x1) {
-                    x2 = Random.Range(minCoefficient, maxCoefficient + 1);
-                }
+        string equationFour = BuildEquationFromSolutions(new float[] { solutions[3], solutions[4] });
+        formulasAndSolutions.Add(equationFour, new float[] { solutions[3], solutions[4] });
+
+        string equationFive = BuildEquationFromSolutions(new float[] { solutions[4], solutions[5] });
+        formulasAndSolutions.Add(equationFive, new float[] { solutions[4], solutions[5] });
+
+        foreach(KeyValuePair<string, float[]> formulaEntry in formulasAndSolutions) {
+            Debug.Log("Formula: " + formulaEntry.Key);
+            Debug.Log("Solutions:");
+            foreach(float solution in formulaEntry.Value) {
+                Debug.Log(solution);
             }
         }
 
-        return new float[] { x1, x2 };
+    }
+
+    private int GenerateSolution() {
+        int x = Random.Range(minCoefficient, maxCoefficient + 1);
+        return x;
     }
 
     private string BuildEquationFromSolutions(float[] solutions) {
