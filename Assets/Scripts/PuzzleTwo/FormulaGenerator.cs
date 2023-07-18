@@ -23,7 +23,7 @@ public class FormulaGenerator : MonoBehaviour {
     private PuzzleOptions chosenPuzzle;
 
     private void Start() {
-        GenerateFormulas();
+        //GenerateFormulas();
     }
 
 	private void Update() {
@@ -31,7 +31,7 @@ public class FormulaGenerator : MonoBehaviour {
     }
 
 	public void GenerateFormulas() {
-        chosenPuzzle = this.gameObject.GetComponent<GearPuzzleController>().selectedPuzzle;
+        chosenPuzzle = this.gameObject.GetComponent<GearPuzzleController>().GetSelectedPuzzle();
         Debug.Log("Selected option: " + chosenPuzzle);
 
         formulasAndSolutions = new Dictionary<string, float[]>();
