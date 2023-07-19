@@ -45,7 +45,7 @@ public class TestLobby : MonoBehaviour
             joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, 2);
 
             NetworkManager.Singleton.StartHost();
-            Loader.LoadNetwork(Loader.Scene.SecondDungeonMockup);
+            Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
         }
         catch (LobbyServiceException e)
         {
