@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using Unity.Netcode;
 
-public class GearPuzzleController : MonoBehaviour {
+public class GearPuzzleController : NetworkBehaviour {
     public enum PuzzleOptions {
         Option1,
         Blabla,
@@ -46,7 +47,7 @@ public class GearPuzzleController : MonoBehaviour {
         SpawnGears();
     }
 
-	public void SpawnGears() {
+    public void SpawnGears() {
         formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
 
         if(formulasAndSolutionsControllerCopy == null) {
@@ -61,6 +62,7 @@ public class GearPuzzleController : MonoBehaviour {
 
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
+            newBigGear.GetComponent<NetworkObject>().Spawn();
 
             // Haal de TextMeshProUGUI-component op van newBigGear
             TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();

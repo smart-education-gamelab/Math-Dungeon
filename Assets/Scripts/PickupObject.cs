@@ -50,12 +50,20 @@ public class PickupObject : NetworkBehaviour
         if (currentObject != null)
             return;
 
-        // Mark the object as picked up
-        currentObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[objectId];
-        currentObject.GetComponent<Rigidbody>().isKinematic = true;
+        // Check if the dictionary contains the key
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
+        {
+            // Mark the object as picked up
+            currentObject = pickedObject;
+            currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
-        // Send an RPC to all clients to synchronize the changes in the picked-up object
-        PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            // Send an RPC to all clients to synchronize the changes in the picked-up object
+            PickUpObjectClientRpc(currentObject.NetworkObjectId);
+        }
+        else
+        {
+            Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+        }
     }
 
     [ClientRpc]
