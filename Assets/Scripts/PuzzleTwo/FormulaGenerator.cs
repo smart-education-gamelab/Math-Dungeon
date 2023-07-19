@@ -1,104 +1,109 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static GearPuzzleController;
 
 public class FormulaGenerator : MonoBehaviour {
-    public int minCoefficient = -10; // Minimumwaarde voor de coëfficiënten in de vergelijking
-    public int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
-    public int formulaCount = 6; // Aantal formules dat gegenereerd moet worden
+    [SerializeField] 
+    private int minCoefficient = -10; // Minimumwaarde voor de coëfficiënten in de vergelijking
+    
+    [SerializeField] 
+    private int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
 
-    private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden
+    private int solutionCountPuzzleOne = 6; //Aantal oplossingen verdeeld over de formules
+    private int[] solutions;
+
+    private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden.
+
 
     public Dictionary<string, float[]> GetFormulasAndSolutions() {
         return formulasAndSolutions;
     }
 
+    private PuzzleOptions chosenPuzzle;
+
     private void Start() {
-        GenerateFormulas();
+        //GenerateFormulas();
     }
 
-    public void GenerateFormulas() {
+	private void Update() {
+        
+    }
+
+	public void GenerateFormulas() {
+        chosenPuzzle = this.gameObject.GetComponent<GearPuzzleController>().GetSelectedPuzzle();
+        Debug.Log("Selected option: " + chosenPuzzle);
+
         formulasAndSolutions = new Dictionary<string, float[]>();
+        solutions = new int[solutionCountPuzzleOne];
 
-        for(int i = 0; i < formulaCount; i++) {
-            int a, b, c;
-            bool hasIntegerSolutions;
+        if(chosenPuzzle == PuzzleOptions.Option1) {
+            PuzzleOne();
+        }
+    }
 
-            // Genereren van formules met gehele getallen als oplossingen
-            do {
-                //a = Random.Range(minCoefficient, maxCoefficient + 1);
-                a = 1;
-                b = Random.Range(minCoefficient, maxCoefficient + 1);
-                c = Random.Range(minCoefficient, maxCoefficient + 1);
+    private void PuzzleOne() {
+        for(int i = 0; i < solutionCountPuzzleOne; i++) {
+            solutions[i] = GenerateSolution();
+            //Ervoor zorgen dat er niks dubbel komt
+        }
 
-                hasIntegerSolutions = CheckIntegerSolutions(a, b, c);
-            } while(!hasIntegerSolutions);
+        string equationOne = BuildEquationFromSolutions(new float[] { solutions[0], solutions[1] });
+        formulasAndSolutions.Add(equationOne, new float[] { solutions[0], solutions[1] });
 
-            string equation = BuildEquation(a, b, c);
-            float[] solutions = SolveEquation(a, b, c);
+        string equationTwo = BuildEquationFromSolutions(new float[] { solutions[0], solutions[2] });
+        formulasAndSolutions.Add(equationTwo, new float[] { solutions[0], solutions[2] });
 
-            // Controleer of de sleutel al bestaat in de dictionary
-            if(formulasAndSolutions.ContainsKey(equation)) {
-                // Sleutel bestaat al, genereer een nieuwe formule
-                Debug.Log("CHECK");
-                i--; //Zodat hij niet te weinig formules maakt
-                continue;
-            } else {
-                formulasAndSolutions.Add(equation, solutions);
+        string equationThree = BuildEquationFromSolutions(new float[] { solutions[0], solutions[3] });
+        formulasAndSolutions.Add(equationThree, new float[] { solutions[0], solutions[3] });
 
-                Debug.Log($"Formula {i + 1}:");
-                Debug.Log("Equation: " + equation);
+        string equationFour = BuildEquationFromSolutions(new float[] { solutions[3], solutions[4] });
+        formulasAndSolutions.Add(equationFour, new float[] { solutions[3], solutions[4] });
 
-                if(solutions.Length == 0) {
-                    Debug.Log("No solutions");
-                } else {
-                    Debug.Log("Solutions:");
-                    foreach(float solution in solutions) {
-                        Debug.Log(solution);
-                    }
-                }
+        string equationFive = BuildEquationFromSolutions(new float[] { solutions[4], solutions[5] });
+        formulasAndSolutions.Add(equationFive, new float[] { solutions[4], solutions[5] });
+
+        foreach(KeyValuePair<string, float[]> formulaEntry in formulasAndSolutions) {
+            Debug.Log("Formula: " + formulaEntry.Key);
+            Debug.Log("Solutions:");
+            foreach(float solution in formulaEntry.Value) {
+                Debug.Log(solution);
             }
         }
+
     }
 
-    private bool CheckIntegerSolutions(int a, int b, int c) {
-        // Controleert of de vergelijking gehele getallen heeft als oplossingen
-        int discriminant = b * b - 4 * a * c;
+    private int GenerateSolution() {
+        int x;
+        bool isDuplicate;
 
-        // Als de discriminant geen perfect vierkant is, heeft de vergelijking geen gehele oplossingen
-        if(!IsPerfectSquare(discriminant)) {
-            return false;
-        }
+        do {
+            x = Random.Range(minCoefficient, maxCoefficient + 1);
+            isDuplicate = false;
 
-        // Controleert of de oplossingen gehele getallen zijn
-        float x1 = (-b + Mathf.Sqrt(discriminant)) / (2f * a);
-        float x2 = (-b - Mathf.Sqrt(discriminant)) / (2f * a);
+            // Controleer of x al eerder is gegenereerd
+            for(int i = 0; i < solutionCountPuzzleOne; i++) {
+                if(solutions[i] == x) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+        } while(isDuplicate);
 
-        return Mathf.Round(x1) == x1 && Mathf.Round(x2) == x2;
+        //Voor nu op deze manier, maar later gewoon checken of de formules niet anders zijn ipv dit want sommige solutions kunnen wel dubbel zijn en alsnog unieke formules maken
+
+        return x;
     }
 
-    private bool IsPerfectSquare(int number) {
-        int sqrt = (int) Mathf.Sqrt(number);
-        return sqrt * sqrt == number;
-    }
+    private string BuildEquationFromSolutions(float[] solutions) {
+        float x1 = solutions[0];
+        float x2 = solutions[1];
 
-    private float[] SolveEquation(int a, int b, int c) {
-        float discriminant = b * b - 4 * a * c;
+        int a = 1;
+        int b = -((int) x1 + (int) x2);
+        int c = (int) (x1 * x2);
 
-        // Als de discriminant negatief is, heeft de vergelijking geen snijpunten met de x-as
-        if(discriminant < 0) {
-            return new float[0];
-        }
-        // Als de discriminant gelijk aan nul is, heeft de vergelijking één snijpunt met de x-as
-        else if(discriminant == 0) {
-            float x = -b / (2f * a);
-            return new float[] { x };
-        }
-        // Als de discriminant positief is, heeft de vergelijking twee snijpunten met de x-as
-        else {
-            float x1 = (-b + Mathf.Sqrt(discriminant)) / (2f * a);
-            float x2 = (-b - Mathf.Sqrt(discriminant)) / (2f * a);
-            return new float[] { x1, x2 };
-        }
+        string equation = BuildEquation(a, b, c);
+        return equation;
     }
 
     private string BuildEquation(int a, int b, int c) {
@@ -107,11 +112,11 @@ public class FormulaGenerator : MonoBehaviour {
         // Opbouwen van de vergelijking
         if(a != 0) {
             if(a == 1) {
-                equation += "x^2";
+                equation += "x²";
             } else if(a == -1) {
-                equation += "-x^2";
+                equation += "-x²";
             } else {
-                equation += $"{a}x^2";
+                equation += $"{a}x²";
             }
         }
 

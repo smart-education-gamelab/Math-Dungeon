@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 7163989056859509355}
   - component: {fileID: 4758296640870299199}
   - component: {fileID: 7018418940553102273}
+  - component: {fileID: 547225536517152418}
   m_Layer: 3
   m_Name: Big gear
   m_TagString: Item
@@ -131,8 +132,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7151476274959150609}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 15.823293, y: 2.9000502, z: 23.546146}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4172591874757152990}
@@ -260,6 +261,18 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!114 &547225536517152418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7151476274959150609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4291f7ee86d2d44fa684555b24b1112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8442964392945941761
 GameObject:
   m_ObjectHideFlags: 0
