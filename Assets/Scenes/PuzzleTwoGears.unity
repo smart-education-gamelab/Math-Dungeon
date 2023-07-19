@@ -464,6 +464,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 809646779}
     m_Modifications:
+    - target: {fileID: 4345993947955859842, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395112806100, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395346823229, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: Floor puzzle 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173396095564776, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_RootOrder
       value: 1
