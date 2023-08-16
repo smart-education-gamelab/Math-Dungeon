@@ -11,6 +11,8 @@ public class WaitingRoomUI : MonoBehaviour
     [SerializeField]
     private Button mainMenuButton;
     [SerializeField]
+    private Button readyButton;
+    [SerializeField]
     private TextMeshProUGUI lobbyNameText;
 
     private void Awake()
@@ -20,6 +22,11 @@ public class WaitingRoomUI : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
             Loader.Load(Loader.Scene.MainMenu);
         });
+        readyButton.onClick.AddListener(() =>
+        {
+            WaitingRoomReady.Instance.SetPlayerReady();
+        });
+
     }
 
     private void Start()

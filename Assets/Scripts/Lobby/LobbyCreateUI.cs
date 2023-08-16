@@ -23,7 +23,7 @@ public class LobbyCreateUI : MonoBehaviour
         createButton.onClick.AddListener(() =>
         {
             Debug.Log(lobbyName.text);
-            TestLobby.Instance.CreateLobby(lobbyName.text);
+            TestLobby.Instance.CreateLobby(lobbyName.text, false);
         });
     }
 
