@@ -26,6 +26,7 @@ public class MathDungeonMultiplayer : NetworkBehaviour
 
     private void Awake()
     {
+        Debug.Log("MathDungeonMultiplayer Awake");
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
@@ -89,14 +90,12 @@ public class MathDungeonMultiplayer : NetworkBehaviour
         if (SceneManager.GetActiveScene().name != Loader.Scene.WaitingRoom.ToString())
         {
             connectionApprovalResponse.Approved = false;
-            //connectionApprovalResponse.Reason = "Game has already started";
             return;
         }
 
         if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
         {
             connectionApprovalResponse.Approved = false;
-            //connectionApprovalResponse.Reason = "Game is full";
             return;
         }
 
@@ -184,5 +183,11 @@ public class MathDungeonMultiplayer : NetworkBehaviour
     public PlayerData GetPlayerDataFromPlayerIndex(int playerIndex)
     {
         return playerDataNetworkList[playerIndex];
+    }
+
+    public void KickPlayer(ulong clientId)
+    {
+        NetworkManager.Singleton.DisconnectClient(clientId);
+        NetworkManager_Server_OnClientDisconnectCallback(clientId);
     }
 }

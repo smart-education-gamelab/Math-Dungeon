@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
@@ -199,7 +200,7 @@ public class TestLobby : MonoBehaviour
                  }
             });
 
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
             MathDungeonMultiplayer.Instance.StartHost();
             Loader.LoadNetwork(Loader.Scene.WaitingRoom);
@@ -222,7 +223,7 @@ public class TestLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
 
             MathDungeonMultiplayer.Instance.StartClient();
         }
@@ -244,7 +245,7 @@ public class TestLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
 
             MathDungeonMultiplayer.Instance.StartClient();
         }
@@ -266,7 +267,7 @@ public class TestLobby : MonoBehaviour
 
             JoinAllocation joinAllocation = await JoinRelay(relayJoinCode);
 
-            //NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinAllocation, "dtls"));
 
             MathDungeonMultiplayer.Instance.StartClient();
         }
