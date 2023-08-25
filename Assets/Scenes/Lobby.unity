@@ -1974,6 +1974,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 594936494
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &698341005
@@ -4070,9 +4074,41 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.NetworkPrefabs.Array.size
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[0].Prefab
+      value: 
+      objectReference: {fileID: 8472752916567889920, guid: 17fad0dd6ab958a428954d83b406ea0d, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[1].Prefab
+      value: 
+      objectReference: {fileID: 1904222173830072385, guid: 9c5de86262bf8174780153f45ca30f93, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[2].Prefab
+      value: 
+      objectReference: {fileID: 4074137149033757767, guid: 2571fc0b74313bc44befbae505a63c84, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[3].Prefab
+      value: 
+      objectReference: {fileID: 4818403598342456195, guid: cdeac4dc292fd69409b8e00e37181f6b, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[4].Prefab
+      value: 
+      objectReference: {fileID: 245494754230425149, guid: 7b67d6a3dc8a96a4383659d4ea196db9, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[5].Prefab
+      value: 
+      objectReference: {fileID: 7703752145993339162, guid: 811ed15b8513ef840b3a3d400296c141, type: 3}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.OldPrefabList.Array.data[6].Prefab
+      value: 
+      objectReference: {fileID: 7151476274959150609, guid: eb1f4d576ae906c4daa0110e2e6ed094, type: 3}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.NetworkPrefabs.Array.data[0].Prefab
       value: 
@@ -4116,6 +4152,10 @@ PrefabInstance:
     - target: {fileID: 959001656234156305, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: m_ProtocolType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 959001656234156305, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: ConnectionData.ServerListenAddress
+      value: 127.0.0.1
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156307, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: m_RootOrder

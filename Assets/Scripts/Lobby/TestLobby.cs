@@ -203,7 +203,12 @@ public class TestLobby : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
 
             MathDungeonMultiplayer.Instance.StartHost();
-            Loader.LoadNetwork(Loader.Scene.WaitingRoom);
+
+            //Uncomment de scene die je wilt laden
+
+            //Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+            //Loader.LoadNetwork(Loader.Scene.WaitingRoom);
         }
         catch (LobbyServiceException e)
         {
