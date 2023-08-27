@@ -17,11 +17,18 @@ public class GearPuzzleController : NetworkBehaviour {
     [SerializeField]
     private PuzzleOptions selectedPuzzle;
 
+    [SerializeField]
+    private GameObject smallGearPrefab;
+
 	[SerializeField]
 	private GameObject bigGearPrefab;
 
+    [SerializeField]
+    private List<Transform> smallGearSpawnPoints = new List<Transform>();
+
     private FormulaGenerator formulaGenerator;
     private Dictionary<string, float[]> formulasAndSolutionsControllerCopy;
+    private int[] solutionsCopy;
     private List<GameObject> spawnedGears = new List<GameObject>();
 
     public PuzzleOptions GetSelectedPuzzle() {
@@ -48,6 +55,7 @@ public class GearPuzzleController : NetworkBehaviour {
 
     public void SpawnGears() {
         formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
+        solutionsCopy = GetComponent<FormulaGenerator>().GetSolutions();
 
         if(formulasAndSolutionsControllerCopy == null) {
             Debug.LogError("Formulas and solutions not generated!");
@@ -87,6 +95,43 @@ public class GearPuzzleController : NetworkBehaviour {
 
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
             spawnedGears.Add(newBigGear);
+        }
+
+        // Loop om het gewenste aantal tandwielen te spawnen
+        for(int j = 0; j < 6; j++) {
+            // Pas de positie van het bigGearPrefab aan naar de positie van het gameobject
+            Vector3 spawnPosition = smallGearSpawnPoints[j].position;
+
+            // Maak een instantie van het bigGearPrefab op de aangepaste positie
+            GameObject newSmallGear = Instantiate(smallGearPrefab, spawnPosition, Quaternion.identity);
+            newSmallGear.GetComponent<NetworkObject>().Spawn();
+
+            // Pas de rotatie aan om de kleine gears verticaal te laten staan
+            newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
+
+            // Haal de TextMeshProUGUI-component op van newBigGear
+            TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
+
+            // Controleer of er een TMP-component is gevonden
+            if(tmp != null) {
+                // Controleer of het huidige indexnummer binnen de geldige bereik ligt
+                if(j < solutionsCopy.Length) {
+                    // Haal de formule op uit de dictionary
+                    int solutionOnGear = solutionsCopy[j];
+
+                    // Pas de formule toe op de tekst van het TMP-object
+                    tmp.text = solutionOnGear.ToString();
+                } else {
+                    Debug.LogWarning("No solution found for small gear at index: " + j);
+                }
+            } else {
+                Debug.LogError("TextMeshPro component not found on big gear!");
+            }
+
+            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
+
+            // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
+            spawnedGears.Add(newSmallGear);
         }
     }
 }
