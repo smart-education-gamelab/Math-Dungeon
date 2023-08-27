@@ -19,6 +19,10 @@ public class FormulaGenerator : MonoBehaviour {
         return formulasAndSolutions;
     }
 
+    public int[] GetSolutions() {
+        return solutions;
+    }
+
     private PuzzleOptions chosenPuzzle;
 
     private void Start() {
