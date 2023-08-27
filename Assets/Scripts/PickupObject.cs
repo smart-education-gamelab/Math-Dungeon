@@ -129,7 +129,6 @@ public class PickupObject : NetworkBehaviour
             return;
 
         // Unmark the object as picked up and let it drop
-        currentObject.GetComponent<Rigidbody>().isKinematic = false;
         currentObject.transform.position = snapPointTransform;
 
         // Send an RPC to all clients to synchronize the changes in the picked-up object
@@ -142,7 +141,6 @@ public class PickupObject : NetworkBehaviour
     private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
-            obj.GetComponent<Rigidbody>().isKinematic = false;
             obj.transform.position = snapPointTransform;
         }
     }
