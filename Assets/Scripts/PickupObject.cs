@@ -10,6 +10,9 @@ public class PickupObject : NetworkBehaviour
     [SerializeField]
     private NetworkObject currentObject; // The current picked-up object
 
+    [SerializeField]
+    private SpriteRenderer crosshairSprite; // Referentie naar het sprite renderer component van het puntje
+
     private void Update()
     {
         if (!IsLocalPlayer)
@@ -25,6 +28,7 @@ public class PickupObject : NetworkBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer))
                 {
+                    crosshairSprite.color = Color.blue;
                     // Send an RPC to the server to pick up the object
                     PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
                 }
