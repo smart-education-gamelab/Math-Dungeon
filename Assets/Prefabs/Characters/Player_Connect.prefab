@@ -262,9 +262,9 @@ MonoBehaviour:
   - {fileID: 6200744928870980807}
   - {fileID: 5043331375816475568}
   sceneCamera: {fileID: 0}
-  spawnPositionPlayerOne: {x: 10, y: 0, z: 3}
+  spawnPositionPlayerOne: {x: -8, y: 0, z: -2}
   spawnRotationPlayerOne: {x: 0, y: 0, z: 0, w: 0}
-  spawnPositionPlayerTwo: {x: 5.5, y: 0, z: -11}
+  spawnPositionPlayerTwo: {x: 7, y: 0, z: -2}
   spawnRotationPlayerTwo: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &507616928691796153
 Rigidbody:
