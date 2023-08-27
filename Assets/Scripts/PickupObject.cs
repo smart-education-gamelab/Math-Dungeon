@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.UI;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -11,7 +12,7 @@ public class PickupObject : NetworkBehaviour
     private NetworkObject currentObject; // The current picked-up object
 
     [SerializeField]
-    private SpriteRenderer crosshairSprite; // Referentie naar het sprite renderer component van het puntje
+    private Image crosshairSprite; // Referentie naar het sprite renderer component van het puntje
 
     private void Update()
     {
