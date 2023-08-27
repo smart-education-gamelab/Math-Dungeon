@@ -4064,7 +4064,7 @@ PrefabInstance:
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.PlayerPrefab
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8472752916567889920, guid: 17fad0dd6ab958a428954d83b406ea0d, type: 3}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.ForceSamePrefabs
       value: 1
@@ -4075,7 +4075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.OldPrefabList.Array.size
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.NetworkPrefabs.Array.size
@@ -4146,12 +4146,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.Prefabs.NetworkPrefabsLists.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 77cc0578b6aaa7845901c90a87ad0b77, type: 2}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
+      propertyPath: NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 959001656234156304, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: NetworkConfig.NetworkPrefabs.Array.data[7].SourcePrefabToOverride
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156305, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: m_ProtocolType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 959001656234156305, guid: fac5e2a3da45b6f4e99189036dfa538f, type: 3}
       propertyPath: ConnectionData.ServerListenAddress

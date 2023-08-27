@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class WaitingRoomReady : NetworkBehaviour
+public class SetReady : NetworkBehaviour
 {
 
 
-    public static WaitingRoomReady Instance { get; private set; }
+    public static SetReady Instance { get; private set; }
 
 
     public event EventHandler OnReadyChanged;
