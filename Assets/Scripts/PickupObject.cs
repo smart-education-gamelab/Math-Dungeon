@@ -38,13 +38,15 @@ public class PickupObject : NetworkBehaviour
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("I CLICKED E");
             if (currentObject == null)
             {
-                
+                Debug.Log("CURRENT OBJECT IS 0");
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer))
                 {
                     // Send an RPC to the server to pick up the object
                     PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
+                    Debug.Log("PICKED UP");
                 }
             }
             else
@@ -66,7 +68,7 @@ public class PickupObject : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void PickUpObjectServerRpc(ulong objectId)
     {
         if (currentObject != null)
@@ -99,7 +101,7 @@ public class PickupObject : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void DropObjectServerRpc() {
         if (currentObject == null)
             return;
@@ -123,7 +125,7 @@ public class PickupObject : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SnapObjectServerRpc(Vector3 snapPointTransform) {
         if(currentObject == null)
             return;
