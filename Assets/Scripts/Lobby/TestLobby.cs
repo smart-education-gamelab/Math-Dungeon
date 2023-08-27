@@ -204,10 +204,6 @@ public class TestLobby : MonoBehaviour
 
             MathDungeonMultiplayer.Instance.StartHost();
 
-            //Uncomment de scene die je wilt laden
-
-            //Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
-            //Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
             Loader.LoadNetwork(Loader.Scene.WaitingRoom);
         }
         catch (LobbyServiceException e)
