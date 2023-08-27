@@ -51,7 +51,11 @@ public class SetReady : NetworkBehaviour
         if (allClientsReady)
         {
             TestLobby.Instance.DeleteLobby();
-            Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
+
+            //uncomment welke je wilt laden
+
+            //Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
         }
     }
 
