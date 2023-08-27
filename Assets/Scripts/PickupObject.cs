@@ -52,7 +52,7 @@ public class PickupObject : NetworkBehaviour
             else
             {
                 if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
-                    SnapObjectServerRpc(hit.transform.position);
+                    SnapObjectServerRpc(hit.transform.position, hit.transform.gameObject.GetComponent<MeshRenderer>());
                 } else {
                     // Send an RPC to the server to drop the object
                     DropObjectServerRpc();
@@ -126,24 +126,34 @@ public class PickupObject : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SnapObjectServerRpc(Vector3 snapPointTransform) {
+    private void SnapObjectServerRpc(Vector3 snapPointTransform, MeshRenderer snapPointRenderer) {
         if(currentObject == null)
             return;
 
         // Unmark the object as picked up and let it drop
         currentObject.transform.position = snapPointTransform;
+        currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
+
+        if(true /*hierin nog checken of de oplossing klopt*/) {
+            snapPointRenderer.forceRenderingOff = true;
+        }
 
         // Send an RPC to all clients to synchronize the changes in the picked-up object
-        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId);
+        SnapObjectClientRpc(snapPointTransform, snapPointRenderer, currentObject.NetworkObjectId);
 
         currentObject = null;
     }
 
     [ClientRpc]
-    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
+    private void SnapObjectClientRpc(Vector3 snapPointTransform, MeshRenderer snapPointRenderer, ulong objectId) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
             obj.transform.position = snapPointTransform;
+            currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
+
+            if(true /*hierin nog checken of de oplossing klopt*/) {
+                snapPointRenderer.forceRenderingOff = true;
+            }
         }
     }
 }
