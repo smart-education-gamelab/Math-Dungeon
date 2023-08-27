@@ -6,6 +6,7 @@ public class PickupObject : NetworkBehaviour
 {
     public Transform objectHolder; // The Transform that represents the position of the object holder
     public LayerMask pickupLayer; // The layer of the objects that can be picked up
+    public LayerMask snapLayer; // The layer of snapping points
     public Camera cam;
 
     [SerializeField]
@@ -28,6 +29,8 @@ public class PickupObject : NetworkBehaviour
 
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer)) {
             crosshairImage.color = Color.blue;
+        } else if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
+            crosshairImage.color = Color.yellow;
         } else {
             crosshairImage.color = Color.white;
         }
