@@ -1013,6 +1013,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 809646779}
     m_Modifications:
+    - target: {fileID: 529044374, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
+      propertyPath: m_TagString
+      value: Crosshair
+      objectReference: {fileID: 0}
     - target: {fileID: 6275916955684100936, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_Name
       value: Canvas

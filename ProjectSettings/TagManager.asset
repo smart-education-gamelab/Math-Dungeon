@@ -8,6 +8,7 @@ TagManager:
   - Key Hint
   - Wall
   - Item
+  - Crosshair
   layers:
   - Default
   - TransparentFX

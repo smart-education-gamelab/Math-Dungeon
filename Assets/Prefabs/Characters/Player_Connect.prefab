@@ -56,8 +56,12 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
   InLocalSpace: 0
   Interpolate: 1
+  SlerpPosition: 0
 --- !u!1 &8472752916285374770
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalObjectIdHash: 951099334
   AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
 --- !u!114 &7193905546878958697
@@ -255,7 +263,9 @@ MonoBehaviour:
   - {fileID: 5043331375816475568}
   sceneCamera: {fileID: 0}
   spawnPositionPlayerOne: {x: 10, y: 0, z: 3}
+  spawnRotationPlayerOne: {x: 0, y: 0, z: 0, w: 0}
   spawnPositionPlayerTwo: {x: 5.5, y: 0, z: -11}
+  spawnRotationPlayerTwo: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &507616928691796153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -323,8 +333,12 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
   InLocalSpace: 0
   Interpolate: 1
+  SlerpPosition: 0
 --- !u!136 &369432122017233389
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -369,6 +383,7 @@ MonoBehaviour:
     m_Bits: 8
   cam: {fileID: 8472752916285374732}
   currentObject: {fileID: 0}
+  crosshairSprite: {fileID: 6438016428373714832, guid: d0ba51668874a5a43992b8aec825c940, type: 3}
 --- !u!1001 &7304571994173084772
 PrefabInstance:
   m_ObjectHideFlags: 0

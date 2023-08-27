@@ -11,25 +11,36 @@ public class PickupObject : NetworkBehaviour
     [SerializeField]
     private NetworkObject currentObject; // The current picked-up object
 
-    [SerializeField]
-    private Image crosshairSprite; // Referentie naar het sprite renderer component van het puntje
+    private Image crosshairImage; // Referentie naar de image component van de crosshair
 
-    private void Update()
+    private void Start() {
+        crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
+    }
+
+	private void Update()
     {
         if (!IsLocalPlayer)
             return;
+
+        // Raycast to select and pick up an object
+        Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 100f);
+        RaycastHit hit;
+
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer)) {
+            crosshairImage.color = Color.blue;
+        } else {
+            crosshairImage.color = Color.white;
+        }
 
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (currentObject == null)
             {
-                // Raycast to select and pick up an object
-                Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 100f);
-                RaycastHit hit;
+                
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer))
                 {
-                    crosshairSprite.color = Color.blue;
+                    crosshairImage.color = Color.blue;
                     // Send an RPC to the server to pick up the object
                     PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
                 }
