@@ -597,27 +597,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669872685}
-  - component: {fileID: 669872684}
   - component: {fileID: 669872686}
+  - component: {fileID: 669872687}
   m_Layer: 0
-  m_Name: WaitingRoomReady
+  m_Name: SetReady
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &669872684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669872683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f939f80c92412da4ba2aad865d707771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &669872685
 Transform:
   m_ObjectHideFlags: 0
@@ -653,6 +641,18 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &669872687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669872683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f50e309d4d25642ab625c5dc13bb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &898081373
 PrefabInstance:
   m_ObjectHideFlags: 0
