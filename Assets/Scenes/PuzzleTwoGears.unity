@@ -320,7 +320,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 
+    ServerListenAddress: 127.0.0.1
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
@@ -625,6 +625,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.72
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173394894458138, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 6 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173394894458142, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -697,6 +701,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173395263321961, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 5 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173395263321965, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -749,6 +757,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.72
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173395661576349, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 4 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656713, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -797,6 +809,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.72
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173395838876248, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 3 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173395838876252, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -837,6 +853,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.72
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173395839565550, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 1 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
     - target: {fileID: 4347173395995396978, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -857,6 +877,38 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 5.72
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173395995396990, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 2 SpawnPoint Small Gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 4347173394950003294}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 4347173394950003296}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 4347173394950003295}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[3]
+      value: 
+      objectReference: {fileID: 4347173394950003293}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[4]
+      value: 
+      objectReference: {fileID: 4347173394950003292}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: smallGearSpawnPoints.Array.data[5]
+      value: 
+      objectReference: {fileID: 4347173394950003291}
     - target: {fileID: 4347173396095564776, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -975,6 +1027,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+--- !u!4 &4347173394950003291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173394894458142, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347173394950003292 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173395263321965, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347173394950003293 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173395661576337, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347173394950003294 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173395839565538, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347173394950003295 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173395838876252, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4347173394950003296 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4347173395995396978, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6275916954866482816
 PrefabInstance:
   m_ObjectHideFlags: 0

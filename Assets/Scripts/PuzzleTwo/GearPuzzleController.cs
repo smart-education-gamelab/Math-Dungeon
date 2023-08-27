@@ -20,6 +20,9 @@ public class GearPuzzleController : NetworkBehaviour {
 	[SerializeField]
 	private GameObject bigGearPrefab;
 
+    [SerializeField]
+    private List<Transform> smallGearSpawnPoints = new List<Transform>();
+
     private FormulaGenerator formulaGenerator;
     private Dictionary<string, float[]> formulasAndSolutionsControllerCopy;
     private List<GameObject> spawnedGears = new List<GameObject>();
