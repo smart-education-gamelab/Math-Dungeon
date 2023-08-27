@@ -6,10 +6,7 @@ using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterSelectUI : MonoBehaviour
-{
-
-
+public class CharacterSelectUI : MonoBehaviour {
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI lobbyNameText;

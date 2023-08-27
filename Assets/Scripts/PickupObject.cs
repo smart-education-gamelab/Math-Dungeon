@@ -43,15 +43,18 @@ public class PickupObject : NetworkBehaviour
                 
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer))
                 {
-                    crosshairImage.color = Color.blue;
                     // Send an RPC to the server to pick up the object
                     PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
                 }
             }
             else
             {
-                // Send an RPC to the server to drop the object
-                DropObjectServerRpc();
+                if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
+                    SnapObjectServerRpc(hit.transform.position);
+                } else {
+                    // Send an RPC to the server to drop the object
+                    DropObjectServerRpc();
+                }
             }
         }
 
@@ -97,8 +100,7 @@ public class PickupObject : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void DropObjectServerRpc()
-    {
+    private void DropObjectServerRpc() {
         if (currentObject == null)
             return;
 
@@ -118,6 +120,30 @@ public class PickupObject : NetworkBehaviour
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             obj.GetComponent<Rigidbody>().isKinematic = false;
+        }
+    }
+
+    [ServerRpc]
+    private void SnapObjectServerRpc(Vector3 snapPointTransform) {
+        if(currentObject == null)
+            return;
+
+        // Unmark the object as picked up and let it drop
+        currentObject.GetComponent<Rigidbody>().isKinematic = false;
+        currentObject.transform.position = snapPointTransform;
+
+        // Send an RPC to all clients to synchronize the changes in the picked-up object
+        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId);
+
+        currentObject = null;
+    }
+
+    [ClientRpc]
+    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
+        // Unmark the object as picked up and let it drop
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
+            obj.GetComponent<Rigidbody>().isKinematic = false;
+            obj.transform.position = snapPointTransform;
         }
     }
 }

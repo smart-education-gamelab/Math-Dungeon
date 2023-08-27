@@ -7,8 +7,6 @@ using UnityEngine;
 
 public struct PlayerData : IEquatable<PlayerData>, INetworkSerializable
 {
-
-
     public ulong clientId;
     public FixedString64Bytes playerName;
     public FixedString64Bytes playerId;
