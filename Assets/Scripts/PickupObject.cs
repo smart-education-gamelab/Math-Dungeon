@@ -183,6 +183,8 @@ public class PickupObject : NetworkBehaviour
             // Voer hier acties uit voor correct geplaatste tandwielen
             Debug.Log("GOEDZO 1");
             didItWork = true;
+            currentObject.gameObject.layer = 0;
+            currentSnapPoint.gameObject.layer = 0;
         } else {
             currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
             Debug.Log("FOUTZO 1");
@@ -204,6 +206,8 @@ public class PickupObject : NetworkBehaviour
 
             if(didItWork) {
                 // Voer hier acties uit voor correct geplaatste tandwielen
+                currentObject.gameObject.layer = 0;
+                currentSnapPoint.gameObject.layer = 0;
                 Debug.Log("GOEDZO 2");
             } else {
                 currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
