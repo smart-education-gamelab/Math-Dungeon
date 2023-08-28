@@ -71,6 +71,8 @@ public class GearPuzzleController : NetworkBehaviour {
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
             newBigGear.GetComponent<NetworkObject>().Spawn();
 
+            Debug.Log(newBigGear.GetComponent<NetworkObject>().IsOwner);
+
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
             }
@@ -103,17 +105,17 @@ public class GearPuzzleController : NetworkBehaviour {
 
         // Loop om het gewenste aantal tandwielen te spawnen
         for(int j = 0; j < 6; j++) {
-            // Pas de positie van het bigGearPrefab aan naar de positie van het gameobject
+            // Pas de positie van het smallGearPrefab aan naar de positie van het gameobject
             Vector3 spawnPosition = smallGearSpawnPoints[j].position;
 
-            // Maak een instantie van het bigGearPrefab op de aangepaste positie
+            // Maak een instantie van het smallGearPrefab op de aangepaste positie
             GameObject newSmallGear = Instantiate(smallGearPrefab, spawnPosition, Quaternion.identity);
             newSmallGear.GetComponent<NetworkObject>().Spawn();
 
             // Pas de rotatie aan om de kleine gears verticaal te laten staan
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
-            // Haal de TextMeshProUGUI-component op van newBigGear
+            // Haal de TextMeshProUGUI-component op van newSmallGear
             TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
