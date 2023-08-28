@@ -386,7 +386,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   cam: {fileID: 8472752916285374732}
-  BigGear: {fileID: 0}
+  player: {fileID: 4016622022606588640}
   currentObject: {fileID: 0}
 --- !u!1001 &7304571994173084772
 PrefabInstance:

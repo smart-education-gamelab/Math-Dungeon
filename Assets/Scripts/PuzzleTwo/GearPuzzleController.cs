@@ -73,7 +73,6 @@ public class GearPuzzleController : NetworkBehaviour {
         } else {
             Debug.LogError("FormulaGenerator component not found!");
         }
-
         SpawnGears();
     }
 
@@ -125,7 +124,7 @@ public class GearPuzzleController : NetworkBehaviour {
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
             newBigGear.GetComponent<NetworkObject>().Spawn();
 
-            Debug.Log(newBigGear.GetComponent<NetworkObject>().IsOwner);
+            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
 
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
