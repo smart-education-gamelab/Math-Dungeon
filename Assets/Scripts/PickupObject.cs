@@ -86,19 +86,35 @@ public class PickupObject : NetworkBehaviour
         if (currentObject != null)
             return;
 
-        // Check if the dictionary contains the key
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
-        {
-            // Mark the object as picked up
-            currentObject = pickedObject;
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
+        if(IsClient) {
+            if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectClient)) {
+                Debug.Log(objectId);
+                // Mark the object as picked up
+                NetworkObject.ChangeOwnership(1);
+                currentObject = pickedObjectClient;
+                currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
-            // Send an RPC to all clients to synchronize the changes in the picked-up object
-            PickUpObjectClientRpc(currentObject.NetworkObjectId);
+                // Send an RPC to all clients to synchronize the changes in the picked-up object
+                PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            } else {
+                Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            }
         }
-        else
-        {
-            Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+
+        if(IsServer || IsHost) {
+            // Check if the dictionary contains the key
+            if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectServer)) {
+                Debug.Log(objectId);
+                // Mark the object as picked up
+                NetworkObject.RemoveOwnership();
+                currentObject = pickedObjectServer;
+                currentObject.GetComponent<Rigidbody>().isKinematic = true;
+
+                // Send an RPC to all clients to synchronize the changes in the picked-up object
+                PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            } else {
+                Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            }
         }
     }
 
