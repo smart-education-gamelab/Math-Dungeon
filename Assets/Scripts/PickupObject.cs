@@ -38,6 +38,7 @@ public class PickupObject : NetworkBehaviour
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log(IsLocalPlayer);
             Debug.Log("I CLICKED E");
             if (currentObject == null)
             {
@@ -51,6 +52,7 @@ public class PickupObject : NetworkBehaviour
             }
             else
             {
+                Debug.Log("Whoops");
                 if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
                     SnapObjectServerRpc(hit.transform.position);
                 } else {
