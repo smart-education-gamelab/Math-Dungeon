@@ -53,9 +53,15 @@ public class GearPuzzleController : NetworkBehaviour {
         SpawnGears();
     }
 
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+    }
+
     public void SpawnGears() {
         formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
         solutionsCopy = GetComponent<FormulaGenerator>().GetSolutions();
+        Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
 
         if(formulasAndSolutionsControllerCopy == null) {
             Debug.LogError("Formulas and solutions not generated!");
@@ -68,6 +74,7 @@ public class GearPuzzleController : NetworkBehaviour {
             Vector3 spawnPosition = spawnPoint.position;
 
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
+            
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
             newBigGear.GetComponent<NetworkObject>().Spawn();
 
@@ -99,17 +106,17 @@ public class GearPuzzleController : NetworkBehaviour {
 
         // Loop om het gewenste aantal tandwielen te spawnen
         for(int j = 0; j < 6; j++) {
-            // Pas de positie van het bigGearPrefab aan naar de positie van het gameobject
+            // Pas de positie van het smallGearPrefab aan naar de positie van het gameobject
             Vector3 spawnPosition = smallGearSpawnPoints[j].position;
 
-            // Maak een instantie van het bigGearPrefab op de aangepaste positie
+            // Maak een instantie van het smallGearPrefab op de aangepaste positie
             GameObject newSmallGear = Instantiate(smallGearPrefab, spawnPosition, Quaternion.identity);
             newSmallGear.GetComponent<NetworkObject>().Spawn();
 
             // Pas de rotatie aan om de kleine gears verticaal te laten staan
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
-            // Haal de TextMeshProUGUI-component op van newBigGear
+            // Haal de TextMeshProUGUI-component op van newSmallGear
             TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden

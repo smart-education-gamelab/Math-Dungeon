@@ -17,7 +17,7 @@ public class MathDungeonManager : NetworkBehaviour
     public event EventHandler OnLocalGameUnpaused;
     public event EventHandler OnMultiplayerGamePaused;
     public event EventHandler OnMultiplayerGameUnpaused;
-    public event EventHandler OnLocalPlayerReadyChanged;
+    //public event EventHandler OnLocalPlayerReadyChanged;
 
 
     private enum State

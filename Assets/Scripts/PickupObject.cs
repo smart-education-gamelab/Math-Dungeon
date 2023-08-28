@@ -29,6 +29,7 @@ public class PickupObject : NetworkBehaviour
 
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer)) {
             crosshairImage.color = Color.blue;
+            Debug.Log(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
         } else if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
             crosshairImage.color = Color.yellow;
         } else {
@@ -38,6 +39,7 @@ public class PickupObject : NetworkBehaviour
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
             Debug.Log(IsLocalPlayer);
             Debug.Log("I CLICKED E");
             if (currentObject == null)
@@ -76,19 +78,43 @@ public class PickupObject : NetworkBehaviour
         if (currentObject != null)
             return;
 
-        // Check if the dictionary contains the key
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
+        if (IsClient)
         {
-            // Mark the object as picked up
-            currentObject = pickedObject;
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectClient))
+            {
+                Debug.Log(objectId);
+                // Mark the object as picked up
+                NetworkObject.ChangeOwnership(1);
+                currentObject = pickedObjectClient;
+                currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
-            // Send an RPC to all clients to synchronize the changes in the picked-up object
-            PickUpObjectClientRpc(currentObject.NetworkObjectId);
+                // Send an RPC to all clients to synchronize the changes in the picked-up object
+                PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            }
+            else
+            {
+                Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            }
         }
-        else
+
+        if (IsServer || IsHost)
         {
-            Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            // Check if the dictionary contains the key
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectServer))
+            {
+                Debug.Log(objectId);
+                // Mark the object as picked up
+                NetworkObject.RemoveOwnership();
+                currentObject = pickedObjectServer;
+                currentObject.GetComponent<Rigidbody>().isKinematic = true;
+
+                // Send an RPC to all clients to synchronize the changes in the picked-up object
+                PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            }
+            else
+            {
+                Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            }
         }
     }
 
@@ -108,13 +134,28 @@ public class PickupObject : NetworkBehaviour
         if (currentObject == null)
             return;
 
-        // Unmark the object as picked up and let it drop
-        currentObject.GetComponent<Rigidbody>().isKinematic = false;
+        if (IsClient)
+        {
+            // Unmark the object as picked up and let it drop
+            currentObject.GetComponent<Rigidbody>().isKinematic = false;
+            currentObject.RemoveOwnership();
 
-        // Send an RPC to all clients to synchronize the changes in the picked-up object
-        DropObjectClientRpc(currentObject.NetworkObjectId);
+            // Send an RPC to all clients to synchronize the changes in the picked-up object
+            DropObjectClientRpc(currentObject.NetworkObjectId);
 
-        currentObject = null;
+            currentObject = null;
+        }
+        if(IsHost || IsServer)
+        {
+            // Unmark the object as picked up and let it drop
+            currentObject.GetComponent<Rigidbody>().isKinematic = false;
+            currentObject.RemoveOwnership();
+
+            // Send an RPC to all clients to synchronize the changes in the picked-up object
+            DropObjectClientRpc(currentObject.NetworkObjectId);
+
+            currentObject = null;
+        }
     }
 
     [ClientRpc]
