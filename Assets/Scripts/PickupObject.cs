@@ -52,7 +52,7 @@ public class PickupObject : NetworkBehaviour
             else
             {
                 if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
-                    SnapObjectServerRpc(hit.transform.position, hit.transform.gameObject.GetComponent<MeshRenderer>());
+                    SnapObjectServerRpc(hit.transform.position);
                 } else {
                     // Send an RPC to the server to drop the object
                     DropObjectServerRpc();
@@ -126,7 +126,7 @@ public class PickupObject : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SnapObjectServerRpc(Vector3 snapPointTransform, MeshRenderer snapPointRenderer) {
+    private void SnapObjectServerRpc(Vector3 snapPointTransform) {
         if(currentObject == null)
             return;
 
@@ -135,24 +135,24 @@ public class PickupObject : NetworkBehaviour
         currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
         if(true /*hierin nog checken of de oplossing klopt*/) {
-            snapPointRenderer.forceRenderingOff = true;
+
         }
 
         // Send an RPC to all clients to synchronize the changes in the picked-up object
-        SnapObjectClientRpc(snapPointTransform, snapPointRenderer, currentObject.NetworkObjectId);
+        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId);
 
         currentObject = null;
     }
 
     [ClientRpc]
-    private void SnapObjectClientRpc(Vector3 snapPointTransform, MeshRenderer snapPointRenderer, ulong objectId) {
+    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
             obj.transform.position = snapPointTransform;
             currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
             if(true /*hierin nog checken of de oplossing klopt*/) {
-                snapPointRenderer.forceRenderingOff = true;
+
             }
         }
     }
