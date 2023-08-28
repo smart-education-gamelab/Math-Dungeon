@@ -123,6 +123,31 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &185677826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4347173395010792254, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &185677827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4347173395669656725, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &185677828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4347173395701028475, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &185677829 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4347173394498354551, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &185677830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4347173395043108833, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+  m_PrefabInstance: {fileID: 4347173394950003290}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &413286118
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354539, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354539, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.y
@@ -532,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354539, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354539, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -547,8 +572,16 @@ PrefabInstance:
       value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354548, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Radius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173394498354548, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173394498354551, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 3 SnapPoint Big Gear
       objectReference: {fileID: 0}
     - target: {fileID: 4347173394498354551, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Layer
@@ -584,7 +617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792242, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792242, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.y
@@ -592,7 +625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792242, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792242, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -607,12 +640,24 @@ PrefabInstance:
       value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792254, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 2 SnapPoint Big Gear
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395010792254, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395010792255, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Radius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395010792255, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395043108833, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 1 SnapPoint Big Gear
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108833, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Layer
@@ -620,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108837, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108837, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.y
@@ -628,7 +673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108837, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108837, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -641,6 +686,10 @@ PrefabInstance:
     - target: {fileID: 4347173395043108837, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 5.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395043108838, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Radius
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395043108838, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Enabled
@@ -720,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656713, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656713, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.y
@@ -728,7 +777,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656713, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656713, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -743,16 +792,32 @@ PrefabInstance:
       value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656714, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Radius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395669656714, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395669656725, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 5 SnapPoint Big Gear
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395669656725, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028472, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Radius
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395701028472, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173395701028475, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Name
+      value: 4 SnapPoint Big Gear
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028475, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Layer
@@ -760,7 +825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028479, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028479, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.y
@@ -768,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028479, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4347173395701028479, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -866,6 +931,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2 SpawnPoint Small Gear
       objectReference: {fileID: 0}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: snapPointGear1
+      value: 
+      objectReference: {fileID: 185677830}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: snapPointGear2
+      value: 
+      objectReference: {fileID: 185677826}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: snapPointGear3
+      value: 
+      objectReference: {fileID: 185677829}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: snapPointGear4
+      value: 
+      objectReference: {fileID: 185677828}
+    - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: snapPointGear5
+      value: 
+      objectReference: {fileID: 185677827}
     - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: smallGearPrefab
       value: 

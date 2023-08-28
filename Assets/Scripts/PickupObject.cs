@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
+using TMPro;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -12,10 +13,16 @@ public class PickupObject : NetworkBehaviour
     [SerializeField]
     private NetworkObject currentObject; // The current picked-up object
 
+    private GameObject currentSnapPoint; // The current snap-point in use
+
     private Image crosshairImage; // Referentie naar de image component van de crosshair
+
+    private GearPuzzleController gearPuzzleController;
 
     private void Start() {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
+        // Verkrijg een referentie naar de GearPuzzleController
+        gearPuzzleController = FindObjectOfType<GearPuzzleController>();
     }
 
 	private void Update()
@@ -56,6 +63,7 @@ public class PickupObject : NetworkBehaviour
             {
                 Debug.Log("Whoops");
                 if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
+                    currentSnapPoint = hit.transform.gameObject;
                     SnapObjectServerRpc(hit.transform.position);
                 } else {
                     // Send an RPC to the server to drop the object
@@ -78,10 +86,8 @@ public class PickupObject : NetworkBehaviour
         if (currentObject != null)
             return;
 
-        if (IsClient)
-        {
-            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectClient))
-            {
+        if(IsClient) {
+            if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectClient)) {
                 Debug.Log(objectId);
                 // Mark the object as picked up
                 NetworkObject.ChangeOwnership(1);
@@ -90,18 +96,14 @@ public class PickupObject : NetworkBehaviour
 
                 // Send an RPC to all clients to synchronize the changes in the picked-up object
                 PickUpObjectClientRpc(currentObject.NetworkObjectId);
-            }
-            else
-            {
+            } else {
                 Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
             }
         }
 
-        if (IsServer || IsHost)
-        {
+        if(IsServer || IsHost) {
             // Check if the dictionary contains the key
-            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectServer))
-            {
+            if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObjectServer)) {
                 Debug.Log(objectId);
                 // Mark the object as picked up
                 NetworkObject.RemoveOwnership();
@@ -110,9 +112,7 @@ public class PickupObject : NetworkBehaviour
 
                 // Send an RPC to all clients to synchronize the changes in the picked-up object
                 PickUpObjectClientRpc(currentObject.NetworkObjectId);
-            }
-            else
-            {
+            } else {
                 Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
             }
         }
@@ -175,18 +175,40 @@ public class PickupObject : NetworkBehaviour
 
         // Unmark the object as picked up and let it drop
         currentObject.transform.position = snapPointTransform;
+        currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
+
+        bool didItWork;
+
+        if(gearPuzzleController.CheckSnapPointFormula(currentSnapPoint, currentObject.GetComponentInChildren<TextMeshProUGUI>().text)) {
+            // Voer hier acties uit voor correct geplaatste tandwielen
+            Debug.Log("GOEDZO 1");
+            didItWork = true;
+        } else {
+            currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            Debug.Log("FOUTZO 1");
+            didItWork = false;
+        }
 
         // Send an RPC to all clients to synchronize the changes in the picked-up object
-        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId);
+        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId, didItWork);
 
         currentObject = null;
     }
 
     [ClientRpc]
-    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
+    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId, bool didItWork) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
             obj.transform.position = snapPointTransform;
+            currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
+
+            if(didItWork) {
+                // Voer hier acties uit voor correct geplaatste tandwielen
+                Debug.Log("GOEDZO 2");
+            } else {
+                currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                Debug.Log("FOUTZO 1");
+            }
         }
     }
 }

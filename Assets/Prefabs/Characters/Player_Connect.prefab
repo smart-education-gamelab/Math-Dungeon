@@ -265,7 +265,7 @@ MonoBehaviour:
   sceneCamera: {fileID: 0}
   spawnPositionPlayerOne: {x: -8, y: 0, z: -2}
   spawnRotationPlayerOne: {x: 0, y: 0, z: 0, w: 0}
-  spawnPositionPlayerTwo: {x: 7, y: 0, z: -2}
+  spawnPositionPlayerTwo: {x: 15, y: 0, z: -2}
   spawnRotationPlayerTwo: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &507616928691796153
 Rigidbody:
