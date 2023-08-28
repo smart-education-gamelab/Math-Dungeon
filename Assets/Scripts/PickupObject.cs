@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
+using TMPro;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -12,10 +13,16 @@ public class PickupObject : NetworkBehaviour
     [SerializeField]
     private NetworkObject currentObject; // The current picked-up object
 
+    private GameObject currentSnapPoint; // The current snap-point in use
+
     private Image crosshairImage; // Referentie naar de image component van de crosshair
+
+    private GearPuzzleController gearPuzzleController;
 
     private void Start() {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
+        // Verkrijg een referentie naar de GearPuzzleController
+        gearPuzzleController = FindObjectOfType<GearPuzzleController>();
     }
 
 	private void Update()
@@ -29,6 +36,7 @@ public class PickupObject : NetworkBehaviour
 
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer)) {
             crosshairImage.color = Color.blue;
+            Debug.Log(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
         } else if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
             crosshairImage.color = Color.yellow;
         } else {
@@ -38,6 +46,7 @@ public class PickupObject : NetworkBehaviour
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
             Debug.Log(IsLocalPlayer);
             Debug.Log("I CLICKED E");
             if (currentObject == null)
@@ -54,6 +63,7 @@ public class PickupObject : NetworkBehaviour
             {
                 Debug.Log("Whoops");
                 if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
+                    currentSnapPoint = hit.transform.gameObject;
                     SnapObjectServerRpc(hit.transform.position);
                 } else {
                     // Send an RPC to the server to drop the object
@@ -136,25 +146,37 @@ public class PickupObject : NetworkBehaviour
         currentObject.transform.position = snapPointTransform;
         currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
-        if(true /*hierin nog checken of de oplossing klopt*/) {
+        bool didItWork;
 
+        if(gearPuzzleController.CheckSnapPointFormula(currentSnapPoint, currentObject.GetComponentInChildren<TextMeshProUGUI>().text)) {
+            // Voer hier acties uit voor correct geplaatste tandwielen
+            Debug.Log("GOEDZO 1");
+            didItWork = true;
+        } else {
+            currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            Debug.Log("FOUTZO 1");
+            didItWork = false;
         }
 
         // Send an RPC to all clients to synchronize the changes in the picked-up object
-        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId);
+        SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId, didItWork);
 
         currentObject = null;
     }
 
     [ClientRpc]
-    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId) {
+    private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId, bool didItWork) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
             obj.transform.position = snapPointTransform;
             currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
-            if(true /*hierin nog checken of de oplossing klopt*/) {
-
+            if(didItWork) {
+                // Voer hier acties uit voor correct geplaatste tandwielen
+                Debug.Log("GOEDZO 2");
+            } else {
+                currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                Debug.Log("FOUTZO 1");
             }
         }
     }

@@ -12,6 +12,11 @@ public class GearPuzzleController : NetworkBehaviour {
     }
 
     [SerializeField]
+    private int wantedSolutions;
+
+    private int amountOfSolved;
+
+    [SerializeField]
     private Transform spawnPoint;
 
     [SerializeField]
@@ -31,12 +36,31 @@ public class GearPuzzleController : NetworkBehaviour {
     private int[] solutionsCopy;
     private List<GameObject> spawnedGears = new List<GameObject>();
 
+    [SerializeField]
+    private GameObject snapPointGear1;
+
+    [SerializeField]
+    private GameObject snapPointGear2;
+
+    [SerializeField]
+    private GameObject snapPointGear3;
+
+    [SerializeField]
+    private GameObject snapPointGear4;
+
+    [SerializeField]
+    private GameObject snapPointGear5;
+
+    // Dictionary om snap points te koppelen aan formules
+    private Dictionary<GameObject, string> snapPointFormulas = new Dictionary<GameObject, string>();
+
     public PuzzleOptions GetSelectedPuzzle() {
         return selectedPuzzle;
     }
 
     // Start is called before the first frame update
     void Start() {
+        amountOfSolved = 0;
         Debug.Log("Selected option: " + selectedPuzzle);
 
         // Haal het FormulaGenerator-script op via GetComponent
@@ -53,9 +77,37 @@ public class GearPuzzleController : NetworkBehaviour {
         SpawnGears();
     }
 
+    // Deze methode controleert of een snap point de juiste formule heeft
+    public bool CheckSnapPointFormula(GameObject snapPoint, string formula) {
+        if(snapPointFormulas.ContainsKey(snapPoint)) {
+            string correctFormula = snapPointFormulas[snapPoint];
+            
+            if(formula == correctFormula) {
+                amountOfSolved++;
+                Debug.Log("aantal opgelost: " + amountOfSolved);
+                return true;
+            } else {
+                Debug.Log("aantal opgelost: " + amountOfSolved);
+                return false;
+            }
+        }
+        Debug.Log("aantal opgelost: " + amountOfSolved);
+        return false;
+    }
+
+    public void AddSnapPointFormula() {
+        snapPointFormulas.Add(snapPointGear1, formulasAndSolutionsControllerCopy.ElementAt(0).Key);
+        snapPointFormulas.Add(snapPointGear2, formulasAndSolutionsControllerCopy.ElementAt(1).Key);
+        snapPointFormulas.Add(snapPointGear3, formulasAndSolutionsControllerCopy.ElementAt(2).Key);
+        snapPointFormulas.Add(snapPointGear4, formulasAndSolutionsControllerCopy.ElementAt(3).Key);
+        snapPointFormulas.Add(snapPointGear5, formulasAndSolutionsControllerCopy.ElementAt(4).Key);
+    }
+
     public void SpawnGears() {
         formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
         solutionsCopy = GetComponent<FormulaGenerator>().GetSolutions();
+
+        AddSnapPointFormula();
 
         if(formulasAndSolutionsControllerCopy == null) {
             Debug.LogError("Formulas and solutions not generated!");
