@@ -71,6 +71,10 @@ public class GearPuzzleController : NetworkBehaviour {
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
             newBigGear.GetComponent<NetworkObject>().Spawn();
 
+            if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
+                Debug.Log("NetworkObject is not spawned or has been destroyed.");
+            }
+
             // Haal de TextMeshProUGUI-component op van newBigGear
             TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
 
