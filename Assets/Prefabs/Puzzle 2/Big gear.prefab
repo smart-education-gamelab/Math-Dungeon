@@ -115,8 +115,8 @@ GameObject:
   - component: {fileID: -890969735941074727}
   - component: {fileID: 7163989056859509355}
   - component: {fileID: 4758296640870299199}
-  - component: {fileID: 7018418940553102273}
   - component: {fileID: 547225536517152418}
+  - component: {fileID: 5805752262012561089}
   m_Layer: 3
   m_Name: Big gear
   m_TagString: Item
@@ -239,7 +239,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &7018418940553102273
+--- !u!114 &547225536517152418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,7 +248,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7151476274959150609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: b4291f7ee86d2d44fa684555b24b1112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5805752262012561089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7151476274959150609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df2868252ab5c4d1da357e8f11f1b524, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
@@ -269,18 +281,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &547225536517152418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7151476274959150609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4291f7ee86d2d44fa684555b24b1112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8442964392945941761
 GameObject:
   m_ObjectHideFlags: 0
