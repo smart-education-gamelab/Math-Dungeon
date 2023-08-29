@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class TriggerObject : InteractableMechanism {
 	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 	[SerializeField] private GameObject keyHintImage;
 
-	private void Start() {
+	private Image crosshairImage; // Referentie naar de image component van de crosshair
 
+	private void Start() {
+		crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
 	}
 
 	public override void Activate() {
@@ -25,6 +29,7 @@ public class TriggerObject : InteractableMechanism {
 			keyHintImage.SetActive(true);
 			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = true;
 			other.gameObject.GetComponent<PlayerActions>().BallThatIsNear = this.gameObject;
+			crosshairImage.color = Color.magenta;
 		}
 	}
 
@@ -32,6 +37,7 @@ public class TriggerObject : InteractableMechanism {
 		if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<LocalPlayerManager>().IsLocalPlayer) {
 			keyHintImage.SetActive(false);
 			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = false;
+			crosshairImage.color = Color.white;
 		}
 	}
 }
