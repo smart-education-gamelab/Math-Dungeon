@@ -88,21 +88,29 @@ public class PickupObject : NetworkBehaviour
     {
         if (currentObject != null)
             return;
-
         var clientId = serverRpcParams.Receive.SenderClientId;
 
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject)) {
-            Debug.Log(objectId);
 
-            // Mark the object as picked up
-            currentObject = pickedObject;
-            Debug.Log(pickedObject.OwnerClientId);
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            var client = NetworkManager.ConnectedClients[clientId];
+            if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
+            {
+                Debug.Log(objectId);
 
-            // Send an RPC to all clients to synchronize the changes in the picked-up object
-            PickUpObjectClientRpc(currentObject.NetworkObjectId);
-        } else {
-            Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+                // Mark the object as picked up
+                pickedObject.ChangeOwnership(clientId);
+                currentObject = pickedObject;
+                Debug.Log(pickedObject.OwnerClientId);
+                currentObject.GetComponent<Rigidbody>().isKinematic = true;
+
+                // Send an RPC to all clients to synchronize the changes in the picked-up object
+                PickUpObjectClientRpc(currentObject.NetworkObjectId);
+            }
+            else
+            {
+                Debug.LogError($"Failed to find object with NetworkObjectId: {objectId}");
+            }
         }
         
     }
@@ -119,16 +127,22 @@ public class PickupObject : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void DropObjectServerRpc(ulong objectId) {
+    private void DropObjectServerRpc(ulong objectId, ServerRpcParams serverRpcParams = default) {
+
+        var clientId = serverRpcParams.Receive.SenderClientId;
         if (currentObject == null)
             return;
-       
-        // Unmark the object as picked up and let it drop
-        currentObject.GetComponent<Rigidbody>().isKinematic = false;
-        // Send an RPC to all clients to synchronize the changes in the picked-up object
-        DropObjectClientRpc(currentObject.NetworkObjectId);
-
-        currentObject = null;
+        if (NetworkManager.ConnectedClients.ContainsKey(clientId))
+        {
+            var client = NetworkManager.ConnectedClients[clientId];
+            // Unmark the object as picked up and let it drop
+            currentObject.GetComponent<Rigidbody>().isKinematic = false;
+            currentObject.RemoveOwnership();
+            // Send an RPC to all clients to synchronize the changes in the picked-up object
+            DropObjectClientRpc(currentObject.NetworkObjectId);
+            
+            currentObject = null;
+        }
     }
 
     [ClientRpc]
