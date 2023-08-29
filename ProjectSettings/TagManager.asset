@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Item
   - Crosshair
+  - EndLevel
   layers:
   - Default
   - TransparentFX
