@@ -70,4 +70,13 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if(other.CompareTag("EndLevel")) {
+            // De speler is in aanraking gekomen met een object met de tag "EndLevel"
+            Debug.Log("Player reached end of level!");
+            // Hier kun je code toevoegen om acties uit te voeren wanneer de speler het einde van het level bereikt.
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        }
+    }
 }
