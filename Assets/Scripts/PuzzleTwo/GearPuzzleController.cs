@@ -58,9 +58,12 @@ public class GearPuzzleController : NetworkBehaviour {
         return selectedPuzzle;
     }
 
+    [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
+
     // Start is called before the first frame update
-    void Start() {
+    private void Start() {
         amountOfSolved = 0;
+        wantedSolutions = 5;
         Debug.Log("Selected option: " + selectedPuzzle);
 
         // Haal het FormulaGenerator-script op via GetComponent
@@ -77,8 +80,17 @@ public class GearPuzzleController : NetworkBehaviour {
         SpawnGears();
     }
 
-    // Deze methode controleert of een snap point de juiste formule heeft
-    public bool CheckSnapPointFormula(GameObject snapPoint, string formula) {
+	private void Update() {
+        if(amountOfSolved == wantedSolutions) {
+            foreach(GameObject objectToActivate in objectsToActivate) {
+                objectToActivate.GetComponent<InteractableMechanism>().Activate();
+            }
+            amountOfSolved = 0;
+        }
+	}
+
+	// Deze methode controleert of een snap point de juiste formule heeft
+	public bool CheckSnapPointFormula(GameObject snapPoint, string formula) {
         if(snapPointFormulas.ContainsKey(snapPoint)) {
             string correctFormula = snapPointFormulas[snapPoint];
             
