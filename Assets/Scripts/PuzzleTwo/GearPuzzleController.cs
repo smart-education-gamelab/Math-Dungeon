@@ -155,7 +155,7 @@ public class GearPuzzleController : NetworkBehaviour {
             TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
-            if(tmp != null) {
+            if(tmpx != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
                 if(i < formulasAndSolutionsControllerCopy.Count) {
                     // Haal de formule op uit de dictionary
@@ -195,7 +195,7 @@ public class GearPuzzleController : NetworkBehaviour {
             TextMeshProUGUI tmpx = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
-            if(tmp != null) {
+            if(tmpx != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
                 if(j < solutionsCopy.Length) {
                     // Haal de formule op uit de dictionary
