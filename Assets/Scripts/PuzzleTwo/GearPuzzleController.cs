@@ -154,7 +154,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     string formula = formulaEntry.Key;
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    tmp.text = formula;
+                    SyncTextMeshPro(tmp, formula);
+                    //tmp.text = formula;
                 } else {
                     Debug.LogWarning("No formula found for big gear at index: " + i);
                 }
@@ -191,7 +192,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     int solutionOnGear = solutionsCopy[j];
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    tmp.text = solutionOnGear.ToString();
+                    SyncTextMeshPro(tmp, solutionOnGear.ToString());
+                    //tmp.text = solutionOnGear.ToString();
                 } else {
                     Debug.LogWarning("No solution found for small gear at index: " + j);
                 }
@@ -205,4 +207,45 @@ public class GearPuzzleController : NetworkBehaviour {
             spawnedGears.Add(newSmallGear);
         }
     }
+
+    // Synchroniseer de TextMeshPro-component
+    private void SyncTextMeshPro(TextMeshProUGUI tmp, string text) {
+        if(IsClient) {
+            tmp.text = text;
+        }
+
+        if(IsServer) {
+            // Synchroniseer de tekst met alle clients
+            NetworkObject networkObject = tmp.GetComponent<NetworkObject>();
+            UpdateTextServerRpc(text);
+        }
+    }
+
+    // RPC-methode om de tekst bij te werken op alle clients
+    [ServerRpc]
+    private void UpdateTextServerRpc(string text) {
+        // Zoek alle TextMeshPro-objecten en update de tekst
+        TextMeshProUGUI[] tmpObjects = FindObjectsOfType<TextMeshProUGUI>();
+        foreach(TextMeshProUGUI tmp in tmpObjects) {
+            tmp.text = text;
+        }
+        UpdateTextClientRpc(text);
+    }
+
+    // Definieer een methode die moet worden uitgevoerd op de client
+    [ClientRpc]
+    private void UpdateTextClientRpc(string text, ClientRpcParams rpcParams = default) {
+        // Voer logica uit om TextMeshPro tekst bij te werken, bijv.:
+        TextMeshProUGUI tmp = GetComponentInChildren<TextMeshProUGUI>();
+        tmp.text = text;
+    }
+
+    /*// Roep de bovenstaande methode aan vanaf de server op een gegeven moment, bijvoorbeeld na het spawnen van het object
+    private void UpdateTextOnClient(string text) {
+        // Controleer of de huidige instantie de server is. Alleen de server mag deze aanroep doen
+        if(IsServer) {
+            // Roep de RPC-functie aan op de client met de opgegeven tekst
+            UpdateTextClientRpc(text);
+        }
+    }*/
 }
