@@ -153,7 +153,7 @@ public class GearPuzzleController : NetworkBehaviour {
 
             // Haal de TextMeshProUGUI-component op van newBigGear
             //TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
-            TextMeshProUGUI newTMP = Instantiate(new TextMeshProUGUI());
+            TextMeshPro newTMP = Instantiate(new TextMeshPro());
             newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
 
             /*// Controleer of er een TMP-component is gevonden
