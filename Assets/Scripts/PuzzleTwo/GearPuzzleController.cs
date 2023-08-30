@@ -60,8 +60,9 @@ public class GearPuzzleController : NetworkBehaviour {
 
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
-    [SerializeField]
-    private TextMeshProUGUI currentTMPObject; // The current picked-up object
+    public NetworkVariable<string> TMPText = new NetworkVariable<string>();
+
+    private TextMeshProUGUI tmp;
 
     // Start is called before the first frame update
     private void Start() {
@@ -80,6 +81,11 @@ public class GearPuzzleController : NetworkBehaviour {
             Debug.LogError("FormulaGenerator component not found!");
         }
         SpawnGears();
+
+        tmp = GetComponent<TextMeshProUGUI>();
+
+        // Listen for changes in the TMP text value
+        TMPText.OnValueChanged += OnTMPTextChanged;
     }
 
 	private void Update() {
@@ -146,7 +152,7 @@ public class GearPuzzleController : NetworkBehaviour {
             }
 
             // Haal de TextMeshProUGUI-component op van newBigGear
-            TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
             if(tmp != null) {
@@ -157,8 +163,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     string formula = formulaEntry.Key;
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    currentTMPObject = tmp;
-                    SyncTextMeshPro(newBigGear.GetComponent<NetworkObject>().NetworkObjectId, formula);
+                    tmp = tmpx;
+                    UpdateTMPTextServerRpc(formula);
                     //tmp.text = formula;
                 } else {
                     Debug.LogWarning("No formula found for big gear at index: " + i);
@@ -186,7 +192,7 @@ public class GearPuzzleController : NetworkBehaviour {
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
             // Haal de TextMeshProUGUI-component op van newSmallGear
-            TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI tmpx = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
             if(tmp != null) {
@@ -196,8 +202,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     int solutionOnGear = solutionsCopy[j];
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    currentTMPObject = tmp;
-                    SyncTextMeshPro(newSmallGear.GetComponent<NetworkObject>().NetworkObjectId, solutionOnGear.ToString());
+                    tmp = tmpx;
+                    UpdateTMPTextServerRpc(solutionOnGear.ToString());
                     //tmp.text = solutionOnGear.ToString();
                 } else {
                     Debug.LogWarning("No solution found for small gear at index: " + j);
@@ -213,37 +219,26 @@ public class GearPuzzleController : NetworkBehaviour {
         }
     }
 
-    // Synchroniseer de TextMeshPro-component
-    private void SyncTextMeshPro(ulong netId, string text) {
-        if(IsClient) {
-            TextMeshProUGUI tmp = currentTMPObject;
-            if(tmp != null) {
-                tmp.text = text;
-            }
-        }
+    private void OnTMPTextChanged(string oldValue, string newValue) {
+        // Update the TMP component with the new text value
+        tmp.text = newValue;
 
-        if(IsServer) {
-            UpdateTextServerRpc(netId, text);
-        }
+        // Call the ServerRpc to synchronize the TMP text across the network
+        UpdateTMPTextServerRpc(newValue);
     }
 
-    // RPC-methode om de tekst bij te werken op alle clients
     [ServerRpc]
-    private void UpdateTextServerRpc(ulong netId, string text) {
-        TextMeshProUGUI tmp = currentTMPObject;
-        if(tmp != null) {
-            tmp.text = text;
-        }
-        UpdateTextClientRpc(netId, text);
+    private void UpdateTMPTextServerRpc(string newText) {
+        // Update the TMP text on the server
+        TMPText.Value = newText;
+
+        // Call the ClientRpc to synchronize the TMP text with the clients
+        UpdateTMPTextClientRpc(newText);
     }
 
-    // Definieer een methode die moet worden uitgevoerd op de client
     [ClientRpc]
-    private void UpdateTextClientRpc(ulong netId, string text, ClientRpcParams rpcParams = default) {
-        TextMeshProUGUI tmp = currentTMPObject;
-        if(tmp != null) {
-            tmp.text = text;
-        }
+    private void UpdateTMPTextClientRpc(string newText) {
+        // Update the TMP text on the clients
+        TMPText.Value = newText;
     }
-
 }
