@@ -49,9 +49,12 @@ public class PickupObject : NetworkBehaviour
         // Check if the player presses the pickup button
         if (Input.GetKeyDown(KeyCode.E))
         {
+
             Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
             Debug.Log(IsLocalPlayer);
             Debug.Log("I CLICKED E");
+
+
             if (currentObject == null)
             {
                 Debug.Log("CURRENT OBJECT IS 0");
@@ -93,7 +96,6 @@ public class PickupObject : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.ContainsKey(clientId))
         {
-            var client = NetworkManager.ConnectedClients[clientId];
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
             {
                 Debug.Log(objectId);
@@ -122,7 +124,7 @@ public class PickupObject : NetworkBehaviour
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
         {
             currentObject = pickedObject;
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
+            //currentObject.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
@@ -152,6 +154,7 @@ public class PickupObject : NetworkBehaviour
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             obj.GetComponent<Rigidbody>().isKinematic = false;
+            currentObject = null;
         }
     }
 
