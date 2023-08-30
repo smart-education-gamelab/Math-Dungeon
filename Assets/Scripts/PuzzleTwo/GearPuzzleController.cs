@@ -141,44 +141,38 @@ public class GearPuzzleController : NetworkBehaviour {
             Vector3 spawnPosition = spawnPoint.position;
 
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
-            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
+
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
-            
+            newBigGear.GetComponent<NetworkObject>().Spawn();
+
+            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
+
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
             }
 
-            /*TextMeshPro newTMP = Instantiate(new TextMeshPro());*/
-            GameObject newGameObject = new GameObject("New TextMeshProUGUI");
-            TextMeshProUGUI newTMP = newGameObject.AddComponent<TextMeshProUGUI>();
-            newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
+            // Haal de TextMeshProUGUI-component op van newBigGear
+            TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
 
-            // Toegang tot de RectTransform-component
-            RectTransform rectTransform = newTMP.GetComponent<RectTransform>();
+            // Controleer of er een TMP-component is gevonden
+            if(tmp != null) {
+                // Controleer of het huidige indexnummer binnen de geldige bereik ligt
+                if(i < formulasAndSolutionsControllerCopy.Count) {
+                    // Haal de formule op uit de dictionary
+                    KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
+                    string formula = formulaEntry.Key;
 
-            // Stel de positie in
-            rectTransform.anchoredPosition3D = new Vector3(0.6f, -0.65f, -0.04f); // Vervang x en y door de gewenste coördinaten
-
-            // Stel de breedte en hoogte in
-            rectTransform.sizeDelta = new Vector2(3, 2); // Vervang width en height door de gewenste waarden
-
-            // Stel de lettergrootte in
-            newTMP.fontSize = 0.4f; // Vervang fontSize door de gewenste waarde
-
-            // Controleer of het huidige indexnummer binnen de geldige bereik ligt
-            if(i < formulasAndSolutionsControllerCopy.Count) {
-                // Haal de formule op uit de dictionary
-                KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
-                string formula = formulaEntry.Key;
-
-                newTMP.text = formula;
-
+                    // Pas de formule toe op de tekst van het TMP-object
+                    tmp.text = formula;
+                } else {
+                    Debug.LogWarning("No formula found for big gear at index: " + i);
+                }
             } else {
-                Debug.LogWarning("No formula found for big gear at index: " + i);
+                Debug.LogError("TextMeshPro component not found on big gear!");
             }
-            newBigGear.GetComponent<NetworkObject>().Spawn();
 
-            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
+            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
+
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
             spawnedGears.Add(newBigGear);
         }
