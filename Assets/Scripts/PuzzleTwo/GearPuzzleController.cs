@@ -143,7 +143,13 @@ public class GearPuzzleController : NetworkBehaviour {
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
             
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
-            
+            newBigGear.GetComponent<NetworkObject>().Spawn();
+
+            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
+
+            if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
+                Debug.Log("NetworkObject is not spawned or has been destroyed.");
+            }
 
             // Haal de TextMeshProUGUI-component op van newBigGear
             //TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
@@ -173,14 +179,8 @@ public class GearPuzzleController : NetworkBehaviour {
             // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
 
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
-            //newTMP.GetComponent<NetworkObject>().Spawn();
-            newBigGear.GetComponent<NetworkObject>().Spawn();
-
-            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
-
-            if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
-                Debug.Log("NetworkObject is not spawned or has been destroyed.");
-            }
+            newTMP.GetComponent<NetworkObject>().Spawn();
+            
             spawnedGears.Add(newBigGear);
         }
 
