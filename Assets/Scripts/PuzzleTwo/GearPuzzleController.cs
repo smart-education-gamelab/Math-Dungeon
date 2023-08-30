@@ -144,7 +144,6 @@ public class GearPuzzleController : NetworkBehaviour {
             // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
             
-
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
             }
@@ -197,30 +196,23 @@ public class GearPuzzleController : NetworkBehaviour {
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
             // Haal de TextMeshProUGUI-component op van newSmallGear
-            TextMeshProUGUI tmpx = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
             // Controleer of er een TMP-component is gevonden
-            if(tmpx != null) {
+            if(tmp != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
                 if(j < solutionsCopy.Length) {
                     // Haal de formule op uit de dictionary
                     int solutionOnGear = solutionsCopy[j];
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    tmp = tmpx;
-                    UpdateTMPTextServerRpc(solutionOnGear.ToString());
-                    //tmp.text = solutionOnGear.ToString();
+                    tmp.text = solutionOnGear.ToString();
                 } else {
                     Debug.LogWarning("No solution found for small gear at index: " + j);
                 }
             } else {
                 Debug.LogError("TextMeshPro component not found on big gear!");
             }
-
-            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
-
-            // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
-            spawnedGears.Add(newSmallGear);
         }
     }
 
