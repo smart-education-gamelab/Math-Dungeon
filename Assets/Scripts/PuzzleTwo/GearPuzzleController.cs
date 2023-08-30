@@ -161,7 +161,7 @@ public class GearPuzzleController : NetworkBehaviour {
             RectTransform rectTransform = newTMP.GetComponent<RectTransform>();
 
             // Stel de positie in
-            rectTransform.anchoredPosition = new Vector3(0, 6, 4.2f); // Vervang x en y door de gewenste coördinaten
+            rectTransform.anchoredPosition3D = new Vector3(0, 6, 4.2f); // Vervang x en y door de gewenste coördinaten
 
             // Stel de breedte en hoogte in
             rectTransform.sizeDelta = new Vector2(3, 2); // Vervang width en height door de gewenste waarden
