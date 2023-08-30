@@ -179,7 +179,7 @@ public class PickupObject : NetworkBehaviour
             currentSnapPoint.gameObject.layer = 0;
         } else {
             currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            crosshairImage.color = Color.red;
+            //crosshairImage.color = Color.red;
             Debug.Log("FOUTZO 1");
             didItWork = false;
         }
@@ -203,7 +203,7 @@ public class PickupObject : NetworkBehaviour
                 Debug.Log("GOEDZO 2");
             } else {
                 currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                crosshairImage.color = Color.red;
+                //crosshairImage.color = Color.red;
                 Debug.Log("FOUTZO 1");
             }
         }
