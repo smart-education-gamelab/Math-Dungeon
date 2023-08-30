@@ -531,7 +531,6 @@ GameObject:
   - component: {fileID: 82914719}
   - component: {fileID: 82914718}
   - component: {fileID: 82914717}
-  - component: {fileID: 82914716}
   m_Layer: 0
   m_Name: NextSceneTrigger
   m_TagString: EndLevel
@@ -554,18 +553,6 @@ Transform:
   m_Father: {fileID: 1980625220}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &82914716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82914714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004e00534e4d09b43b5c6f3f12065d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &82914717
 BoxCollider:
   m_ObjectHideFlags: 0

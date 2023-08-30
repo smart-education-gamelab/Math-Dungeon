@@ -7,10 +7,7 @@ using UnityEngine;
 public class MathDungeonManager : NetworkBehaviour
 {
 
-
     public static MathDungeonManager Instance { get; private set; }
-
-
 
     public event EventHandler OnStateChanged;
     public event EventHandler OnLocalGamePaused;
@@ -41,7 +38,6 @@ public class MathDungeonManager : NetworkBehaviour
     private Dictionary<ulong, bool> playerPausedDictionary;
     private bool autoTestGamePausedState;
 
-
     private void Awake()
     {
         Instance = this;
@@ -64,11 +60,15 @@ public class MathDungeonManager : NetworkBehaviour
 
     private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
+        int amountOfSpawns = 0;
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
             Transform playerTransform = Instantiate(playerPrefab);
             playerTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            Debug.Log("aantal clients: " + NetworkManager.Singleton.ConnectedClientsIds.Count);
+            amountOfSpawns++;
         }
+        Debug.Log("amount of spawns: " + amountOfSpawns);
     }
 
     private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
