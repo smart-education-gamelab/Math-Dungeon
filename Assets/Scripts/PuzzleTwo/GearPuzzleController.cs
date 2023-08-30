@@ -215,37 +215,22 @@ public class GearPuzzleController : NetworkBehaviour {
         }
 
         if(IsServer) {
-            // Synchroniseer de tekst met alle clients
-            NetworkObject networkObject = tmp.GetComponent<NetworkObject>();
-            UpdateTextServerRpc(text);
+            UpdateTextServerRpc(tmp, text);
         }
     }
 
     // RPC-methode om de tekst bij te werken op alle clients
     [ServerRpc]
-    private void UpdateTextServerRpc(string text) {
-        // Zoek alle TextMeshPro-objecten en update de tekst
-        TextMeshProUGUI[] tmpObjects = FindObjectsOfType<TextMeshProUGUI>();
-        foreach(TextMeshProUGUI tmp in tmpObjects) {
-            tmp.text = text;
-        }
-        UpdateTextClientRpc(text);
+    private void UpdateTextServerRpc(TextMeshProUGUI tmp, string text) {
+        tmp.text = text;
+        
+        UpdateTextClientRpc(tmp, text);
     }
 
     // Definieer een methode die moet worden uitgevoerd op de client
     [ClientRpc]
-    private void UpdateTextClientRpc(string text, ClientRpcParams rpcParams = default) {
-        // Voer logica uit om TextMeshPro tekst bij te werken, bijv.:
-        TextMeshProUGUI tmp = GetComponentInChildren<TextMeshProUGUI>();
+    private void UpdateTextClientRpc(TextMeshProUGUI tmp, string text, ClientRpcParams rpcParams = default) {
         tmp.text = text;
     }
 
-    /*// Roep de bovenstaande methode aan vanaf de server op een gegeven moment, bijvoorbeeld na het spawnen van het object
-    private void UpdateTextOnClient(string text) {
-        // Controleer of de huidige instantie de server is. Alleen de server mag deze aanroep doen
-        if(IsServer) {
-            // Roep de RPC-functie aan op de client met de opgegeven tekst
-            UpdateTextClientRpc(text);
-        }
-    }*/
 }
