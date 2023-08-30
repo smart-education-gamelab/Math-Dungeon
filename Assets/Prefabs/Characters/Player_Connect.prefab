@@ -392,6 +392,7 @@ MonoBehaviour:
   cam: {fileID: 8472752916285374732}
   player: {fileID: 4016622022606588640}
   currentObject: {fileID: 0}
+  rayLength: 2
 --- !u!1001 &7304571994173084772
 PrefabInstance:
   m_ObjectHideFlags: 0

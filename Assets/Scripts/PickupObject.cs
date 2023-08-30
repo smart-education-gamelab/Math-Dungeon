@@ -22,6 +22,9 @@ public class PickupObject : NetworkBehaviour
 
     private GearPuzzleController gearPuzzleController;
 
+    [SerializeField]
+    private float rayLength;
+
     private void Start() {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
         // Verkrijg een referentie naar de GearPuzzleController
@@ -58,7 +61,7 @@ public class PickupObject : NetworkBehaviour
             if (currentObject == null)
             {
                 Debug.Log("CURRENT OBJECT IS 0");
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer))
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer))
                 {
                     // Send an RPC to the server to pick up the object
                     PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
