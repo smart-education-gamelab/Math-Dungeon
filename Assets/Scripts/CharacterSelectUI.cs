@@ -18,7 +18,7 @@ public class CharacterSelectUI : MonoBehaviour {
         mainMenuButton.onClick.AddListener(() => {
             TestLobby.Instance.LeaveLobby();
             NetworkManager.Singleton.Shutdown();
-            Loader.Load(Loader.Scene.MainMenu);
+            Loader.LoadNetwork(Loader.Scene.Lobby);
         });
         readyButton.onClick.AddListener(() => {
             SetReady.Instance.SetPlayerReady();

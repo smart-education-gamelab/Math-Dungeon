@@ -40,7 +40,7 @@ public class PickupObject : NetworkBehaviour
         Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 100f);
         RaycastHit hit;
 
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, pickupLayer)) {
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer)) {
             crosshairImage.color = Color.green;
             Debug.Log(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
         } else if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {

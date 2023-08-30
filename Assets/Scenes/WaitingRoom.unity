@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Lobby Code: Code'
       objectReference: {fileID: 0}
+    - target: {fileID: 4262886428127044038, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_text
+      value: LOBBY
+      objectReference: {fileID: 0}
     - target: {fileID: 5453632967320456568, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_Name
       value: WaitingCanvas
