@@ -60,6 +60,9 @@ public class GearPuzzleController : NetworkBehaviour {
 
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
+    [SerializeField]
+    private TextMeshProUGUI currentTMPObject; // The current picked-up object
+
     // Start is called before the first frame update
     private void Start() {
         amountOfSolved = 0;
@@ -154,7 +157,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     string formula = formulaEntry.Key;
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    SyncTextMeshPro(tmp, formula);
+                    currentTMPObject = tmp;
+                    SyncTextMeshPro(newBigGear.GetComponent<NetworkObject>().NetworkObjectId, formula);
                     //tmp.text = formula;
                 } else {
                     Debug.LogWarning("No formula found for big gear at index: " + i);
@@ -192,7 +196,8 @@ public class GearPuzzleController : NetworkBehaviour {
                     int solutionOnGear = solutionsCopy[j];
 
                     // Pas de formule toe op de tekst van het TMP-object
-                    SyncTextMeshPro(tmp, solutionOnGear.ToString());
+                    currentTMPObject = tmp;
+                    SyncTextMeshPro(newSmallGear.GetComponent<NetworkObject>().NetworkObjectId, solutionOnGear.ToString());
                     //tmp.text = solutionOnGear.ToString();
                 } else {
                     Debug.LogWarning("No solution found for small gear at index: " + j);
@@ -209,28 +214,36 @@ public class GearPuzzleController : NetworkBehaviour {
     }
 
     // Synchroniseer de TextMeshPro-component
-    private void SyncTextMeshPro(TextMeshProUGUI tmp, string text) {
+    private void SyncTextMeshPro(ulong netId, string text) {
         if(IsClient) {
-            tmp.text = text;
+            TextMeshProUGUI tmp = currentTMPObject;
+            if(tmp != null) {
+                tmp.text = text;
+            }
         }
 
         if(IsServer) {
-            UpdateTextServerRpc(tmp, text);
+            UpdateTextServerRpc(netId, text);
         }
     }
 
     // RPC-methode om de tekst bij te werken op alle clients
     [ServerRpc]
-    private void UpdateTextServerRpc(TextMeshProUGUI tmp, string text) {
-        tmp.text = text;
-        
-        UpdateTextClientRpc(tmp, text);
+    private void UpdateTextServerRpc(ulong netId, string text) {
+        TextMeshProUGUI tmp = currentTMPObject;
+        if(tmp != null) {
+            tmp.text = text;
+        }
+        UpdateTextClientRpc(netId, text);
     }
 
     // Definieer een methode die moet worden uitgevoerd op de client
     [ClientRpc]
-    private void UpdateTextClientRpc(TextMeshProUGUI tmp, string text, ClientRpcParams rpcParams = default) {
-        tmp.text = text;
+    private void UpdateTextClientRpc(ulong netId, string text, ClientRpcParams rpcParams = default) {
+        TextMeshProUGUI tmp = currentTMPObject;
+        if(tmp != null) {
+            tmp.text = text;
+        }
     }
 
 }
