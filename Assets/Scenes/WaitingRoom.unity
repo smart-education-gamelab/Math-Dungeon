@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaitingCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7449389245594989585, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_text
+      value: 'Lobby Naam: LobbyNaam'
+      objectReference: {fileID: 0}
     - target: {fileID: 9065511499760258041, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
