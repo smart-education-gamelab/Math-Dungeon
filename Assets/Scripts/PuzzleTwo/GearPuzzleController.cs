@@ -157,6 +157,18 @@ public class GearPuzzleController : NetworkBehaviour {
             //newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
             newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
 
+            // Toegang tot de RectTransform-component
+            RectTransform rectTransform = newTMP.GetComponent<RectTransform>();
+
+            // Stel de positie in
+            rectTransform.anchoredPosition = new Vector3(0, 6, 4.2f); // Vervang x en y door de gewenste coördinaten
+
+            // Stel de breedte en hoogte in
+            rectTransform.sizeDelta = new Vector2(3, 2); // Vervang width en height door de gewenste waarden
+
+            // Stel de lettergrootte in
+            newTMP.fontSize = 0.4f; // Vervang fontSize door de gewenste waarde
+
             // Controleer of het huidige indexnummer binnen de geldige bereik ligt
             if(i < formulasAndSolutionsControllerCopy.Count) {
                 // Haal de formule op uit de dictionary
@@ -170,8 +182,6 @@ public class GearPuzzleController : NetworkBehaviour {
             }
 
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
-            //newTMP.GetComponent<NetworkObject>().Spawn();
-            
             spawnedGears.Add(newBigGear);
         }
 
