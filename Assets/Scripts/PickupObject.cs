@@ -166,20 +166,20 @@ public class PickupObject : NetworkBehaviour
         if(currentObject == null)
             return;
 
-        // Unmark the object as picked up and let it drop
-        currentObject.transform.position = snapPointTransform;
-        currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
-
         bool didItWork;
 
         if(gearPuzzleController.CheckSnapPointFormula(currentSnapPoint, currentObject.GetComponentInChildren<TextMeshProUGUI>().text)) {
             // Voer hier acties uit voor correct geplaatste tandwielen
+            // Unmark the object as picked up and let it drop
+            currentObject.transform.position = snapPointTransform;
+            currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
             Debug.Log("GOEDZO 1");
             didItWork = true;
             currentObject.gameObject.layer = 0;
             currentSnapPoint.gameObject.layer = 0;
         } else {
             currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            crosshairImage.color = Color.red;
             Debug.Log("FOUTZO 1");
             didItWork = false;
         }
@@ -194,16 +194,16 @@ public class PickupObject : NetworkBehaviour
     private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId, bool didItWork) {
         // Unmark the object as picked up and let it drop
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj)) {
-            obj.transform.position = snapPointTransform;
-            currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
-
             if(didItWork) {
                 // Voer hier acties uit voor correct geplaatste tandwielen
+                obj.transform.position = snapPointTransform;
+                currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
                 currentObject.gameObject.layer = 0;
                 currentSnapPoint.gameObject.layer = 0;
                 Debug.Log("GOEDZO 2");
             } else {
                 currentObject.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                crosshairImage.color = Color.red;
                 Debug.Log("FOUTZO 1");
             }
         }
