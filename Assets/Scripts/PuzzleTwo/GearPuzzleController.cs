@@ -170,7 +170,7 @@ public class GearPuzzleController : NetworkBehaviour {
             }
 
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
-            newTMP.GetComponent<NetworkObject>().Spawn();
+            //newTMP.GetComponent<NetworkObject>().Spawn();
             
             spawnedGears.Add(newBigGear);
         }
