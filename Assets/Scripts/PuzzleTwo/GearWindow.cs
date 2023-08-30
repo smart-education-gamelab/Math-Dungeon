@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GearWindow : MonoBehaviour {
 
-    public int startingValue = 7; // Beginwaarde voor het getal op het raam
+    public int startingValue = 2; // Beginwaarde voor het getal op het raam
     public int currentValue; // Huidige waarde op het raam
 
     public List<GameObject> passedGears; // Lijst van gears die al zijn doorgegeven
