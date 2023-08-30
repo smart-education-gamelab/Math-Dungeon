@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4479809407431214294}
   - component: {fileID: 4101917925366807217}
+  - component: {fileID: 5512766862928936847}
   m_Layer: 0
   m_Name: Door
   m_TagString: Wall
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alternatePosition: {x: -3, y: 1, z: 0.5}
   speed: 1
+--- !u!65 &5512766862928936847
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4479809407431214293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 3, z: 0.5}
+  m_Center: {x: -0.5, y: 1.5, z: 0}
 --- !u!1 &8731872360524123167
 GameObject:
   m_ObjectHideFlags: 0
