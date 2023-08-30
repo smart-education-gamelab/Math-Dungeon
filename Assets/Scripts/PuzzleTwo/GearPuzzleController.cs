@@ -143,6 +143,37 @@ public class GearPuzzleController : NetworkBehaviour {
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
             
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
+            
+
+            // Haal de TextMeshProUGUI-component op van newBigGear
+            //TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI newTMP = Instantiate(new TextMeshProUGUI());
+            newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
+
+            /*// Controleer of er een TMP-component is gevonden
+            if(tmpx != null) {*/
+            // Controleer of het huidige indexnummer binnen de geldige bereik ligt
+            if(i < formulasAndSolutionsControllerCopy.Count) {
+                    // Haal de formule op uit de dictionary
+                KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
+                string formula = formulaEntry.Key;
+
+                    // Pas de formule toe op de tekst van het TMP-object
+                newTMP.text = formula;
+                    
+                    //UpdateTMPTextServerRpc(formula);
+                    //tmp.text = formula;
+            } else {
+                Debug.LogWarning("No formula found for big gear at index: " + i);
+            }
+            /*} else {
+                Debug.LogError("TextMeshPro component not found on big gear!");
+            }*/
+
+            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
+
+            // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
+            //newTMP.GetComponent<NetworkObject>().Spawn();
             newBigGear.GetComponent<NetworkObject>().Spawn();
 
             Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
@@ -150,32 +181,6 @@ public class GearPuzzleController : NetworkBehaviour {
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
             }
-
-            // Haal de TextMeshProUGUI-component op van newBigGear
-            TextMeshProUGUI tmpx = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
-
-            // Controleer of er een TMP-component is gevonden
-            if(tmpx != null) {
-                // Controleer of het huidige indexnummer binnen de geldige bereik ligt
-                if(i < formulasAndSolutionsControllerCopy.Count) {
-                    // Haal de formule op uit de dictionary
-                    KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
-                    string formula = formulaEntry.Key;
-
-                    // Pas de formule toe op de tekst van het TMP-object
-                    tmp = tmpx;
-                    UpdateTMPTextServerRpc(formula);
-                    //tmp.text = formula;
-                } else {
-                    Debug.LogWarning("No formula found for big gear at index: " + i);
-                }
-            } else {
-                Debug.LogError("TextMeshPro component not found on big gear!");
-            }
-
-            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
-
-            // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
             spawnedGears.Add(newBigGear);
         }
 
