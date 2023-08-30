@@ -143,9 +143,7 @@ public class GearPuzzleController : NetworkBehaviour {
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
             // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
             GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
-            newBigGear.GetComponent<NetworkObject>().Spawn();
-
-            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
+            
 
             if(!newBigGear.GetComponent<NetworkObject>().IsSpawned) {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
@@ -154,14 +152,13 @@ public class GearPuzzleController : NetworkBehaviour {
             /*TextMeshPro newTMP = Instantiate(new TextMeshPro());*/
             GameObject newGameObject = new GameObject("New TextMeshProUGUI");
             TextMeshProUGUI newTMP = newGameObject.AddComponent<TextMeshProUGUI>();
-            //newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
             newTMP.transform.SetParent(newBigGear.GetComponentInChildren<Canvas>().transform, false);
 
             // Toegang tot de RectTransform-component
             RectTransform rectTransform = newTMP.GetComponent<RectTransform>();
 
             // Stel de positie in
-            rectTransform.anchoredPosition3D = new Vector3(0, -0.65f, -0.04f); // Vervang x en y door de gewenste coördinaten
+            rectTransform.anchoredPosition3D = new Vector3(0.6f, -0.65f, -0.04f); // Vervang x en y door de gewenste coördinaten
 
             // Stel de breedte en hoogte in
             rectTransform.sizeDelta = new Vector2(3, 2); // Vervang width en height door de gewenste waarden
@@ -180,7 +177,9 @@ public class GearPuzzleController : NetworkBehaviour {
             } else {
                 Debug.LogWarning("No formula found for big gear at index: " + i);
             }
+            newBigGear.GetComponent<NetworkObject>().Spawn();
 
+            Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
             spawnedGears.Add(newBigGear);
         }
