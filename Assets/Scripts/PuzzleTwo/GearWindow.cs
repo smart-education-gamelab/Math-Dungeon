@@ -63,6 +63,6 @@ public class GearWindow : MonoBehaviour {
     }
 
     private void ResetPuzzle() {
-        // TODO: Implementeer de logica om de doorgegeven gears te resetten en de waarde op het raam terug te zetten naar de startwaarde
+        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
     }
 }
