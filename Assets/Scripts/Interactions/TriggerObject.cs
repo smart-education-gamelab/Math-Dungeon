@@ -6,10 +6,10 @@ public class TriggerObject : InteractableMechanism {
 	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 	[SerializeField] private GameObject keyHintImage;
 
-	private Image crosshairImage; // Referentie naar de image component van de crosshair
+	//private Image crosshairImage; // Referentie naar de image component van de crosshair
 
 	private void Start() {
-		crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
+		//crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
 	}
 
 	public override void Activate() {
@@ -29,7 +29,7 @@ public class TriggerObject : InteractableMechanism {
 			keyHintImage.SetActive(true);
 			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = true;
 			other.gameObject.GetComponent<PlayerActions>().BallThatIsNear = this.gameObject;
-			crosshairImage.color = Color.magenta;
+			//crosshairImage.color = Color.magenta;
 		}
 	}
 
@@ -37,7 +37,7 @@ public class TriggerObject : InteractableMechanism {
 		if(other.gameObject.CompareTag("Player") && other.gameObject.GetComponent<LocalPlayerManager>().IsLocalPlayer) {
 			keyHintImage.SetActive(false);
 			other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = false;
-			crosshairImage.color = Color.white;
+			//crosshairImage.color = Color.white;
 		}
 	}
 }
