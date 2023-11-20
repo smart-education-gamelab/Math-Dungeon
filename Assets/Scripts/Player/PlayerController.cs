@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : NetworkBehaviour{
     [SerializeField]
     private float speed = 5f;
     [SerializeField]
@@ -76,7 +77,22 @@ public class PlayerController : MonoBehaviour {
             // De speler is in aanraking gekomen met een object met de tag "EndLevel"
             Debug.Log("Player reached end of level!");
             // Hier kun je code toevoegen om acties uit te voeren wanneer de speler het einde van het level bereikt.
-            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+            OnEndSceneServerRpc();
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void OnEndSceneServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        OnEndSceneClientRpc();
+        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+
+
+    }
+
+    [ClientRpc]
+    private void OnEndSceneClientRpc()
+    {
+        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
     }
 }
