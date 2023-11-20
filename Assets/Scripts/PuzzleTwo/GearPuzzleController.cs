@@ -20,9 +20,9 @@ public class GearPuzzleController : NetworkBehaviour {
     private Transform spawnPoint;
 
     [SerializeField]
-    private PuzzleOptions selectedPuzzle;
+	private PuzzleOptions selectedPuzzle;
 
-    [SerializeField]
+	[SerializeField]
     private GameObject smallGearPrefab;
 
 	[SerializeField]
@@ -60,7 +60,7 @@ public class GearPuzzleController : NetworkBehaviour {
 
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
-    public NetworkVariable<string> TMPText = new NetworkVariable<string>();
+    /*public NetworkVariable<string> TMPText = new NetworkVariable<string>();*/
 
     private TextMeshProUGUI tmp;
 
@@ -84,8 +84,8 @@ public class GearPuzzleController : NetworkBehaviour {
 
         tmp = GetComponent<TextMeshProUGUI>();
 
-        // Listen for changes in the TMP text value
-        TMPText.OnValueChanged += OnTMPTextChanged;
+        /*// Listen for changes in the TMP text value
+        TMPText.OnValueChanged += OnTMPTextChanged;*/
     }
 
 	private void Update() {
@@ -221,7 +221,7 @@ public class GearPuzzleController : NetworkBehaviour {
     [ServerRpc]
     private void UpdateTMPTextServerRpc(string newText) {
         // Update the TMP text on the server
-        TMPText.Value = newText;
+        /*TMPText.Value = newText;*/
 
         // Call the ClientRpc to synchronize the TMP text with the clients
         UpdateTMPTextClientRpc(newText);
@@ -230,6 +230,6 @@ public class GearPuzzleController : NetworkBehaviour {
     [ClientRpc]
     private void UpdateTMPTextClientRpc(string newText) {
         // Update the TMP text on the clients
-        TMPText.Value = newText;
+        /*TMPText.Value = newText;*/
     }
 }
