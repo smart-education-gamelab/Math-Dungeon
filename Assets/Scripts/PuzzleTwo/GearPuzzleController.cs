@@ -141,9 +141,13 @@ public class GearPuzzleController : NetworkBehaviour {
             Vector3 spawnPosition = spawnPoint.position;
 
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
-
-            GameObject newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
-            newBigGear.GetComponent<NetworkObject>().Spawn();
+            GameObject newBigGear;
+            if(IsServer || IsHost) {
+                newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
+                newBigGear.GetComponent<NetworkObject>().Spawn();
+            } else {
+                return;
+            }
 
             Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
 
