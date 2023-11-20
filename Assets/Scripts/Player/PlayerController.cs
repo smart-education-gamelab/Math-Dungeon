@@ -93,6 +93,6 @@ public class PlayerController : NetworkBehaviour{
     [ClientRpc]
     private void OnEndSceneClientRpc()
     {
-        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        OnEndSceneServerRpc();
     }
 }
