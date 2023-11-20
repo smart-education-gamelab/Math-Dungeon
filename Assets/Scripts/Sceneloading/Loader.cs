@@ -26,10 +26,13 @@ public static class Loader
 
     public static void LoadNetwork(Scene targetScene)
     {
-        NetworkManager.Singleton.SceneManager.LoadScene(targetScene.ToString(), LoadSceneMode.Single);
+        if (NetworkManager.Singleton && NetworkManager.Singleton.IsServer)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(targetScene.ToString(), LoadSceneMode.Single);
+        }
     }
 
-    public static void LoaderCallback()
+public static void LoaderCallback()
     {
         SceneManager.LoadScene(targetScene.ToString());
     }
