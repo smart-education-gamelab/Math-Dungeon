@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 
 public class PlayerController : NetworkBehaviour{
     [SerializeField]
@@ -84,14 +85,12 @@ public class PlayerController : NetworkBehaviour{
     [ServerRpc(RequireOwnership = false)]
     private void OnEndSceneServerRpc(ServerRpcParams serverRpcParams = default)
     {
-        OnEndSceneClientRpc();
+        OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
-
-
     }
 
     [ClientRpc]
-    private void OnEndSceneClientRpc()
+    private void OnEndSceneClientRpc(ulong clientId)
     {
         OnEndSceneServerRpc();
     }
