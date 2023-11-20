@@ -44,11 +44,15 @@ public class GameManager : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
-
+        
         playerReadyDictionary = new Dictionary<ulong, bool>();
         playerPausedDictionary = new Dictionary<ulong, bool>();
     }
 
+    public void Start()
+    {
+        DontDestroyOnLoad(this);
+    }
     public override void OnNetworkSpawn()
     {
         state.OnValueChanged += State_OnValueChanged;
