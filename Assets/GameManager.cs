@@ -45,8 +45,6 @@ public class GameManager : NetworkBehaviour
     {
         Instance = this;
 
-        DontDestroyOnLoad(gameObject);
-
         playerReadyDictionary = new Dictionary<ulong, bool>();
         playerPausedDictionary = new Dictionary<ulong, bool>();
     }
