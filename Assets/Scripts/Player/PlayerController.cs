@@ -92,6 +92,6 @@ public class PlayerController : NetworkBehaviour{
     [ClientRpc]
     private void OnEndSceneClientRpc(ulong clientId)
     {
-        OnEndSceneServerRpc();
+        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
     }
 }
