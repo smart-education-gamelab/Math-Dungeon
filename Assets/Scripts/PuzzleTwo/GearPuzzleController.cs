@@ -84,7 +84,7 @@ public class GearPuzzleController : NetworkBehaviour {
         }
         SpawnGears();
 
-        //tmp = GetComponent<TextMeshProUGUI>();
+        tmp = GetComponent<TextMeshProUGUI>();
 
         /*// Listen for changes in the TMP text value
         TMPText.OnValueChanged += OnTMPTextChanged;*/
@@ -158,9 +158,9 @@ public class GearPuzzleController : NetworkBehaviour {
             }
 
             // Haal de TextMeshProUGUI-component op van newBigGear
-            //TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
 
-            /*// Controleer of er een TMP-component is gevonden
+            // Controleer of er een TMP-component is gevonden
             if(tmp != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
                 if(i < formulasAndSolutionsControllerCopy.Count) {
@@ -175,7 +175,7 @@ public class GearPuzzleController : NetworkBehaviour {
                 }
             } else {
                 Debug.LogError("TextMeshPro component not found on big gear!");
-            }*/
+            }
 
             // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
 
@@ -196,9 +196,9 @@ public class GearPuzzleController : NetworkBehaviour {
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
 
             // Haal de TextMeshProUGUI-component op van newSmallGear
-            //TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI tmp = newSmallGear.GetComponentInChildren<TextMeshProUGUI>();
 
-            /*// Controleer of er een TMP-component is gevonden
+            // Controleer of er een TMP-component is gevonden
             if(tmp != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
                 if(j < solutionsCopy.Length) {
@@ -212,7 +212,7 @@ public class GearPuzzleController : NetworkBehaviour {
                 }
             } else {
                 Debug.LogError("TextMeshPro component not found on big gear!");
-            }*/
+            }
         }
     }
 
