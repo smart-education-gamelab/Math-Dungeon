@@ -84,7 +84,7 @@ public class GearPuzzleController : NetworkBehaviour {
         }
         SpawnGears();
 
-        tmp = GetComponent<TextMeshProUGUI>();
+        //tmp = GetComponent<TextMeshProUGUI>();
 
         /*// Listen for changes in the TMP text value
         TMPText.OnValueChanged += OnTMPTextChanged;*/
