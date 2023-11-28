@@ -85,6 +85,7 @@ public class PlayerController : NetworkBehaviour{
     [ServerRpc(RequireOwnership = false)]
     private void OnEndSceneServerRpc(ServerRpcParams serverRpcParams = default)
     {
+        Debug.ClearDeveloperConsole();
         OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
     }
@@ -92,6 +93,7 @@ public class PlayerController : NetworkBehaviour{
     [ClientRpc]
     private void OnEndSceneClientRpc(ulong clientId)
     {
+        Debug.ClearDeveloperConsole();
         Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
     }
 }

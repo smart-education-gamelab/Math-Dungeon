@@ -3,6 +3,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using Unity.Netcode;
+using Newtonsoft.Json;
+using System.Collections;
 
 public class GearPuzzleController : NetworkBehaviour {
     public enum PuzzleOptions {
@@ -32,8 +34,6 @@ public class GearPuzzleController : NetworkBehaviour {
     private List<Transform> smallGearSpawnPoints = new List<Transform>();
 
     private FormulaGenerator formulaGenerator;
-    private Dictionary<string, float[]> formulasAndSolutionsControllerCopy;
-    private int[] solutionsCopy;
     private List<GameObject> spawnedGears = new List<GameObject>();
 
     [SerializeField]
@@ -51,6 +51,9 @@ public class GearPuzzleController : NetworkBehaviour {
     [SerializeField]
     private GameObject snapPointGear5;
 
+    [SerializeField]
+    private GameObject gearParent;
+
     // Dictionary om snap points te koppelen aan formules
     private Dictionary<GameObject, string> snapPointFormulas = new Dictionary<GameObject, string>();
 
@@ -60,7 +63,7 @@ public class GearPuzzleController : NetworkBehaviour {
 
     [SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 
-    /*public NetworkVariable<string> TMPText = new NetworkVariable<string>();*/
+    public string TMPText;
 
     //private TextMeshProUGUI tmp;
 
@@ -76,13 +79,17 @@ public class GearPuzzleController : NetworkBehaviour {
         formulaGenerator = GetComponent<FormulaGenerator>();
 
         // Controleer of het FormulaGenerator-script is gevonden
-        if(formulaGenerator != null) {
+        if(formulaGenerator != null && (IsServer || IsOwner)) {
             // Roep GenerateFormulas aan via de referentie naar FormulaGenerator
             formulaGenerator.GenerateFormulas();
+            Dictionary<string, float[]> formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
+            int[] solutionsCopy = GetComponent<FormulaGenerator>().GetSolutions();
+            SpawnGears(formulasAndSolutionsControllerCopy, solutionsCopy);
         } else {
             Debug.LogError("FormulaGenerator component not found!");
         }
-        SpawnGears();
+
+        
 
         //tmp = GetComponent<TextMeshProUGUI>();
 
@@ -117,22 +124,20 @@ public class GearPuzzleController : NetworkBehaviour {
         return false;
     }
 
-    public void AddSnapPointFormula() {
-        snapPointFormulas.Add(snapPointGear1, formulasAndSolutionsControllerCopy.ElementAt(0).Key);
-        snapPointFormulas.Add(snapPointGear2, formulasAndSolutionsControllerCopy.ElementAt(1).Key);
-        snapPointFormulas.Add(snapPointGear3, formulasAndSolutionsControllerCopy.ElementAt(2).Key);
-        snapPointFormulas.Add(snapPointGear4, formulasAndSolutionsControllerCopy.ElementAt(3).Key);
-        snapPointFormulas.Add(snapPointGear5, formulasAndSolutionsControllerCopy.ElementAt(4).Key);
+    public void AddSnapPointFormula(Dictionary<string, float[]> snapPointFormulasAndSolutions) {
+        snapPointFormulas.Add(snapPointGear1, snapPointFormulasAndSolutions.ElementAt(0).Key);
+        snapPointFormulas.Add(snapPointGear2, snapPointFormulasAndSolutions.ElementAt(1).Key);
+        snapPointFormulas.Add(snapPointGear3, snapPointFormulasAndSolutions.ElementAt(2).Key);
+        snapPointFormulas.Add(snapPointGear4, snapPointFormulasAndSolutions.ElementAt(3).Key);
+        snapPointFormulas.Add(snapPointGear5, snapPointFormulasAndSolutions.ElementAt(4).Key);
     }
 
-    public void SpawnGears() {
-        formulasAndSolutionsControllerCopy = GetComponent<FormulaGenerator>().GetFormulasAndSolutions();
-        solutionsCopy = GetComponent<FormulaGenerator>().GetSolutions();
+    public void SpawnGears(Dictionary<string, float[]> formulasAndSolutions, int[] solutions) {
         Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
 
-        AddSnapPointFormula();
+        AddSnapPointFormula(formulasAndSolutions);
 
-        if(formulasAndSolutionsControllerCopy == null) {
+        if(formulasAndSolutions == null) {
             Debug.LogError("Formulas and solutions not generated!");
             return;
         }
@@ -144,12 +149,10 @@ public class GearPuzzleController : NetworkBehaviour {
 
             // Maak een instantie van het bigGearPrefab op de aangepaste positie
             GameObject newBigGear;
-            if(IsServer || IsHost) {
-                newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
-                newBigGear.GetComponent<NetworkObject>().Spawn();
-            } else {
-                return;
-            }
+
+            newBigGear = Instantiate(bigGearPrefab, spawnPosition, Quaternion.identity);
+            newBigGear.GetComponent<NetworkObject>().Spawn();
+            newBigGear.transform.parent = gearParent.transform;
 
             Debug.Log(newBigGear.GetComponent<NetworkObject>().OwnerClientId);
 
@@ -157,31 +160,13 @@ public class GearPuzzleController : NetworkBehaviour {
                 Debug.Log("NetworkObject is not spawned or has been destroyed.");
             }
 
-            // Haal de TextMeshProUGUI-component op van newBigGear
-            TextMeshProUGUI tmp = newBigGear.GetComponentInChildren<TextMeshProUGUI>();
-
-            // Controleer of er een TMP-component is gevonden
-            if(tmp != null) {
-                // Controleer of het huidige indexnummer binnen de geldige bereik ligt
-                if(i < formulasAndSolutionsControllerCopy.Count) {
-                    // Haal de formule op uit de dictionary
-                    KeyValuePair<string, float[]> formulaEntry = formulasAndSolutionsControllerCopy.ElementAt(i);
-                    string formula = formulaEntry.Key;
-
-                    // Pas de formule toe op de tekst van het TMP-object
-                    tmp.text = formula;
-                } else {
-                    Debug.LogWarning("No formula found for big gear at index: " + i);
-                }
-            } else {
-                Debug.LogError("TextMeshPro component not found on big gear!");
-            }
-
-            // Optioneel: Pas de positie en rotatie van newBigGear aan naar wens
+            setGearText(i, formulasAndSolutions);
 
             // Voeg newBigGear toe aan de lijst met gespawnede tandwielen
             spawnedGears.Add(newBigGear);
         }
+
+
 
         // Loop om het gewenste aantal tandwielen te spawnen
         for(int j = 0; j < 6; j++) {
@@ -201,9 +186,9 @@ public class GearPuzzleController : NetworkBehaviour {
             // Controleer of er een TMP-component is gevonden
             if(tmp != null) {
                 // Controleer of het huidige indexnummer binnen de geldige bereik ligt
-                if(j < solutionsCopy.Length) {
+                if(j < solutions.Length) {
                     // Haal de formule op uit de dictionary
-                    int solutionOnGear = solutionsCopy[j];
+                    int solutionOnGear = solutions[j];
 
                     // Pas de formule toe op de tekst van het TMP-object
                     tmp.text = solutionOnGear.ToString();
@@ -214,28 +199,64 @@ public class GearPuzzleController : NetworkBehaviour {
                 Debug.LogError("TextMeshPro component not found on big gear!");
             }
         }
+
+        ArrayList jsonPayloadList = new ArrayList();
+        jsonPayloadList.Add(formulasAndSolutions);
+        jsonPayloadList.Add(solutions);
+        string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
+
+        UpdateTMPTextServerRpc(jsonPayload);
     }
 
-    /*private void OnTMPTextChanged(string oldValue, string newValue) {
-        // Update the TMP component with the new text value
-        tmp.text = newValue;
-
-        // Call the ServerRpc to synchronize the TMP text across the network
-        UpdateTMPTextServerRpc(newValue);
-    }
-
-    [ServerRpc]
-    private void UpdateTMPTextServerRpc(string newText) {
-        // Update the TMP text on the server
-        *//*TMPText.Value = newText;*//*
-
-        // Call the ClientRpc to synchronize the TMP text with the clients
-        UpdateTMPTextClientRpc(newText);
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateTMPTextServerRpc(string jsonPayload)
+    {
+        Debug.Log(jsonPayload);
+        // Call the ClientRpc 
+        UpdateTMPTextClientRpc(jsonPayload);
     }
 
     [ClientRpc]
-    private void UpdateTMPTextClientRpc(string newText) {
-        // Update the TMP text on the clients
-        *//*TMPText.Value = newText;*//*
-    }*/
+    private void UpdateTMPTextClientRpc(string jsonPayload)
+    {
+        Debug.Log("client");
+        Debug.Log(jsonPayload);
+
+        ArrayList syncArrayList = JsonConvert.DeserializeObject <ArrayList>(jsonPayload);
+        Dictionary<string, float[]> syncFormulasAndSolutions = JsonConvert.DeserializeObject<Dictionary<string, float[]>>(syncArrayList[0].ToString());
+        //Debug.Log("1 " + syncArrayList[0].ToString());
+        //Debug.Log("2 " + syncArrayList[1].ToString());
+        Debug.Log(syncFormulasAndSolutions.Keys);
+        int[] syncSolutions = JsonConvert.DeserializeObject<int[]>(syncArrayList[1].ToString());
+        Debug.Log(syncSolutions);
+
+        for(int i = 0; i < gearParent.transform.childCount; i++)
+        {
+            setGearText(i, syncFormulasAndSolutions);
+        }
+
+        //SpawnGears(syncFormulasAndSolutions, syncSolutions);
+    }
+
+    
+    private void setGearText(int gearIndex, Dictionary<string, float[]> formulasAndSolutions)
+    {
+        GameObject bigGear = gearParent.transform.GetChild(gearIndex).gameObject;
+        TextMeshProUGUI tmp = bigGear.GetComponentInChildren<TextMeshProUGUI>();
+
+        // Controleer of er een TMP-component is gevonden
+        if (tmp != null)
+        {
+                // Haal de formule op uit de dictionary
+                KeyValuePair<string, float[]> formulaEntry = formulasAndSolutions.ElementAt(gearIndex);
+                string formula = formulaEntry.Key;
+                Debug.Log(formula);
+                // Pas de formule toe op de tekst van het TMP-object
+                tmp.text = formula;
+        }
+        else
+        {
+            Debug.LogError("TextMeshPro component not found on big gear!");
+        }
+    }
 }
