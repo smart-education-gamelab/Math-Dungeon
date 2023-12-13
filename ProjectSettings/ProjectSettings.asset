@@ -908,11 +908,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: b19b2526-0e31-49d3-a3de-022c672779d2
+  cloudProjectId: 7067dfda-54bc-482e-ad9b-a1b02496e39a
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Math-Dungeon
-  organizationId: unity_ahbmvprswvuihw
+  projectName: MathDungeon
+  organizationId: smart-education-lab
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
