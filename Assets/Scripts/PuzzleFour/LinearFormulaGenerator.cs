@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class LinearFormulaGenerator : MonoBehaviour {
@@ -20,6 +21,12 @@ public class LinearFormulaGenerator : MonoBehaviour {
     Vector2 pointD = new Vector2(99, 99);
 
     int[] xCoords = new int[4];
+
+    [SerializeField]
+    private TextMeshProUGUI textFormula;
+    [SerializeField]
+    private TextMeshProUGUI textFormulaTwo;
+
 
     // Start is called before the first frame update
     void Start() {
