@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2141642452854848685}
   - component: {fileID: 1481910602010151610}
   m_Layer: 0
-  m_Name: Floor puzzle 3
+  m_Name: Floor puzzle 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

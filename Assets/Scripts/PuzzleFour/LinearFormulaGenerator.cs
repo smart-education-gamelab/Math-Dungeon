@@ -12,23 +12,40 @@ public class LinearFormulaGenerator : MonoBehaviour {
 
     Vector2 pointA = new Vector2(99, 99);
     Vector2 pointB = new Vector2(99, 99);
+
+    Vector2 aAndBValueTwo = new Vector2(99, 99);
+    string linearFormulaTwo = "placeholder two";
+
     Vector2 pointC = new Vector2(99, 99);
     Vector2 pointD = new Vector2(99, 99);
 
+    int[] xCoords = new int[4];
+
     // Start is called before the first frame update
     void Start() {
+        xCoords = XPointsOnGraph();
+
         aAndBValue = GenerateAAndB();
-        Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + "B: " + aAndBValue.y.ToString());
+        Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
         linearFormula = BuildFormulaFromAAndB((int) aAndBValue.x, (int) aAndBValue.y);
         Debug.Log("Debug 2: Formula: " + linearFormula);
-        pointA.x = XPointsOnGraph()[0];
+        pointA.x = xCoords[0];
+        pointA.y = CalculateY((int) aAndBValue.x, (int) aAndBValue.y, (int) pointA.x);
         Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
-        pointB.x = XPointsOnGraph()[1];
+        pointB.x = xCoords[1];
+        pointB.y = CalculateY((int) aAndBValue.x, (int) aAndBValue.y, (int) pointB.x);
         Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
-        pointC.x = XPointsOnGraph()[2];
-        Debug.Log("Debug 5: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
-        pointD.x = XPointsOnGraph()[3];
-        Debug.Log("Debug 6: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
+
+        aAndBValueTwo = GenerateAAndB();
+        Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
+        linearFormulaTwo = BuildFormulaFromAAndB((int) aAndBValueTwo.x, (int) aAndBValueTwo.y);
+        Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
+        pointC.x = xCoords[2];
+        pointC.y = CalculateY((int) aAndBValueTwo.x, (int) aAndBValueTwo.y, (int) pointC.x);
+        Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+        pointD.x = xCoords[3];
+        pointD.y = CalculateY((int) aAndBValueTwo.x, (int) aAndBValueTwo.y, (int) pointD.x);
+        Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
     }
 
     // Update is called once per frame
@@ -59,21 +76,25 @@ public class LinearFormulaGenerator : MonoBehaviour {
     private int[] XPointsOnGraph() {
 		int[] xPoints = new int[4] { 99, 99, 99, 99 };
 
-        foreach(int i in xPoints) {
+        for(int i = 0; i < xPoints.Length; i++) {
             xPoints[i] = Random.Range(minValue, maxValue);
-            Debug.Log("Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
+            //Debug.Log("Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
 
-            foreach(int j in xPoints) {
+            for(int j = 0; j < xPoints.Length; j++) {
                 if(i != j) {
                     while(xPoints[i] == xPoints[j]) {
                         xPoints[i] = Random.Range(minValue, maxValue);
                     }
                 }
             }
-            Debug.Log("Na dubbel check. Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
+            //Debug.Log("Na dubbel check. Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
         }
 
         return xPoints;
+    }
+
+    private int CalculateY(int aValue, int bValue, int xValue) {
+        return (xValue * aValue) + bValue;
     }
 
     //Calc y from x

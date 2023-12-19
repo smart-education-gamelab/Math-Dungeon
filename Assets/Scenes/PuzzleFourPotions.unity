@@ -512,15 +512,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1394702673401840026, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
-      value: Puzzel 3
+      value: Puzzel 4
       objectReference: {fileID: 0}
     - target: {fileID: 1394702674388662744, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 205949297
-      objectReference: {fileID: 0}
-    - target: {fileID: 3390851643823782519, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
-      propertyPath: GlobalObjectIdHash
-      value: 539322455
       objectReference: {fileID: 0}
     - target: {fileID: 6741509236087105204, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: GlobalObjectIdHash
