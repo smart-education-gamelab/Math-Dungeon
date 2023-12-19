@@ -13,6 +13,8 @@ public class GearPuzzleController : NetworkBehaviour {
         Option55
     }
 
+    public AudioSource Click;
+
     [SerializeField]
     private int wantedSolutions;
 
@@ -112,6 +114,7 @@ public class GearPuzzleController : NetworkBehaviour {
             string correctFormula = snapPointFormulas[snapPoint];
             
             if(formula == correctFormula) {
+                Click.Play();
                 amountOfSolved++;
                 Debug.Log("aantal opgelost: " + amountOfSolved);
                 return true;
