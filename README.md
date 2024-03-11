@@ -6,7 +6,7 @@ Welcome to the **Math Dungeon Repository**. This repository serves as a comprehe
 
 ## Available Versions
 
-Math Dungeon has evolved over time, and each version captures a unique stage in its development. Here, we list the versions from the newest to the oldest:
+Math Dungeon will evolve over time, and each version captures a unique stage in its development. Here, we list the versions from the newest to the oldest:
 
 https://github.com/smart-education-gamelab/Math-Dungeon/tree/MathDungeon-VER.0.1
 
