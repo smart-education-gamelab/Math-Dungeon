@@ -11,7 +11,8 @@ public static class Loader
         Loading,
         WaitingRoom,
         PuzzleOneDoors,
-        PuzzleTwoGears
+        PuzzleTwoGears,
+        PuzzleFourPotions
         
     }
 
