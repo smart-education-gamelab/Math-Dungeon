@@ -1820,6 +1820,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cauldron_Lg_Changeable_04
       objectReference: {fileID: 0}
+    - target: {fileID: 7469416894752492114, guid: f52ea4d37278cae4a87b9065d33c9be3, type: 3}
+      propertyPath: m_TagString
+      value: Cauldron
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f52ea4d37278cae4a87b9065d33c9be3, type: 3}
 --- !u!4 &5597315550597593908 stripped
@@ -3160,7 +3164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 415820, guid: c4f68fd2ecbf59c4b90d068b0291ca74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.83
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 415820, guid: c4f68fd2ecbf59c4b90d068b0291ca74, type: 3}
       propertyPath: m_LocalPosition.z

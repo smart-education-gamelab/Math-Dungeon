@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &526233229
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4639,6 +4639,10 @@ PrefabInstance:
       propertyPath: keyHintImage
       value: 
       objectReference: {fileID: 1394702673257651255}
+    - target: {fileID: 7636257221609975882, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: cauldronCanvasLink
+      value: 
+      objectReference: {fileID: 526233228}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
 --- !u!114 &1063112056619782054 stripped
@@ -4738,6 +4742,10 @@ PrefabInstance:
       propertyPath: keyHintImage
       value: 
       objectReference: {fileID: 1394702673257651255}
+    - target: {fileID: 7636257221609975882, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: cauldronCanvasLink
+      value: 
+      objectReference: {fileID: 526233228}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
 --- !u!114 &963173989108092941 stripped
