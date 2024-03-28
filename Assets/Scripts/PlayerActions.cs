@@ -43,6 +43,7 @@ public class PlayerActions : MonoBehaviour {
 				BallThatIsNear.GetComponent<InteractableMechanism>().Activate();
 			} else if(IsNearCauldron) {
 				cauldronCanvas.SetActive(!cauldronCanvas.activeSelf);
+				this.gameObject.GetComponent<PlayerMotor>().CanWalk = !this.gameObject.GetComponent<PlayerMotor>().CanWalk;
 			}
 		}
     }
