@@ -11,7 +11,8 @@ TagManager:
   - Crosshair
   - EndLevel
   - Ball
-  - Cauldron
+  - Cauldron A
+  - Cauldron B
   layers:
   - Default
   - TransparentFX

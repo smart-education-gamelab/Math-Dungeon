@@ -6,7 +6,8 @@ public class TriggerObject : InteractableMechanism {
 	[SerializeField] private List<GameObject> objectsToActivate = new List<GameObject>();
 	[SerializeField] private GameObject keyHintImage;
 
-	[SerializeField] private GameObject cauldronCanvasLink;
+	[SerializeField] private GameObject cauldronCanvasLinkA;
+	[SerializeField] private GameObject cauldronCanvasLinkB;
 
 	//private Image crosshairImage; // Referentie naar de image component van de crosshair
 
@@ -32,9 +33,13 @@ public class TriggerObject : InteractableMechanism {
 			if(this.gameObject.CompareTag("Ball")) {
 				other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = true;
 				other.gameObject.GetComponent<PlayerActions>().BallThatIsNear = this.gameObject;
-			} else if(this.gameObject.CompareTag("Cauldron")) {
+			} else if(this.gameObject.CompareTag("Cauldron A")) {
 				other.gameObject.GetComponent<PlayerActions>().IsNearCauldron = true;
-				other.gameObject.GetComponent<PlayerActions>().CauldronCanvas = cauldronCanvasLink;
+				other.gameObject.GetComponent<PlayerActions>().CauldronCanvas = cauldronCanvasLinkA;
+			} else if (this.gameObject.CompareTag("Cauldron B"))
+            {
+				other.gameObject.GetComponent<PlayerActions>().IsNearCauldron = true;
+				other.gameObject.GetComponent<PlayerActions>().CauldronCanvas = cauldronCanvasLinkB;
 			}
 			//crosshairImage.color = Color.magenta;
 		}
@@ -45,7 +50,7 @@ public class TriggerObject : InteractableMechanism {
 			keyHintImage.SetActive(false);
 			if(this.gameObject.CompareTag("Ball")) {
 				other.gameObject.GetComponent<PlayerActions>().IsNearActivationBall = false;
-			} else if(this.gameObject.CompareTag("Cauldron")) {
+			} else if(this.gameObject.CompareTag("Cauldron A") || this.gameObject.CompareTag("Cauldron B")) {
 				other.gameObject.GetComponent<PlayerActions>().IsNearCauldron = false;
 			}
 			//crosshairImage.color = Color.white;

@@ -36,6 +36,18 @@ public class LocalPlayerManager : NetworkBehaviour
     [SerializeField]
     private Quaternion spawnRotationPlayerTwo2;
 
+    [Header("Player one puzzle 4")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerOne4;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerOne4;
+
+    [Header("Player two puzzle 4")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerTwo4;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerTwo4;
+
     // Start is called before the first frame update
     void Start()
     {

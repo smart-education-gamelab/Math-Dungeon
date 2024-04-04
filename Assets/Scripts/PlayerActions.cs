@@ -44,6 +44,15 @@ public class PlayerActions : MonoBehaviour {
 			} else if(IsNearCauldron) {
 				cauldronCanvas.SetActive(!cauldronCanvas.activeSelf);
 				this.gameObject.GetComponent<PlayerMotor>().CanWalk = !this.gameObject.GetComponent<PlayerMotor>().CanWalk;
+				if(Cursor.lockState == CursorLockMode.Locked)
+                {
+					Cursor.lockState = CursorLockMode.None;
+					Cursor.visible = true;
+                } else
+                {
+					Cursor.lockState = CursorLockMode.Locked;
+					Cursor.visible = false;
+                }
 			}
 		}
     }
