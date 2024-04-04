@@ -84,6 +84,18 @@ public class LocalPlayerManager : NetworkBehaviour
                 this.gameObject.transform.position = spawnPositionPlayerTwo2;
                 this.gameObject.transform.rotation = spawnRotationPlayerTwo2;
             }
+        } else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            if (IsHost)
+            {
+                this.gameObject.transform.position = spawnPositionPlayerOne4;
+                this.gameObject.transform.rotation = spawnRotationPlayerOne4;
+            }
+            else
+            {
+                this.gameObject.transform.position = spawnPositionPlayerTwo4;
+                this.gameObject.transform.rotation = spawnRotationPlayerTwo4;
+            }
         }
 
 
