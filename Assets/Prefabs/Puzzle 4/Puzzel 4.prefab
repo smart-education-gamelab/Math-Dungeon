@@ -4284,7 +4284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1215320258216902, guid: d9701c9a48aaebe40813707f15a57b7d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4393125519056686, guid: d9701c9a48aaebe40813707f15a57b7d, type: 3}
       propertyPath: m_RootOrder
@@ -4548,7 +4548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1215320258216902, guid: d9701c9a48aaebe40813707f15a57b7d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4393125519056686, guid: d9701c9a48aaebe40813707f15a57b7d, type: 3}
       propertyPath: m_RootOrder
@@ -6391,6 +6391,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PotionBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 2003735169719858306, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bb5b2adca1799f249ab277d629928fa6, type: 3}
     - target: {fileID: 3214568999868295025, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_Name
       value: Try out inrichting (1)
@@ -6403,10 +6407,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 657a6bec1bfe2af4d8fe2405e55e74ac, type: 3}
-    - target: {fileID: 5597315550597621524, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
-      propertyPath: m_TagString
-      value: Cauldron B
-      objectReference: {fileID: 0}
     - target: {fileID: 7541540586561268107, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_RootOrder
       value: 1
