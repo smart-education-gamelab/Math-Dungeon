@@ -28,4 +28,18 @@ public class NumbersOnly : MonoBehaviour
             inputField.text = Regex.Replace(inputField.text, "[^0-9]", "");
         }
     }
+
+    public void IncreaseNumber()
+    {
+        int currentValue = int.Parse(inputField.text);
+        currentValue++;
+        inputField.text = currentValue.ToString();
+    }
+
+    public void DecreaseNumber()
+    {
+        int currentValue = int.Parse(inputField.text);
+        currentValue--;
+        inputField.text = currentValue.ToString();
+    }
 }
