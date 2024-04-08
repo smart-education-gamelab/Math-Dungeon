@@ -19,13 +19,13 @@ public class NumbersOnly : MonoBehaviour
     void ValidateInput(string input)
     {
         // Define a regular expression pattern to match only numbers
-        string pattern = @"^\d*$";
+        string pattern = @"^\d*$-";
 
         // Check if the input matches the pattern
         if (!Regex.IsMatch(input, pattern))
         {
             // If the input doesn't match, remove the invalid characters
-            inputField.text = Regex.Replace(inputField.text, "[^0-9]", "");
+            inputField.text = Regex.Replace(inputField.text, "[^-0-9]", "");
         }
     }
 
