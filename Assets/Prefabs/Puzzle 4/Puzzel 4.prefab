@@ -6383,10 +6383,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1394702673401840025}
     m_Modifications:
+    - target: {fileID: 117679075047843410, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_Name
+      value: PotionYellow
+      objectReference: {fileID: 0}
+    - target: {fileID: 1117260188608208737, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_Name
+      value: PotionBlue
+      objectReference: {fileID: 0}
     - target: {fileID: 3214568999868295025, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_Name
       value: Try out inrichting (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3394387575909926478, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0f649a353f6ad7f40990bd4a3864d961, type: 3}
+    - target: {fileID: 4009198231069208717, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 657a6bec1bfe2af4d8fe2405e55e74ac, type: 3}
     - target: {fileID: 5597315550597621524, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_TagString
       value: Cauldron B
@@ -6502,10 +6518,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Try out inrichting
       objectReference: {fileID: 0}
-    - target: {fileID: 5597315550597621524, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
-      propertyPath: m_TagString
-      value: Cauldron A
-      objectReference: {fileID: 0}
     - target: {fileID: 7541540586561268107, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -6554,10 +6566,6 @@ PrefabInstance:
       propertyPath: keyHintImage
       value: 
       objectReference: {fileID: 1394702673257651255}
-    - target: {fileID: 7636257221609975882, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
-      propertyPath: cauldronCanvasLink
-      value: 
-      objectReference: {fileID: 526233228}
     - target: {fileID: 7636257221609975882, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: cauldronCanvasLinkA
       value: 
