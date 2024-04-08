@@ -668,6 +668,10 @@ PrefabInstance:
       propertyPath: m_Text
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 173422035955213813, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_TagString
+      value: Cauldron A
+      objectReference: {fileID: 0}
     - target: {fileID: 1394702673401840025, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_RootOrder
       value: 0
