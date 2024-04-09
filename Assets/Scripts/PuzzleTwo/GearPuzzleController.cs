@@ -172,6 +172,7 @@ public class GearPuzzleController : NetworkBehaviour {
             // Maak een instantie van het smallGearPrefab op de aangepaste positie
             GameObject newSmallGear = Instantiate(smallGearPrefab, spawnPosition, Quaternion.identity);
             newSmallGear.GetComponent<NetworkObject>().Spawn();
+            newSmallGear.transform.parent = gearParent.transform;
 
             // Pas de rotatie aan om de kleine gears verticaal te laten staan
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);

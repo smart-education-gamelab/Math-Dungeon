@@ -90,12 +90,14 @@ public class PlayerController : NetworkBehaviour{
         {
             Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
             Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 1");
             OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         }
         else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
         {
             Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
             Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 2");
             OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         }
 
@@ -107,11 +109,13 @@ public class PlayerController : NetworkBehaviour{
         if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleOneDoors.ToString())
         {
             Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 1");
             Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
         }
         else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
         {
             Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 2");
             Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
         }
     }
