@@ -55,11 +55,13 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
         CalculatePoints();
     }
 
     public void CalculatePoints()
     {
+        Debug.Log("2 Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
         if (IsServer || IsOwner)
         {
             xCoords = XPointsOnGraph();
