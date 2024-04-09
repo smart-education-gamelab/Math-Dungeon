@@ -436,6 +436,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1572105287, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 173422035955213813, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_TagString
       value: Cauldron A

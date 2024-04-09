@@ -65,10 +65,6 @@ public class GearPuzzleController : NetworkBehaviour {
 
     public string TMPText;
 
-    //private TextMeshProUGUI tmp;
-
-    //public NetworkVariable<string> myString = new NetworkVariable<string>();
-
     // Start is called before the first frame update
     private void Start() {
         amountOfSolved = 0;

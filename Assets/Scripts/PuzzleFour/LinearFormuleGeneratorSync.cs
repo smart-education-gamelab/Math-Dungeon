@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine;
 using Unity.Netcode;
-using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using System.Collections;
 
 public class LinearFormuleGeneratorSync : NetworkBehaviour
 {
@@ -12,7 +13,7 @@ public class LinearFormuleGeneratorSync : NetworkBehaviour
     [SerializeField]
     private int maxValue = 10;
 
-    Vector2 aAndBValue = new Vector2(99, 99);
+    Vector2 aAndBValue = new Vector2(99, 99); //Later uit elkaar trekken?
     string linearFormula = "placeholder";
 
     Vector2 pointA = new Vector2(99, 99);
@@ -23,8 +24,6 @@ public class LinearFormuleGeneratorSync : NetworkBehaviour
 
     Vector2 pointC = new Vector2(99, 99);
     Vector2 pointD = new Vector2(99, 99);
-
-    private List<object> payloadList = new List<object>();
 
     int[] xCoords = new int[4];
 
@@ -42,102 +41,127 @@ public class LinearFormuleGeneratorSync : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI textYC;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(IsServer + "Start");
         if (IsServer)
         {
-            GenerateValuesAndSync();
+            Debug.Log("ik ben server");
+            xCoords = XPointsOnGraph();
+
+            aAndBValue = GenerateAAndB();
+            Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
+            linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
+            Debug.Log("Debug 2: Formula: " + linearFormula);
+            pointA.x = xCoords[0];
+            pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
+            Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
+            pointB.x = xCoords[1];
+            pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
+            Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
+            textXA.text = pointA.x.ToString();
+            textXB.text = pointB.x.ToString();
+            textYA.text = pointA.y.ToString();
+
+            aAndBValueTwo = GenerateAAndB();
+            Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
+            linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
+            Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
+            pointC.x = xCoords[2];
+            pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
+            Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+            pointD.x = xCoords[3];
+            pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
+            Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
+            textXC.text = pointC.x.ToString();
+            textXD.text = pointD.x.ToString();
+            textYC.text = pointC.y.ToString();
+
+            ArrayList jsonPayloadList = new ArrayList();
+            jsonPayloadList.Add(pointA);
+            jsonPayloadList.Add(pointB);
+            jsonPayloadList.Add(pointC);
+            jsonPayloadList.Add(pointD);
+            string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
+
+            UpdateTMPTextServerRpc(jsonPayload);
         }
-    }
+     }
 
-    void GenerateValuesAndSync()
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateTMPTextServerRpc(string jsonPayload)
     {
-        xCoords = XPointsOnGraph();
-
-        aAndBValue = GenerateAAndB();
-        linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
-        pointA.x = xCoords[0];
-        pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
-        pointB.x = xCoords[1];
-        pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
-
-        aAndBValueTwo = GenerateAAndB();
-        linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
-        pointC.x = xCoords[2];
-        pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
-        pointD.x = xCoords[3];
-        pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
-
-        // Serialize data
-        List<object> payloadList = new List<object>();
-        payloadList.Add(new Dictionary<string, object>
-        {
-            { "Formulas", new float[][] { new float[] { aAndBValue.x, aAndBValue.y }, new float[] { aAndBValueTwo.x, aAndBValueTwo.y } } },
-            { "Solutions", new int[] { (int)pointA.y, (int)pointB.y, (int)pointC.y, (int)pointD.y } }
-        });
-
-        string jsonPayload = JsonConvert.SerializeObject(payloadList);
-
-        RpcSyncValuesClientRpc(jsonPayload);
+        Debug.Log(jsonPayload);
+        // Call the ClientRpc 
+        UpdateTMPTextClientRpc(jsonPayload);
     }
 
     [ClientRpc]
-    void RpcSyncValuesClientRpc(string jsonPayload)
+    private void UpdateTMPTextClientRpc(string jsonPayload)
     {
-        List<object> syncData = JsonConvert.DeserializeObject<List<object>>(jsonPayload);
-        Dictionary<string, object> dataDict = (Dictionary<string, object>)syncData[0];
-        float[][] formulasArray = (float[][])dataDict["Formulas"];
-        int[] solutions = (int[])dataDict["Solutions"];
-
-        float[] formula1 = formulasArray[0];
-        float[] formula2 = formulasArray[1];
-
-        // Update UI or do something with the synchronized data
-        // For example:
-        textXA.text = formula1[0].ToString();
-        textXB.text = formula2[0].ToString();
-        textYA.text = solutions[0].ToString();
-        textXC.text = formula1[1].ToString();
-        textXD.text = formula2[1].ToString();
-        textYC.text = solutions[2].ToString();
+        Debug.Log("client");
+        Debug.Log(jsonPayload);
+        ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
+        
+        Debug.Log(syncArrayList);
     }
 
-    private Vector2 GenerateAAndB()
+        private Vector2 GenerateAAndB()
     {
         int valueA = Random.Range(minValue, maxValue);
         int valueB = Random.Range(minValue, maxValue);
 
-        return new Vector2(valueA, valueB);
+        Vector2 returnValue = new Vector2(valueA, valueB);
+
+        return returnValue;
     }
 
     private string BuildFormulaFromAAndB(int valueA, int valueB)
     {
-        string formula = valueA + "x";
+        string returnValue = valueA.ToString() + "x";
         if (valueB < 0)
-            formula += " - " + Mathf.Abs(valueB);
+        {
+            returnValue = returnValue + " - " + (valueB * -1).ToString();
+        }
         else
-            formula += " + " + valueB;
+        {
+            returnValue = returnValue + " + " + valueB.ToString();
+        }
 
-        return formula;
+        return returnValue;
     }
 
     private int[] XPointsOnGraph()
     {
-        List<int> xPoints = new List<int>();
+        int[] xPoints = new int[4] { 99, 99, 99, 99 };
 
-        while (xPoints.Count < 4)
+        for (int i = 0; i < xPoints.Length; i++)
         {
-            int rand = Random.Range(minValue, maxValue);
-            if (!xPoints.Contains(rand))
-                xPoints.Add(rand);
+            xPoints[i] = Random.Range(minValue, maxValue);
+            //Debug.Log("Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
+
+            for (int j = 0; j < xPoints.Length; j++)
+            {
+                if (i != j)
+                {
+                    while (xPoints[i] == xPoints[j])
+                    {
+                        xPoints[i] = Random.Range(minValue, maxValue);
+                    }
+                }
+            }
+            //Debug.Log("Na dubbel check. Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
         }
 
-        return xPoints.ToArray();
+        return xPoints;
     }
 
     private int CalculateY(int aValue, int bValue, int xValue)
     {
         return (xValue * aValue) + bValue;
     }
+
+    //Calc y from x
 }

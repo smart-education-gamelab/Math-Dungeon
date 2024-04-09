@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : NetworkBehaviour{
     [SerializeField]
@@ -85,15 +86,33 @@ public class PlayerController : NetworkBehaviour{
     [ServerRpc(RequireOwnership = false)]
     private void OnEndSceneServerRpc(ServerRpcParams serverRpcParams = default)
     {
-        Debug.ClearDeveloperConsole();
-        OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
-        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
-    }
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleOneDoors.ToString())
+        {
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+            Debug.ClearDeveloperConsole();
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
+        {
+            Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+            Debug.ClearDeveloperConsole();
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
 
-    [ClientRpc]
+    }
+        [ClientRpc]
     private void OnEndSceneClientRpc(ulong clientId)
     {
-        Debug.ClearDeveloperConsole();
-        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleOneDoors.ToString())
+        {
+            Debug.ClearDeveloperConsole();
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
+        {
+            Debug.ClearDeveloperConsole();
+            Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+        }
     }
 }

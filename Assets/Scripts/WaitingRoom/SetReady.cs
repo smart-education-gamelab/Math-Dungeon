@@ -52,9 +52,9 @@ public class SetReady : NetworkBehaviour
 
             //uncomment welke je wilt laden
 
-            //Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
+            Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
             //Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
-            Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+            //Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
         }
     }
 
