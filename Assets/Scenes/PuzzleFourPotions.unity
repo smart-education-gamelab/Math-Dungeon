@@ -436,6 +436,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1755716305, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: input_left_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755716305, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_TagString
+      value: InputAnswerYBTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845564191, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: input_right_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845564191, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_TagString
+      value: InputAnswerYDTag
+      objectReference: {fileID: 0}
     - target: {fileID: 173422035955213813, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_TagString
       value: Cauldron A
@@ -500,6 +516,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Puzzel 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2820292211646508992, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: input_left_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 2820292211646508992, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_TagString
+      value: InputAnswerYBTag
+      objectReference: {fileID: 0}
     - target: {fileID: 3584951783380946734, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_fontSize
       value: 30
@@ -507,6 +531,14 @@ PrefabInstance:
     - target: {fileID: 3584951783380946734, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_fontSizeBase
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208751422116238688, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: input_right_B
+      objectReference: {fileID: 0}
+    - target: {fileID: 4208751422116238688, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_TagString
+      value: InputAnswerYDTag
       objectReference: {fileID: 0}
     - target: {fileID: 4874922225514380389, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_AnchoredPosition.x

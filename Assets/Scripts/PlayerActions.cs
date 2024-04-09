@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerActions : MonoBehaviour {
     private bool isNearActivationBall;
@@ -8,6 +9,9 @@ public class PlayerActions : MonoBehaviour {
 
 	private bool isNearCauldron;
 	private GameObject cauldronCanvas;
+
+	[SerializeField]
+	private GameObject potionControllerRef;
 
 	public bool IsNearActivationBall {
 		get => isNearActivationBall;
@@ -53,7 +57,38 @@ public class PlayerActions : MonoBehaviour {
 					Cursor.lockState = CursorLockMode.Locked;
 					Cursor.visible = false;
                 }
+
+				if(cauldronCanvas.activeSelf == true)
+                {
+					string inputAnswerB = FindChildWithTag(cauldronCanvas, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					string correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYB.ToString();
+					string inputAnswerD = FindChildWithTag(cauldronCanvas, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
+					string correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYD.ToString();
+
+					if(inputAnswerB == correctAnswerB && inputAnswerD == correctAnswerD)
+                    {
+						Debug.Log("Hoeraaa!");
+                    }
+
+				}
 			}
 		}
     }
+
+	GameObject FindChildWithTag(GameObject parent, string tag)
+	{
+		GameObject child = null;
+
+		foreach (Transform transform in parent.transform)
+		{
+			if (transform.CompareTag(tag))
+			{
+				child = transform.gameObject;
+				break;
+			}
+		}
+
+		return child;
+	}
+
 }
