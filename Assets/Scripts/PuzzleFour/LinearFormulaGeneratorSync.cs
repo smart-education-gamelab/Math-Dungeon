@@ -53,8 +53,9 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
 
     // Start is called before the first frame update
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
         Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
         CalculatePoints();
     }
