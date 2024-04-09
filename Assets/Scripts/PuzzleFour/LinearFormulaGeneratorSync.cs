@@ -53,51 +53,54 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        xCoords = XPointsOnGraph();
+        if (IsServer || IsOwner)
+        {
+            xCoords = XPointsOnGraph();
 
-        aAndBValue = GenerateAAndB();
-        Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
-        linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
-        Debug.Log("Debug 2: Formula: " + linearFormula);
-        pointA.x = xCoords[0];
-        pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
-        Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
-        pointB.x = xCoords[1];
-        pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
-        Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
-        /*textXA.text = pointA.x.ToString();
-        textXB.text = pointB.x.ToString();
-        textYA.text = pointA.y.ToString();*/
+            aAndBValue = GenerateAAndB();
+            Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
+            linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
+            Debug.Log("Debug 2: Formula: " + linearFormula);
+            pointA.x = xCoords[0];
+            pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
+            Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
+            pointB.x = xCoords[1];
+            pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
+            Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
+            /*textXA.text = pointA.x.ToString();
+            textXB.text = pointB.x.ToString();
+            textYA.text = pointA.y.ToString();*/
 
-        aAndBValueTwo = GenerateAAndB();
-        Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
-        linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
-        Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
-        pointC.x = xCoords[2];
-        pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
-        Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
-        pointD.x = xCoords[3];
-        pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
-        Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
-        /*textXC.text = pointC.x.ToString();
-        textXD.text = pointD.x.ToString();
-        textYC.text = pointC.y.ToString();*/
+            aAndBValueTwo = GenerateAAndB();
+            Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
+            linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
+            Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
+            pointC.x = xCoords[2];
+            pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
+            Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+            pointD.x = xCoords[3];
+            pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
+            Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
+            /*textXC.text = pointC.x.ToString();
+            textXD.text = pointD.x.ToString();
+            textYC.text = pointC.y.ToString();*/
 
 
-        ArrayList jsonPayloadList = new ArrayList();
-        jsonPayloadList.Add(pointA.x.ToString());
-        jsonPayloadList.Add(pointA.y.ToString());
-        jsonPayloadList.Add(pointB.x.ToString());
-        jsonPayloadList.Add(pointB.y.ToString());
-        jsonPayloadList.Add(pointC.x.ToString());
-        jsonPayloadList.Add(pointC.y.ToString());
-        jsonPayloadList.Add(pointD.x.ToString());
-        jsonPayloadList.Add(pointD.y.ToString());
-        string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
+            ArrayList jsonPayloadList = new ArrayList();
+            jsonPayloadList.Add(pointA.x.ToString());
+            jsonPayloadList.Add(pointA.y.ToString());
+            jsonPayloadList.Add(pointB.x.ToString());
+            jsonPayloadList.Add(pointB.y.ToString());
+            jsonPayloadList.Add(pointC.x.ToString());
+            jsonPayloadList.Add(pointC.y.ToString());
+            jsonPayloadList.Add(pointD.x.ToString());
+            jsonPayloadList.Add(pointD.y.ToString());
+            string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
 
-        UpdatePointsTextServerRpc(jsonPayload);
+            UpdatePointsTextServerRpc(jsonPayload);
+        }
     }
 
     [ServerRpc(RequireOwnership = false)]
