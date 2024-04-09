@@ -5,7 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Collections;
 
-public class LinearFormuleGeneratorSync : NetworkBehaviour
+public class LinearFormulaGeneratorSync : NetworkBehaviour
 {
     [SerializeField]
     private int minValue = -10;
