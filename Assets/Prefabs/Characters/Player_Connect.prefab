@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3200d2822d7bb640919a298fc80910c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potionControllerRef: {fileID: 532659001922297532, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
 --- !u!114 &7964763029631065610
 MonoBehaviour:
   m_ObjectHideFlags: 0

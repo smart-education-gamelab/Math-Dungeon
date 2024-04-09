@@ -13,6 +13,8 @@ TagManager:
   - Ball
   - Cauldron A
   - Cauldron B
+  - InputAnswerYDTag
+  - InputAnswerYBTag
   layers:
   - Default
   - TransparentFX

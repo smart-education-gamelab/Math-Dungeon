@@ -36,6 +36,15 @@ public class LinearFormulaGenerator : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI textYC;
 
+    public int answerYB {
+        get => (int) pointB.y;
+    }
+    
+    
+    public int answerYD {
+        get => (int) pointD.y;
+    }
+
 
     // Start is called before the first frame update
     void Start() {
