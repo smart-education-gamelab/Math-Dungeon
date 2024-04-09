@@ -1,8 +1,10 @@
 using TMPro;
 using UnityEngine;
 using Newtonsoft.Json;
+using Unity.Netcode;
+using System.Collections;
 
-public class LinearFormulaGeneratorSync : MonoBehaviour
+public class LinearFormulaGeneratorSync : NetworkBehaviour
 {
     [SerializeField]
     private int minValue = -10;
@@ -65,9 +67,9 @@ public class LinearFormulaGeneratorSync : MonoBehaviour
         pointB.x = xCoords[1];
         pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
         Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
-        textXA.text = pointA.x.ToString();
+        /*textXA.text = pointA.x.ToString();
         textXB.text = pointB.x.ToString();
-        textYA.text = pointA.y.ToString();
+        textYA.text = pointA.y.ToString();*/
 
         aAndBValueTwo = GenerateAAndB();
         Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
@@ -79,15 +81,59 @@ public class LinearFormulaGeneratorSync : MonoBehaviour
         pointD.x = xCoords[3];
         pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
         Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
-        textXC.text = pointC.x.ToString();
+        /*textXC.text = pointC.x.ToString();
         textXD.text = pointD.x.ToString();
-        textYC.text = pointC.y.ToString();
+        textYC.text = pointC.y.ToString();*/
+
+
+        ArrayList jsonPayloadList = new ArrayList();
+        jsonPayloadList.Add(pointA.x.ToString());
+        jsonPayloadList.Add(pointA.y.ToString());
+        jsonPayloadList.Add(pointB.x.ToString());
+        jsonPayloadList.Add(pointB.y.ToString());
+        jsonPayloadList.Add(pointC.x.ToString());
+        jsonPayloadList.Add(pointC.y.ToString());
+        jsonPayloadList.Add(pointD.x.ToString());
+        jsonPayloadList.Add(pointD.y.ToString());
+        string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
+
+        UpdatePointsTextServerRpc(jsonPayload);
     }
 
-    // Update is called once per frame
-    void Update()
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdatePointsTextServerRpc(string jsonPayload)
     {
+        Debug.Log(jsonPayload);
+        UpdatePointsTextClientRpc(jsonPayload);
+    }
 
+    [ClientRpc]
+    private void UpdatePointsTextClientRpc(string jsonPayload)
+    {
+        Debug.Log("client");
+        Debug.Log(jsonPayload);
+
+        ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
+        string pointAX = JsonConvert.DeserializeObject<string>(syncArrayList[0].ToString());
+        string pointAY = JsonConvert.DeserializeObject<string>(syncArrayList[1].ToString());
+        string pointBX = JsonConvert.DeserializeObject<string>(syncArrayList[2].ToString());
+        string pointBY = JsonConvert.DeserializeObject<string>(syncArrayList[3].ToString());
+        string pointCX = JsonConvert.DeserializeObject<string>(syncArrayList[4].ToString());
+        string pointCY = JsonConvert.DeserializeObject<string>(syncArrayList[5].ToString());
+        string pointDX = JsonConvert.DeserializeObject<string>(syncArrayList[6].ToString());
+        string pointDY = JsonConvert.DeserializeObject<string>(syncArrayList[7].ToString());
+        Debug.Log("A: (" + pointAX + ", " + pointAY + ")");
+        Debug.Log("B: (" + pointBX + ", " + pointBY + ")");
+        Debug.Log("C: (" + pointCX + ", " + pointCY + ")");
+        Debug.Log("D: (" + pointDX + ", " + pointDY + ")");
+
+        textXA.text = pointAX;
+        textXB.text = pointBX;
+        textYA.text = pointAY;
+
+        textXC.text = pointCX;
+        textXD.text = pointDX;
+        textYC.text = pointCY;
     }
 
     private Vector2 GenerateAAndB()

@@ -219,7 +219,7 @@ public class GearPuzzleController : NetworkBehaviour {
         Debug.Log("client");
         Debug.Log(jsonPayload);
 
-        ArrayList syncArrayList = JsonConvert.DeserializeObject <ArrayList>(jsonPayload);
+        ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
         Dictionary<string, float[]> syncFormulasAndSolutions = JsonConvert.DeserializeObject<Dictionary<string, float[]>>(syncArrayList[0].ToString());
         //Debug.Log("1 " + syncArrayList[0].ToString());
         //Debug.Log("2 " + syncArrayList[1].ToString());
