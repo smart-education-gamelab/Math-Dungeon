@@ -1,11 +1,8 @@
 using TMPro;
 using UnityEngine;
-using Unity.Netcode;
-using System.Linq;
 using Newtonsoft.Json;
-using System.Collections;
 
-public class LinearFormulaGeneratorSync : NetworkBehaviour
+public class LinearFormulaGeneratorSync : MonoBehaviour
 {
     [SerializeField]
     private int minValue = -10;
@@ -41,74 +38,59 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI textYC;
 
+    public int answerYB
+    {
+        get => (int)pointB.y;
+    }
+
+
+    public int answerYD
+    {
+        get => (int)pointD.y;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(IsServer + "Start");
-        if (IsServer)
-        {
-            Debug.Log("ik ben server");
-            xCoords = XPointsOnGraph();
+        xCoords = XPointsOnGraph();
 
-            aAndBValue = GenerateAAndB();
-            Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
-            linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
-            Debug.Log("Debug 2: Formula: " + linearFormula);
-            pointA.x = xCoords[0];
-            pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
-            Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
-            pointB.x = xCoords[1];
-            pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
-            Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
-            textXA.text = pointA.x.ToString();
-            textXB.text = pointB.x.ToString();
-            textYA.text = pointA.y.ToString();
+        aAndBValue = GenerateAAndB();
+        Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
+        linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
+        Debug.Log("Debug 2: Formula: " + linearFormula);
+        pointA.x = xCoords[0];
+        pointA.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointA.x);
+        Debug.Log("Debug 3: Point A: (" + pointA.x.ToString() + ", " + pointA.y.ToString() + ").");
+        pointB.x = xCoords[1];
+        pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
+        Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
+        textXA.text = pointA.x.ToString();
+        textXB.text = pointB.x.ToString();
+        textYA.text = pointA.y.ToString();
 
-            aAndBValueTwo = GenerateAAndB();
-            Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
-            linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
-            Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
-            pointC.x = xCoords[2];
-            pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
-            Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
-            pointD.x = xCoords[3];
-            pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
-            Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
-            textXC.text = pointC.x.ToString();
-            textXD.text = pointD.x.ToString();
-            textYC.text = pointC.y.ToString();
-
-            ArrayList jsonPayloadList = new ArrayList();
-            jsonPayloadList.Add(pointA);
-            jsonPayloadList.Add(pointB);
-            jsonPayloadList.Add(pointC);
-            jsonPayloadList.Add(pointD);
-            string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
-
-            UpdateTMPTextServerRpc(jsonPayload);
-        }
-     }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void UpdateTMPTextServerRpc(string jsonPayload)
-    {
-        Debug.Log(jsonPayload);
-        // Call the ClientRpc 
-        UpdateTMPTextClientRpc(jsonPayload);
+        aAndBValueTwo = GenerateAAndB();
+        Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
+        linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
+        Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
+        pointC.x = xCoords[2];
+        pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
+        Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+        pointD.x = xCoords[3];
+        pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
+        Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
+        textXC.text = pointC.x.ToString();
+        textXD.text = pointD.x.ToString();
+        textYC.text = pointC.y.ToString();
     }
 
-    [ClientRpc]
-    private void UpdateTMPTextClientRpc(string jsonPayload)
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log("client");
-        Debug.Log(jsonPayload);
-        ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-        
-        Debug.Log(syncArrayList);
+
     }
 
-        private Vector2 GenerateAAndB()
+    private Vector2 GenerateAAndB()
     {
         int valueA = Random.Range(minValue, maxValue);
         int valueB = Random.Range(minValue, maxValue);
