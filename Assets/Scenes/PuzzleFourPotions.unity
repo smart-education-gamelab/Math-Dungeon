@@ -390,11 +390,11 @@ PrefabInstance:
     - target: {fileID: 2792159510329896056, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: textYA
       value: 
-      objectReference: {fileID: 1394702674270380078}
+      objectReference: {fileID: 1394702674270380076}
     - target: {fileID: 2792159510329896056, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: textYC
       value: 
-      objectReference: {fileID: 1394702674270380076}
+      objectReference: {fileID: 1394702674270380078}
     - target: {fileID: 3448017268071882249, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 517417195
@@ -467,7 +467,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
 --- !u!114 &1394702674270380076 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7605740898084831447, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5501351255003211112, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
   m_PrefabInstance: {fileID: 1394702674270380075}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
