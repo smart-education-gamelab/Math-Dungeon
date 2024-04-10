@@ -158,8 +158,17 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
     private Vector2 GenerateAAndB()
     {
-        int valueA = Random.Range(minValue, maxValue);
-        int valueB = Random.Range(minValue, maxValue);
+        int valueA = 0;
+        while (valueA == 0)
+        {
+            valueA = Random.Range(minValue, maxValue);
+        }
+
+        int valueB = 0;
+        while (valueB == 0)
+        {
+            valueB = Random.Range(minValue, maxValue);
+        }
 
         Vector2 returnValue = new Vector2(valueA, valueB);
 
@@ -187,7 +196,10 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
         for (int i = 0; i < xPoints.Length; i++)
         {
-            xPoints[i] = Random.Range(minValue, maxValue);
+            while (xPoints[i] == 0)
+            {
+                xPoints[i] = Random.Range(minValue, maxValue);
+            }
             //Debug.Log("Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
 
             for (int j = 0; j < xPoints.Length; j++)
