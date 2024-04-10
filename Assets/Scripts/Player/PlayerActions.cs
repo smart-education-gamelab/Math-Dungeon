@@ -32,9 +32,18 @@ public class PlayerActions : MonoBehaviour {
 		set => cauldronCanvas = value;
 	}
 
+	private string inputAnswerB;
+	private string correctAnswerB;
+	private string inputAnswerD;
+	private string correctAnswerD;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		inputAnswerB = "aap";
+		correctAnswerB = "noot";
+		inputAnswerD = "mies";
+		correctAnswerD = "hond";
         IsNearActivationBall = false;
 		IsNearCauldron = false;
     }
@@ -60,12 +69,17 @@ public class PlayerActions : MonoBehaviour {
 
 				if(cauldronCanvas.activeSelf == true)
                 {
-					string inputAnswerB = FindChildWithTag(cauldronCanvas, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					string correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYB.ToString();
-					string inputAnswerD = FindChildWithTag(cauldronCanvas, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					string correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYD.ToString();
+					inputAnswerB = FindChildWithTag(cauldronCanvas, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYB.ToString();
+					inputAnswerD = FindChildWithTag(cauldronCanvas, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
+					correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYD.ToString();
 
-					if(inputAnswerB == correctAnswerB && inputAnswerD == correctAnswerD)
+					Debug.Log("Geg. Antw. B: " + inputAnswerB);
+					Debug.Log("Cor. Antw. B: " + correctAnswerB);
+					Debug.Log("Geg. Antw. D: " + inputAnswerD);
+					Debug.Log("Cor. Antw. D: " + correctAnswerD);
+
+					if (inputAnswerB == correctAnswerB && inputAnswerD == correctAnswerD)
                     {
 						Debug.Log("Hoeraaa!");
                     }
