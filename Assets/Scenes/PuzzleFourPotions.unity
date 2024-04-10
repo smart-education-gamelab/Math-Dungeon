@@ -462,13 +462,14 @@ PrefabInstance:
     - target: {fileID: 7158972724882187664, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
       value: Try out inrichting A
+      objectReference: {fileID: 0}
     - target: {fileID: 7689453410698722822, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
-      value: Door2
+      value: DoorB
       objectReference: {fileID: 0}
     - target: {fileID: 7689453410774056848, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
-      value: Door1
+      value: DoorA
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
