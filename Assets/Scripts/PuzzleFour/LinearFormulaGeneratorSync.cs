@@ -170,6 +170,8 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
             valueB = Random.Range(minValue, maxValue);
         }
 
+        //later de 0 weer toe staan
+
         Vector2 returnValue = new Vector2(valueA, valueB);
 
         return returnValue;
