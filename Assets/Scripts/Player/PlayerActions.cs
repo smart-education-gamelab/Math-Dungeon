@@ -134,13 +134,13 @@ public class PlayerActions : MonoBehaviour {
 					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
 					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
-					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerBRoomA);
-					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerBRoomA);
-					Debug.Log("Kamer A Geg. Antw. D: " + inputAnswerDRoomA);
-					Debug.Log("Kamer A Cor. Antw. D: " + correctAnswerDRoomA);
+					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerBRoomA);
+					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerBRoomA);
+					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerDRoomA);
+					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerDRoomA);
 
-					Debug.Log("Kamer B Geg. Antw. B: " + inputAnswerBRoomB);
-					Debug.Log("Kamer B Cor. Antw. B: " + correctAnswerBRoomB);
+					Debug.Log("Kamer B Geg. Antw. C: " + inputAnswerBRoomB);
+					Debug.Log("Kamer B Cor. Antw. C: " + correctAnswerBRoomB);
 					Debug.Log("Kamer B Geg. Antw. D: " + inputAnswerDRoomB);
 					Debug.Log("Kamer B Cor. Antw. D: " + correctAnswerDRoomB);
 
