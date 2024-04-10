@@ -15,6 +15,7 @@ TagManager:
   - Cauldron B
   - InputAnswerYDTag
   - InputAnswerYBTag
+  - PotionController
   layers:
   - Default
   - TransparentFX

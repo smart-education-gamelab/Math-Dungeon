@@ -10,7 +10,6 @@ public class PlayerActions : MonoBehaviour {
 	private bool isNearCauldron;
 	private GameObject cauldronCanvas;
 
-	[SerializeField]
 	private GameObject potionControllerRef;
 
 	public bool IsNearActivationBall {
@@ -51,6 +50,7 @@ public class PlayerActions : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+		potionControllerRef = GameObject.FindWithTag("PotionController");
 		if(Input.GetButtonDown("Activate")) {
 			if(IsNearActivationBall) {
 				BallThatIsNear.GetComponent<InteractableMechanism>().Activate();

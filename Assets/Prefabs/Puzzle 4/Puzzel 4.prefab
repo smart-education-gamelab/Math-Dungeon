@@ -2314,7 +2314,6 @@ Transform:
   - {fileID: 1393126548967651453}
   - {fileID: 526233229}
   - {fileID: 3186485805552005882}
-  - {fileID: 1572105289}
   - {fileID: 1394702672923215335}
   - {fileID: 2792159510329896057}
   m_Father: {fileID: 0}
@@ -4441,92 +4440,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1442728647627301925, guid: f035596d52b2ff24397a4c820e4b2879, type: 3}
   m_PrefabInstance: {fileID: 531249652732132925}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &532659001289765627
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1394702673401840025}
-    m_Modifications:
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.676693
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.813092
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.2453496
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textXA
-      value: 
-      objectReference: {fileID: 1063112056619782054}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textXB
-      value: 
-      objectReference: {fileID: 5002049767407845332}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textXC
-      value: 
-      objectReference: {fileID: 963173989108092941}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textXD
-      value: 
-      objectReference: {fileID: 5113791924612210815}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textYA
-      value: 
-      objectReference: {fileID: 7605740898084831447}
-    - target: {fileID: 532659001922297523, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: textYC
-      value: 
-      objectReference: {fileID: 7642620007208132476}
-    - target: {fileID: 532659001922297532, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-      propertyPath: m_Name
-      value: PotionController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
---- !u!4 &1572105289 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 532659001922297522, guid: 99a65d22a074a2d4ba7ee503ea1e4aa7, type: 3}
-  m_PrefabInstance: {fileID: 532659001289765627}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1072523873092132591
 PrefabInstance:
@@ -6823,6 +6736,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1394702673401840025}
     m_Modifications:
+    - target: {fileID: 153808150795306007, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 951099334
+      objectReference: {fileID: 0}
     - target: {fileID: 811774496876901988, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
       propertyPath: m_Name
       value: PotionControllerSync
@@ -6853,7 +6770,7 @@ PrefabInstance:
       objectReference: {fileID: 7642620007208132476}
     - target: {fileID: 811774496876901991, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 811774496876901991, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7051,7 +6968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275916955684100940, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6275916955684100940, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7418,6 +7335,10 @@ PrefabInstance:
     - target: {fileID: 3214568999868295025, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_Name
       value: Try out inrichting
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597315550597621524, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
+      propertyPath: m_TagString
+      value: Cauldron A
       objectReference: {fileID: 0}
     - target: {fileID: 7541540586561268107, guid: 9b2502de864bbfd4d850d1e3d978f027, type: 3}
       propertyPath: m_RootOrder
