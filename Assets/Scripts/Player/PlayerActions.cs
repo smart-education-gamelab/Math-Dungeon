@@ -8,9 +8,18 @@ public class PlayerActions : MonoBehaviour {
     private GameObject ballThatIsNear;
 
 	private bool isNearCauldron;
-	private GameObject cauldronCanvas;
+	private GameObject cauldronCanvasA;
+	private GameObject cauldronCanvasB;
 
 	private GameObject potionControllerRef;
+
+	[SerializeField]
+	private GameObject movingWallA;
+
+	[SerializeField]
+	private GameObject movingWallB;
+
+	private string canvasName;
 
 	public bool IsNearActivationBall {
 		get => isNearActivationBall;
@@ -25,26 +34,63 @@ public class PlayerActions : MonoBehaviour {
 		get => isNearCauldron;
 		set => isNearCauldron = value;
 	}
-
-	public GameObject CauldronCanvas {
-		get => cauldronCanvas;
-		set => cauldronCanvas = value;
+	public string CanvasName{
+		get => canvasName;
+		set => canvasName = value;
 	}
 
-	private string inputAnswerB;
-	private string correctAnswerB;
-	private string inputAnswerD;
-	private string correctAnswerD;
+	//Kamer A
+	public GameObject CauldronCanvasA {
+		get => cauldronCanvasA;
+		set => cauldronCanvasA = value;
+	}
+
+	//Kamer B
+	public GameObject CauldronCanvasB {
+		get => cauldronCanvasB;
+		set => cauldronCanvasB = value;
+    }
+
+	//Kamer A
+	private string inputAnswerBRoomA;
+	private string correctAnswerBRoomA;
+	private string inputAnswerDRoomA;
+	private string correctAnswerDRoomA;
+
+	//Kamer B
+	private string inputAnswerBRoomB;
+	private string correctAnswerBRoomB;
+	private string inputAnswerDRoomB;
+	private string correctAnswerDRoomB;
+
+	private bool RoomACorrect;
+	private bool RoomBCorrect;
 
 	// Start is called before the first frame update
 	void Start()
     {
-		inputAnswerB = "aap";
-		correctAnswerB = "noot";
-		inputAnswerD = "mies";
-		correctAnswerD = "hond";
-        IsNearActivationBall = false;
+		//Kamer A
+		inputAnswerBRoomA = "aap";
+		correctAnswerBRoomA = "noot";
+		inputAnswerDRoomA = "mies";
+		correctAnswerDRoomA = "hond";
+
+		//Kamer B
+		inputAnswerBRoomB = "paa";
+		correctAnswerBRoomB = "toon";
+		inputAnswerDRoomB = "seim";
+		correctAnswerDRoomB = "dnoh";
+
+
+		IsNearActivationBall = false;
 		IsNearCauldron = false;
+
+		movingWallA = GameObject.Find("DoorA");
+		movingWallB = GameObject.Find("DoorB");
+
+
+		RoomACorrect = false;
+		RoomBCorrect = false;
     }
 
     // Update is called once per frame
@@ -55,7 +101,14 @@ public class PlayerActions : MonoBehaviour {
 			if(IsNearActivationBall) {
 				BallThatIsNear.GetComponent<InteractableMechanism>().Activate();
 			} else if(IsNearCauldron) {
-				cauldronCanvas.SetActive(!cauldronCanvas.activeSelf);
+				if (canvasName == "A")
+				{
+					cauldronCanvasA.SetActive(!cauldronCanvasA.activeSelf);
+				} else if (canvasName == "B")
+                {
+					cauldronCanvasB.SetActive(!cauldronCanvasB.activeSelf);
+                }
+
 				this.gameObject.GetComponent<PlayerMotor>().CanWalk = !this.gameObject.GetComponent<PlayerMotor>().CanWalk;
 				if(Cursor.lockState == CursorLockMode.Locked)
                 {
@@ -67,22 +120,51 @@ public class PlayerActions : MonoBehaviour {
 					Cursor.visible = false;
                 }
 
-				if(!cauldronCanvas.activeSelf)
+				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf)
                 {
-					inputAnswerB = FindChildWithTag(cauldronCanvas, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
-					inputAnswerD = FindChildWithTag(cauldronCanvas, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
+					//Kamer A
+					inputAnswerBRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					inputAnswerDRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
+					correctAnswerDRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
-					Debug.Log("Geg. Antw. B: " + inputAnswerB);
-					Debug.Log("Cor. Antw. B: " + correctAnswerB);
-					Debug.Log("Geg. Antw. D: " + inputAnswerD);
-					Debug.Log("Cor. Antw. D: " + correctAnswerD);
+					//Kamer B
+					inputAnswerBRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					correctAnswerBRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
+					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
-					if (inputAnswerB == correctAnswerB && inputAnswerD == correctAnswerD)
+					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerBRoomA);
+					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerBRoomA);
+					Debug.Log("Kamer A Geg. Antw. D: " + inputAnswerDRoomA);
+					Debug.Log("Kamer A Cor. Antw. D: " + correctAnswerDRoomA);
+
+					Debug.Log("Kamer B Geg. Antw. B: " + inputAnswerBRoomB);
+					Debug.Log("Kamer B Cor. Antw. B: " + correctAnswerBRoomB);
+					Debug.Log("Kamer B Geg. Antw. D: " + inputAnswerDRoomB);
+					Debug.Log("Kamer B Cor. Antw. D: " + correctAnswerDRoomB);
+
+					//Kamer A
+					if (inputAnswerBRoomA == correctAnswerBRoomA && inputAnswerDRoomA == correctAnswerDRoomA)
                     {
+						RoomACorrect = true;
+						
 						Debug.Log("Hoeraaa!");
                     }
+
+					//Kamer B
+					if (inputAnswerBRoomB == correctAnswerBRoomB && inputAnswerDRoomB == correctAnswerDRoomB)
+					{
+						RoomBCorrect = true;
+
+						Debug.Log("Hoeraaa!");
+					}
+
+					if (RoomACorrect == true && RoomBCorrect == true)
+					{
+						movingWallA.GetComponent<InteractableMechanism>().Activate();
+						movingWallB.GetComponent<InteractableMechanism>().Activate();
+					}
 
 				}
 			}
