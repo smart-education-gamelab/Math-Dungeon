@@ -100,6 +100,13 @@ public class PlayerController : NetworkBehaviour{
             Debug.Log("Scene 2");
             OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            Loader.LoadNetwork(Loader.Scene.Necromancer);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 3");
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
 
     }
         [ClientRpc]
@@ -117,6 +124,12 @@ public class PlayerController : NetworkBehaviour{
             Debug.ClearDeveloperConsole();
             Debug.Log("Client: Scene 2");
             Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 3");
+            Loader.LoadNetwork(Loader.Scene.Necromancer);
         }
     }
 }
