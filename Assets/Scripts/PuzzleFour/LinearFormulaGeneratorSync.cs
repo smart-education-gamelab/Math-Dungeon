@@ -40,11 +40,20 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI textYC;
 
+    public int answerYA
+    {
+        get => (int)pointA.y;
+    }
+
     public int answerYB
     {
         get => (int)pointB.y;
     }
 
+    public int answerYC
+    {
+        get => (int)pointC.y;
+    }
 
     public int answerYD
     {

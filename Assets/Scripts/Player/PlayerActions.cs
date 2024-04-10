@@ -124,13 +124,13 @@ public class PlayerActions : MonoBehaviour {
                 {
 					//Kamer A
 					inputAnswerBRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYA.ToString();
 					inputAnswerDRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerDRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
+					correctAnswerDRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
 
 					//Kamer B
 					inputAnswerBRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerBRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					correctAnswerBRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
 					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
 					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
