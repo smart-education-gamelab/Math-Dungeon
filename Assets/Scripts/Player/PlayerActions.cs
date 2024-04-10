@@ -180,8 +180,8 @@ public class PlayerActions : MonoBehaviour {
 	{
 		
 		ArrayList jsonPayloadAnswersList = new ArrayList();
-		jsonPayloadAnswersList.Add(inputAnswerARoomA);
-		jsonPayloadAnswersList.Add(inputAnswerBRoomA);
+		jsonPayloadAnswersList.Add(inputAnswerCRoomB);
+		jsonPayloadAnswersList.Add(inputAnswerDRoomB);
 		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
 		RequestAnswersClientRpc(jsonPayload);
@@ -192,8 +192,8 @@ public class PlayerActions : MonoBehaviour {
 	{
 		Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		tempSyncArrayList.Add(inputAnswerCRoomB);
-		tempSyncArrayList.Add(inputAnswerDRoomB);
+		tempSyncArrayList.Add(inputAnswerARoomA);
+		tempSyncArrayList.Add(inputAnswerBRoomA);
 		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
@@ -207,10 +207,10 @@ public class PlayerActions : MonoBehaviour {
 	[ClientRpc]
 	private void CheckAnswers(string jsonPayloadThree, string corAnswAA, string corAnswBA, string corAnswCB, string corAnswDB) {
 		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
-		string inAnswAA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
-		string inAnswBA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
-		string inAnswCB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
-		string inAnswDB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
+		string inAnswAA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
+		string inAnswBA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
+		string inAnswCB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
+		string inAnswDB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
 
 
 		Debug.Log("Kamer A Geg. Antw. A: " + inAnswAA);
