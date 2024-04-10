@@ -67,12 +67,12 @@ public class PlayerActions : MonoBehaviour {
 					Cursor.visible = false;
                 }
 
-				if(cauldronCanvas.activeSelf == true)
+				if(!cauldronCanvas.activeSelf)
                 {
 					inputAnswerB = FindChildWithTag(cauldronCanvas, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYB.ToString();
+					correctAnswerB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
 					inputAnswerD = FindChildWithTag(cauldronCanvas, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGenerator>().answerYD.ToString();
+					correctAnswerD = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
 					Debug.Log("Geg. Antw. B: " + inputAnswerB);
 					Debug.Log("Cor. Antw. B: " + correctAnswerB);
