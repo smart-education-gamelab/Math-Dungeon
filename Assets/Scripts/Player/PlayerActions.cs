@@ -136,6 +136,8 @@ public class PlayerActions : MonoBehaviour {
 					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
 					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
+					RequestAnswersServerRpc();
+/*
 					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerARoomA);
 					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerARoomA);
 					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerBRoomA);
@@ -166,7 +168,7 @@ public class PlayerActions : MonoBehaviour {
 					{
 						movingWallA.GetComponent<InteractableMechanism>().Activate();
 						movingWallB.GetComponent<InteractableMechanism>().Activate();
-					}
+					}*/
 
 				}
 			}
@@ -192,13 +194,57 @@ public class PlayerActions : MonoBehaviour {
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
 		tempSyncArrayList.Add(inputAnswerCRoomB);
 		tempSyncArrayList.Add(inputAnswerDRoomB);
+		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
+		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
 
 	[ServerRpc(RequireOwnership = false)]
-	private void GatherAnswersServerRpc(string jsonPayloadAnswersList)
+	private void GatherAnswersServerRpc(string jsonPayloadTwo)
     {
-		jsonPayLoadAnswers
+		CheckAnswers(jsonPayloadTwo, correctAnswerARoomA, correctAnswerBRoomA, correctAnswerCRoomB, correctAnswerDRoomB);
     }
+
+	[ClientRpc]
+	private void CheckAnswers(string jsonPayloadThree, string corAnswAA, string corAnswBA, string corAnswCB, string corAnswDB) {
+		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
+		string inAnswAA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
+		string inAnswBA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
+		string inAnswCB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
+		string inAnswDB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
+
+
+		Debug.Log("Kamer A Geg. Antw. A: " + inAnswAA);
+		Debug.Log("Kamer A Cor. Antw. A: " + corAnswAA);
+		Debug.Log("Kamer A Geg. Antw. B: " + inAnswBA);
+		Debug.Log("Kamer A Cor. Antw. B: " + corAnswBA);
+
+		Debug.Log("Kamer B Geg. Antw. C: " + inAnswCB);
+		Debug.Log("Kamer B Cor. Antw. C: " + corAnswCB);
+		Debug.Log("Kamer B Geg. Antw. D: " + inAnswDB);
+		Debug.Log("Kamer B Cor. Antw. D: " + corAnswDB);
+
+		//Kamer A
+		if (inAnswAA == corAnswAA && inAnswBA == corAnswBA)
+		{
+			RoomACorrect = true;
+
+			Debug.Log("Hoeraaa!");
+		}
+
+		//Kamer B
+		if (inAnswCB == corAnswCB && inAnswDB == corAnswDB)
+		{
+			RoomBCorrect = true;
+
+			Debug.Log("Hoeraaa!");
+		}
+
+		if (RoomACorrect == true && RoomBCorrect == true)
+		{
+			movingWallA.GetComponent<InteractableMechanism>().Activate();
+			movingWallB.GetComponent<InteractableMechanism>().Activate();
+		}
+	}
 
 	GameObject FindChildWithTag(GameObject parent, string tag)
 	{
