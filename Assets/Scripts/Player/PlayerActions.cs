@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
+using Newtonsoft.Json;
 
 public class PlayerActions : MonoBehaviour {
     private bool isNearActivationBall;
@@ -52,14 +54,14 @@ public class PlayerActions : MonoBehaviour {
     }
 
 	//Kamer A
+	private string inputAnswerARoomA;
+	private string correctAnswerARoomA;
 	private string inputAnswerBRoomA;
 	private string correctAnswerBRoomA;
-	private string inputAnswerDRoomA;
-	private string correctAnswerDRoomA;
 
 	//Kamer B
-	private string inputAnswerBRoomB;
-	private string correctAnswerBRoomB;
+	private string inputAnswerCRoomB;
+	private string correctAnswerCRoomB;
 	private string inputAnswerDRoomB;
 	private string correctAnswerDRoomB;
 
@@ -70,14 +72,14 @@ public class PlayerActions : MonoBehaviour {
 	void Start()
     {
 		//Kamer A
-		inputAnswerBRoomA = "aap";
-		correctAnswerBRoomA = "noot";
-		inputAnswerDRoomA = "mies";
-		correctAnswerDRoomA = "hond";
+		inputAnswerARoomA = "aap";
+		correctAnswerARoomA = "noot";
+		inputAnswerBRoomA = "mies";
+		correctAnswerBRoomA = "hond";
 
 		//Kamer B
-		inputAnswerBRoomB = "paa";
-		correctAnswerBRoomB = "toon";
+		inputAnswerCRoomB = "paa";
+		correctAnswerCRoomB = "toon";
 		inputAnswerDRoomB = "seim";
 		correctAnswerDRoomB = "dnoh";
 
@@ -123,29 +125,29 @@ public class PlayerActions : MonoBehaviour {
 				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf)
                 {
 					//Kamer A
-					inputAnswerBRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYA.ToString();
-					inputAnswerDRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerDRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					inputAnswerARoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					correctAnswerARoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYA.ToString();
+					inputAnswerBRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
+					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
 
 					//Kamer B
-					inputAnswerBRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerBRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
+					inputAnswerCRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
+					correctAnswerCRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
 					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
 					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
-					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerBRoomA);
-					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerBRoomA);
-					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerDRoomA);
-					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerDRoomA);
+					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerARoomA);
+					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerARoomA);
+					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerBRoomA);
+					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerBRoomA);
 
-					Debug.Log("Kamer B Geg. Antw. C: " + inputAnswerBRoomB);
-					Debug.Log("Kamer B Cor. Antw. C: " + correctAnswerBRoomB);
+					Debug.Log("Kamer B Geg. Antw. C: " + inputAnswerCRoomB);
+					Debug.Log("Kamer B Cor. Antw. C: " + correctAnswerCRoomB);
 					Debug.Log("Kamer B Geg. Antw. D: " + inputAnswerDRoomB);
 					Debug.Log("Kamer B Cor. Antw. D: " + correctAnswerDRoomB);
 
 					//Kamer A
-					if (inputAnswerBRoomA == correctAnswerBRoomA && inputAnswerDRoomA == correctAnswerDRoomA)
+					if (inputAnswerARoomA == correctAnswerARoomA && inputAnswerBRoomA == correctAnswerBRoomA)
                     {
 						RoomACorrect = true;
 						
@@ -153,7 +155,7 @@ public class PlayerActions : MonoBehaviour {
                     }
 
 					//Kamer B
-					if (inputAnswerBRoomB == correctAnswerBRoomB && inputAnswerDRoomB == correctAnswerDRoomB)
+					if (inputAnswerCRoomB == correctAnswerCRoomB && inputAnswerDRoomB == correctAnswerDRoomB)
 					{
 						RoomBCorrect = true;
 
@@ -169,6 +171,33 @@ public class PlayerActions : MonoBehaviour {
 				}
 			}
 		}
+    }
+
+	[ServerRpc(RequireOwnership = false)]
+	private void RequestAnswersServerRpc()
+	{
+		
+		ArrayList jsonPayloadAnswersList = new ArrayList();
+		jsonPayloadAnswersList.Add(inputAnswerARoomA);
+		jsonPayloadAnswersList.Add(inputAnswerBRoomA);
+		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
+
+		RequestAnswersClientRpc(jsonPayload);
+	}
+
+	[ClientRpc]
+	private void RequestAnswersClientRpc(string jsonPayload)
+	{
+		Debug.Log("client");
+		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
+		tempSyncArrayList.Add(inputAnswerCRoomB);
+		tempSyncArrayList.Add(inputAnswerDRoomB);
+	}
+
+	[ServerRpc(RequireOwnership = false)]
+	private void GatherAnswersServerRpc(string jsonPayloadAnswersList)
+    {
+		jsonPayLoadAnswers
     }
 
 	GameObject FindChildWithTag(GameObject parent, string tag)
