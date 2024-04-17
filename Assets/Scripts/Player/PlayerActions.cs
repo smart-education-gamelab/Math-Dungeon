@@ -138,8 +138,10 @@ public class PlayerActions : NetworkBehaviour{
     }
 
 	[ServerRpc(RequireOwnership = false)]
-	private void RequestAnswersServerRpc()
+	private void RequestAnswersServerRpc(ServerRpcParams serverRpcParams = default)
 	{
+		Debug.Log(serverRpcParams.Receive.SenderClientId);
+
 		Debug.Log("server rpc nr 1");
 		ArrayList jsonPayloadAnswersList = new ArrayList();
 		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
@@ -152,8 +154,6 @@ public class PlayerActions : NetworkBehaviour{
 	[ClientRpc]
 	private void RequestAnswersClientRpc(string jsonPayload, ClientRpcParams clientRpcParams = default)
 	{
-		Debug.Log("RARA WIE BEN IK: " + clientRpcParams.Send.TargetClientIds.ToString());
-
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
