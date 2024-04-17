@@ -224,14 +224,14 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     {
         int[] xPoints = new int[6] { 99, 99, 99, 99, 99, 99 };
 
-        for (int i = 0; i < xPoints.Length; i++)
+        for (int i = 0; i <= xPoints.Length; i++)
         {
             while (xPoints[i] == 0)
             {
                 xPoints[i] = Random.Range(minValue, maxValue);
             }
 
-            for (int j = 0; j < xPoints.Length; j++)
+            for (int j = 0; j <= xPoints.Length; j++)
             {
                 if (i != j)
                 {
