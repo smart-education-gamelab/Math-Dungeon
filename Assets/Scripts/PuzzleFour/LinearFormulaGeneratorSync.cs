@@ -17,12 +17,14 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
     Vector2 pointA = new Vector2(99, 99);
     Vector2 pointB = new Vector2(99, 99);
+    Vector2 pointC = new Vector2(99, 99);
 
     Vector2 aAndBValueTwo = new Vector2(99, 99);
     string linearFormulaTwo = "placeholder two";
 
-    Vector2 pointC = new Vector2(99, 99);
     Vector2 pointD = new Vector2(99, 99);
+    Vector2 pointE = new Vector2(99, 99);
+    Vector2 pointF = new Vector2(99, 99);
 
     int[] xCoords = new int[4];
 
@@ -32,22 +34,26 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     private TextMeshProUGUI textXB;
     [SerializeField]
     private TextMeshProUGUI textYA;
-
+    [SerializeField]
+    private TextMeshProUGUI textYB;
     [SerializeField]
     private TextMeshProUGUI textXC;
+
+
     [SerializeField]
     private TextMeshProUGUI textXD;
     [SerializeField]
-    private TextMeshProUGUI textYC;
+    private TextMeshProUGUI textXE;
+    [SerializeField]
+    private TextMeshProUGUI textYD;
+    [SerializeField]
+    private TextMeshProUGUI textYE;
+    [SerializeField]
+    private TextMeshProUGUI textXF;
 
-    public int answerYA
+    public int answerXC
     {
-        get => (int)pointA.y;
-    }
-
-    public int answerYB
-    {
-        get => (int)pointB.y;
+        get => (int)pointC.x;
     }
 
     public int answerYC
@@ -55,9 +61,14 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
         get => (int)pointC.y;
     }
 
-    public int answerYD
+    public int answerXF
     {
-        get => (int)pointD.y;
+        get => (int)pointF.x;
+    }
+
+    public int answerYF
+    {
+        get => (int)pointF.y;
     }
 
 
@@ -76,6 +87,8 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
         {
             xCoords = XPointsOnGraph();
 
+            //Eerste formule
+
             aAndBValue = GenerateAAndB();
             Debug.Log("Debug 1: A: " + aAndBValue.x.ToString() + ", B: " + aAndBValue.y.ToString());
             linearFormula = BuildFormulaFromAAndB((int)aAndBValue.x, (int)aAndBValue.y);
@@ -86,23 +99,26 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
             pointB.x = xCoords[1];
             pointB.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointB.x);
             Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
-            /*textXA.text = pointA.x.ToString();
-            textXB.text = pointB.x.ToString();
-            textYA.text = pointA.y.ToString();*/
+            pointC.x = xCoords[2];
+            pointC.y = CalculateY((int)aAndBValue.x, (int)aAndBValue.y, (int)pointC.x);
+            Debug.Log("Debug 5: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+
+            //Tweede formule
 
             aAndBValueTwo = GenerateAAndB();
-            Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
+            Debug.Log("Debug 6: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
             linearFormulaTwo = BuildFormulaFromAAndB((int)aAndBValueTwo.x, (int)aAndBValueTwo.y);
-            Debug.Log("Debug 6: Formula 2: " + linearFormulaTwo);
-            pointC.x = xCoords[2];
-            pointC.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointC.x);
-            Debug.Log("Debug 7: Point C: (" + pointC.x.ToString() + ", " + pointC.y.ToString() + ").");
+            Debug.Log("Debug 7: Formula 2: " + linearFormulaTwo);
             pointD.x = xCoords[3];
             pointD.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointD.x);
             Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
-            /*textXC.text = pointC.x.ToString();
-            textXD.text = pointD.x.ToString();
-            textYC.text = pointC.y.ToString();*/
+            pointE.x = xCoords[4];
+            pointE.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointE.x);
+            Debug.Log("Debug 9: Point E: (" + pointE.x.ToString() + ", " + pointE.y.ToString() + ").");
+            pointF.x = xCoords[5];
+            pointF.y = CalculateY((int)aAndBValueTwo.x, (int)aAndBValueTwo.y, (int)pointF.x);
+            Debug.Log("Debug 10: Point F: (" + pointF.x.ToString() + ", " + pointF.y.ToString() + ").");
+
 
 
             ArrayList jsonPayloadList = new ArrayList();
@@ -114,6 +130,10 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
             jsonPayloadList.Add(pointC.y.ToString());
             jsonPayloadList.Add(pointD.x.ToString());
             jsonPayloadList.Add(pointD.y.ToString());
+            jsonPayloadList.Add(pointE.x.ToString());
+            jsonPayloadList.Add(pointE.y.ToString());
+            jsonPayloadList.Add(pointF.x.ToString());
+            jsonPayloadList.Add(pointF.y.ToString());
             string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
 
             UpdatePointsTextServerRpc(jsonPayload);
@@ -142,18 +162,31 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
         string pointCY = JsonConvert.DeserializeObject<string>(syncArrayList[5].ToString());
         string pointDX = JsonConvert.DeserializeObject<string>(syncArrayList[6].ToString());
         string pointDY = JsonConvert.DeserializeObject<string>(syncArrayList[7].ToString());
+        string pointEX = JsonConvert.DeserializeObject<string>(syncArrayList[8].ToString());
+        string pointEY = JsonConvert.DeserializeObject<string>(syncArrayList[9].ToString());
+        string pointFX = JsonConvert.DeserializeObject<string>(syncArrayList[10].ToString());
+        string pointFY = JsonConvert.DeserializeObject<string>(syncArrayList[11].ToString());
         Debug.Log("A: (" + pointAX + ", " + pointAY + ")");
         Debug.Log("B: (" + pointBX + ", " + pointBY + ")");
         Debug.Log("C: (" + pointCX + ", " + pointCY + ")");
         Debug.Log("D: (" + pointDX + ", " + pointDY + ")");
+        Debug.Log("E: (" + pointEX + ", " + pointEY + ")");
+        Debug.Log("F: (" + pointFX + ", " + pointFY + ")");
 
         textXA.text = pointAX;
         textXB.text = pointBX;
         textYA.text = pointAY;
-
+        textYB.text = pointBY;
+        
         textXC.text = pointCX;
+
+
         textXD.text = pointDX;
-        textYC.text = pointCY;
+        textXE.text = pointEX;
+        textYD.text = pointDY;
+        textYE.text = pointEY;
+
+        textXF.text = pointFX;
     }
 
     private Vector2 GenerateAAndB()
@@ -194,7 +227,7 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
     private int[] XPointsOnGraph()
     {
-        int[] xPoints = new int[4] { 99, 99, 99, 99 };
+        int[] xPoints = new int[6] { 99, 99, 99, 99, 99, 99 };
 
         for (int i = 0; i < xPoints.Length; i++)
         {

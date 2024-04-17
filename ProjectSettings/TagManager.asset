@@ -13,9 +13,11 @@ TagManager:
   - Ball
   - Cauldron A
   - Cauldron B
-  - InputAnswerYDTag
-  - InputAnswerYBTag
   - PotionController
+  - InputAnswerXCTag
+  - InputAnswerYCTag
+  - InputAnswerXFTag
+  - InputAnswerYFTag
   layers:
   - Default
   - TransparentFX

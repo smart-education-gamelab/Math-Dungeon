@@ -54,16 +54,16 @@ public class PlayerActions : MonoBehaviour {
     }
 
 	//Kamer A
-	private string inputAnswerARoomA;
-	private string correctAnswerARoomA;
-	private string inputAnswerBRoomA;
-	private string correctAnswerBRoomA;
+	private string inputAnswerCXRoomA;
+	private string correctAnswerCXRoomA;
+	private string inputAnswerCYRoomA;
+	private string correctAnswerCYRoomA;
 
 	//Kamer B
-	private string inputAnswerCRoomB;
-	private string correctAnswerCRoomB;
-	private string inputAnswerDRoomB;
-	private string correctAnswerDRoomB;
+	private string inputAnswerFXRoomB;
+	private string correctAnswerFXRoomB;
+	private string inputAnswerFYRoomB;
+	private string correctAnswerFYRoomB;
 
 	private bool RoomACorrect;
 	private bool RoomBCorrect;
@@ -72,16 +72,16 @@ public class PlayerActions : MonoBehaviour {
 	void Start()
     {
 		//Kamer A
-		inputAnswerARoomA = "aap";
-		correctAnswerARoomA = "noot";
-		inputAnswerBRoomA = "mies";
-		correctAnswerBRoomA = "hond";
+		inputAnswerCXRoomA = "aap";
+		correctAnswerCXRoomA = "noot";
+		inputAnswerCYRoomA = "mies";
+		correctAnswerCYRoomA = "hond";
 
 		//Kamer B
-		inputAnswerCRoomB = "paa";
-		correctAnswerCRoomB = "toon";
-		inputAnswerDRoomB = "seim";
-		correctAnswerDRoomB = "dnoh";
+		inputAnswerFXRoomB = "paa";
+		correctAnswerFXRoomB = "toon";
+		inputAnswerFYRoomB = "seim";
+		correctAnswerFYRoomB = "dnoh";
 
 
 		IsNearActivationBall = false;
@@ -103,73 +103,35 @@ public class PlayerActions : MonoBehaviour {
 			if(IsNearActivationBall) {
 				BallThatIsNear.GetComponent<InteractableMechanism>().Activate();
 			} else if(IsNearCauldron) {
-				if (canvasName == "A")
-				{
+				if (canvasName == "A") {
 					cauldronCanvasA.SetActive(!cauldronCanvasA.activeSelf);
-				} else if (canvasName == "B")
-                {
+				} else if (canvasName == "B") {
 					cauldronCanvasB.SetActive(!cauldronCanvasB.activeSelf);
                 }
 
 				this.gameObject.GetComponent<PlayerMotor>().CanWalk = !this.gameObject.GetComponent<PlayerMotor>().CanWalk;
-				if(Cursor.lockState == CursorLockMode.Locked)
-                {
+				if(Cursor.lockState == CursorLockMode.Locked) {
 					Cursor.lockState = CursorLockMode.None;
 					Cursor.visible = true;
-                } else
-                {
+                } else {
 					Cursor.lockState = CursorLockMode.Locked;
 					Cursor.visible = false;
                 }
 
-				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf)
-                {
+				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf) {
 					//Kamer A
-					inputAnswerARoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerARoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYA.ToString();
-					inputAnswerBRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerBRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYB.ToString();
+					inputAnswerCXRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerXCTag").GetComponent<TMP_InputField>().text;
+					correctAnswerCXRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerXC.ToString();
+					inputAnswerCYRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYCTag").GetComponent<TMP_InputField>().text;
+					correctAnswerCYRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
 
 					//Kamer B
-					inputAnswerCRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYBTag").GetComponent<TMP_InputField>().text;
-					correctAnswerCRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
-					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
-					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
+					inputAnswerFXRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerXFTag").GetComponent<TMP_InputField>().text;
+					correctAnswerFXRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerXF.ToString();
+					inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
+					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYF.ToString();
 
 					RequestAnswersServerRpc();
-/*
-					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerARoomA);
-					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerARoomA);
-					Debug.Log("Kamer A Geg. Antw. B: " + inputAnswerBRoomA);
-					Debug.Log("Kamer A Cor. Antw. B: " + correctAnswerBRoomA);
-
-					Debug.Log("Kamer B Geg. Antw. C: " + inputAnswerCRoomB);
-					Debug.Log("Kamer B Cor. Antw. C: " + correctAnswerCRoomB);
-					Debug.Log("Kamer B Geg. Antw. D: " + inputAnswerDRoomB);
-					Debug.Log("Kamer B Cor. Antw. D: " + correctAnswerDRoomB);
-
-					//Kamer A
-					if (inputAnswerARoomA == correctAnswerARoomA && inputAnswerBRoomA == correctAnswerBRoomA)
-                    {
-						RoomACorrect = true;
-						
-						Debug.Log("Hoeraaa!");
-                    }
-
-					//Kamer B
-					if (inputAnswerCRoomB == correctAnswerCRoomB && inputAnswerDRoomB == correctAnswerDRoomB)
-					{
-						RoomBCorrect = true;
-
-						Debug.Log("Hoeraaa!");
-					}
-
-					if (RoomACorrect == true && RoomBCorrect == true)
-					{
-						movingWallA.GetComponent<InteractableMechanism>().Activate();
-						movingWallB.GetComponent<InteractableMechanism>().Activate();
-					}*/
-
 				}
 			}
 		}
@@ -180,8 +142,8 @@ public class PlayerActions : MonoBehaviour {
 	{
 		
 		ArrayList jsonPayloadAnswersList = new ArrayList();
-		jsonPayloadAnswersList.Add(inputAnswerCRoomB);
-		jsonPayloadAnswersList.Add(inputAnswerDRoomB);
+		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
+		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
 		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
 		RequestAnswersClientRpc(jsonPayload);
@@ -192,8 +154,8 @@ public class PlayerActions : MonoBehaviour {
 	{
 		Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		tempSyncArrayList.Add(inputAnswerARoomA);
-		tempSyncArrayList.Add(inputAnswerBRoomA);
+		tempSyncArrayList.Add(inputAnswerCXRoomA);
+		tempSyncArrayList.Add(inputAnswerCYRoomA);
 		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
@@ -201,30 +163,30 @@ public class PlayerActions : MonoBehaviour {
 	[ServerRpc(RequireOwnership = false)]
 	private void GatherAnswersServerRpc(string jsonPayloadTwo)
     {
-		CheckAnswers(jsonPayloadTwo, correctAnswerARoomA, correctAnswerBRoomA, correctAnswerCRoomB, correctAnswerDRoomB);
+		CheckAnswers(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
     }
 
 	[ClientRpc]
-	private void CheckAnswers(string jsonPayloadThree, string corAnswAA, string corAnswBA, string corAnswCB, string corAnswDB) {
+	private void CheckAnswers(string jsonPayloadThree, string corAnswCX, string corAnswCY, string corAnswFX, string corAnswFY) {
 		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
-		string inAnswAA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
-		string inAnswBA = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
-		string inAnswCB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
-		string inAnswDB = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
+		string inAnswCX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
+		string inAnswCY = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
+		string inAnswFX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
+		string inAnswFY = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
 
 
-		Debug.Log("Kamer A Geg. Antw. A: " + inAnswAA);
-		Debug.Log("Kamer A Cor. Antw. A: " + corAnswAA);
-		Debug.Log("Kamer A Geg. Antw. B: " + inAnswBA);
-		Debug.Log("Kamer A Cor. Antw. B: " + corAnswBA);
+		Debug.Log("Kamer A Geg. Antw. X van punt C: " + inAnswCX);
+		Debug.Log("Kamer A Cor. Antw. X van punt C: " + corAnswCX);
+		Debug.Log("Kamer A Geg. Antw. Y van punt C: " + inAnswCY);
+		Debug.Log("Kamer A Cor. Antw. Y van punt C: " + corAnswCY);
 
-		Debug.Log("Kamer B Geg. Antw. C: " + inAnswCB);
-		Debug.Log("Kamer B Cor. Antw. C: " + corAnswCB);
-		Debug.Log("Kamer B Geg. Antw. D: " + inAnswDB);
-		Debug.Log("Kamer B Cor. Antw. D: " + corAnswDB);
+		Debug.Log("Kamer B Geg. Antw. X van punt F: " + inAnswFX);
+		Debug.Log("Kamer B Cor. Antw. X van punt F: " + corAnswFX);
+		Debug.Log("Kamer B Geg. Antw. Y van punt F: " + inAnswFY);
+		Debug.Log("Kamer B Cor. Antw. Y van punt F: " + corAnswFY);
 
 		//Kamer A
-		if (inAnswAA == corAnswAA && inAnswBA == corAnswBA)
+		if (inAnswCX == corAnswCX && inAnswCY == corAnswCY)
 		{
 			RoomACorrect = true;
 
@@ -232,7 +194,7 @@ public class PlayerActions : MonoBehaviour {
 		}
 
 		//Kamer B
-		if (inAnswCB == corAnswCB && inAnswDB == corAnswDB)
+		if (inAnswFX == corAnswFX && inAnswFY == corAnswFY)
 		{
 			RoomBCorrect = true;
 
