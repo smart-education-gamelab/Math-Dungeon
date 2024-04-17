@@ -137,10 +137,14 @@ public class PlayerActions : NetworkBehaviour{
 					ArrayList jsonPayloadAnswersList = new ArrayList();
 					if (inputAnswerCXRoomA == "0" && inputAnswerCYRoomA == "0")
 					{
+						Debug.Log("Kamer B antwoord x: " + inputAnswerFXRoomB);
+						Debug.Log("Kamer B antwoord y: " + inputAnswerFYRoomB);
 						jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 						jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
 					} else
                     {
+						Debug.Log("Kamer A antwoord x: " + inputAnswerCXRoomA);
+						Debug.Log("Kamer A antwoord y: " + inputAnswerCYRoomA);
 						jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
 						jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
                     }
