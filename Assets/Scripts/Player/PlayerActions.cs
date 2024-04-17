@@ -152,7 +152,7 @@ public class PlayerActions : NetworkBehaviour{
 	[ClientRpc]
 	private void RequestAnswersClientRpc(string jsonPayload, ClientRpcParams clientRpcParams = default)
 	{
-		Debug.Log("RARA WIE BEN IK: " + clientRpcParams.Send.TargetClientIds);
+		Debug.Log("RARA WIE BEN IK: " + clientRpcParams.Send.TargetClientIds.ToString());
 
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
