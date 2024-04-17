@@ -5,7 +5,7 @@ using TMPro;
 using Unity.Netcode;
 using Newtonsoft.Json;
 
-public class PlayerActions : NetworkBehaviour {
+public class PlayerActions : NetworkBehaviour{
     private bool isNearActivationBall;
     private GameObject ballThatIsNear;
 
@@ -144,8 +144,6 @@ public class PlayerActions : NetworkBehaviour {
 		ArrayList jsonPayloadAnswersList = new ArrayList();
 		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
-		//jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
-		//jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
 		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
 		RequestAnswersClientRpc(jsonPayload);
@@ -163,18 +161,16 @@ public class PlayerActions : NetworkBehaviour {
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
 
-    [ServerRpc(RequireOwnership = false)]
+	[ServerRpc(RequireOwnership = false)]
 	private void GatherAnswersServerRpc(string jsonPayloadTwo)
     {
 		Debug.Log("server rpc nr 2");
-		Debug.Log("TempSyncArrayList 2: " + jsonPayloadTwo);
 		CheckAnswersClientRpc(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
     }
 
 	[ClientRpc]
 	private void CheckAnswersClientRpc(string jsonPayloadThree, string corAnswCX, string corAnswCY, string corAnswFX, string corAnswFY) {
 		Debug.Log("client rpc nr 2");
-		Debug.Log("HELP: " + jsonPayloadThree);
 
 		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
 		string inAnswCX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
