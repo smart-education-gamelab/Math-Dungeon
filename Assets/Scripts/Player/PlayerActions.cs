@@ -68,6 +68,8 @@ public class PlayerActions : NetworkBehaviour{
 	private bool RoomACorrect;
 	private bool RoomBCorrect;
 
+	private Dictionary<ulong, ArrayList> clientAnswers = new Dictionary<ulong, ArrayList>();
+
 	// Start is called before the first frame update
 	void Start()
     {
@@ -131,13 +133,82 @@ public class PlayerActions : NetworkBehaviour{
 					inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
 					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF.ToString();
 
-					RequestAnswersServerRpc();
+					//RequestAnswersServerRpc();
+					ArrayList jsonPayloadAnswersList = new ArrayList();
+					if (inputAnswerCXRoomA == "0" && inputAnswerCYRoomA == "0")
+					{
+						jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
+						jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
+					} else
+                    {
+						jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
+						jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
+                    }
+					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
+					SendAnswersServerRpc(jsonPayload);
 				}
 			}
 		}
     }
 
 	[ServerRpc(RequireOwnership = false)]
+	private void SendAnswersServerRpc(string payload,  ServerRpcParams serverRpcParams = default)
+    {
+		ulong clientID = serverRpcParams.Receive.SenderClientId;
+		ArrayList answersFromClient = JsonConvert.DeserializeObject<ArrayList>(payload);
+		string inAnswX = JsonConvert.DeserializeObject<string>(answersFromClient[0].ToString());
+		string inAnswY = JsonConvert.DeserializeObject<string>(answersFromClient[1].ToString());
+
+		clientAnswers.Add(clientID, answersFromClient);
+
+		if(clientAnswers.Keys.Count < 2)
+        {
+			Debug.Log("nee");
+			return;
+        }
+
+		bool isItGood = false;
+
+		if (clientID == 1)
+		{
+			if (inAnswX == correctAnswerCXRoomA && inAnswY == correctAnswerCYRoomA)
+			{
+				isItGood = true;
+			}
+			else
+			{
+				isItGood = false;
+			}
+		} else
+        {
+			if (inAnswX == correctAnswerFXRoomB && inAnswY == correctAnswerFYRoomB)
+			{
+				isItGood = true;
+			}
+			else
+			{
+				isItGood = false;
+			}
+		}
+
+		handleSubmittedAnswersClientRpc(isItGood);
+	}
+
+	[ClientRpc]
+	private void handleSubmittedAnswersClientRpc(bool isGood)
+    {
+		if(isGood)
+        {
+			Debug.Log("Hoeraaaaaaaaaaaaaaaaaaaaaaaaaa BOTH");
+			movingWallA.GetComponent<InteractableMechanism>().Activate();
+			movingWallB.GetComponent<InteractableMechanism>().Activate();
+		} else
+        {
+
+        }
+    }
+
+	/*[ServerRpc(RequireOwnership = false)]
 	private void RequestAnswersServerRpc(ServerRpcParams serverRpcParams = default)
 	{
 		Debug.Log(serverRpcParams.Receive.SenderClientId);
@@ -215,7 +286,7 @@ public class PlayerActions : NetworkBehaviour{
 			movingWallA.GetComponent<InteractableMechanism>().Activate();
 			movingWallB.GetComponent<InteractableMechanism>().Activate();
 		}
-	}
+	}*/
 
 	GameObject FindChildWithTag(GameObject parent, string tag)
 	{
