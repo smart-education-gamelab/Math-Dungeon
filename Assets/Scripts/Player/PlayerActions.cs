@@ -150,8 +150,10 @@ public class PlayerActions : NetworkBehaviour{
 	}
 
 	[ClientRpc]
-	private void RequestAnswersClientRpc(string jsonPayload)
+	private void RequestAnswersClientRpc(string jsonPayload, ClientRpcParams clientRpcParams = default)
 	{
+		Debug.Log("RARA WIE BEN IK: " + clientRpcParams.Send.TargetClientIds);
+
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
