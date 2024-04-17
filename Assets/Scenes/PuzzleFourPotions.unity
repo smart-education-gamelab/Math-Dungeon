@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008070238, g: 0.029848402, b: 0.15446785, a: 1}
+  m_IndirectSpecularColor: {r: 0.008076611, g: 0.029856993, b: 0.15448934, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -416,6 +416,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 809646779}
     m_Modifications:
+    - target: {fileID: 65421970624186736, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: PotionYellow
+      objectReference: {fileID: 0}
     - target: {fileID: 1394702673401840025, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -492,9 +496,17 @@ PrefabInstance:
       propertyPath: textYC
       value: 
       objectReference: {fileID: 1394702674270380078}
+    - target: {fileID: 2793382173089432366, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0f649a353f6ad7f40990bd4a3864d961, type: 3}
     - target: {fileID: 3448017268071882249, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 517417195
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631099558231563648, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5249273956316399256, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
@@ -511,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 5501351255960939113, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
       value: y2KamerBGeel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649663224179123379, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5748201409756756673, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
@@ -567,6 +583,14 @@ PrefabInstance:
     - target: {fileID: 7689453410774056848, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
       propertyPath: m_Name
       value: DoorA
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706487282779122065, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 657a6bec1bfe2af4d8fe2405e55e74ac, type: 3}
+    - target: {fileID: 8756594478759785783, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
+      propertyPath: m_Name
+      value: PotionBlue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8354f0c0b15cdf49930a8a8309656bd, type: 3}
