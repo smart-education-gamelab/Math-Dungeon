@@ -134,32 +134,34 @@ public class PlayerActions : MonoBehaviour {
 					ArrayList jsonPayloadAnswersList = new ArrayList();
 					jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 					jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
+					jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
+					jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
 					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
-					RequestAnswersServerRpc(jsonPayload);
+					GatherAnswersServerRpc(jsonPayload);
 				}
 			}
 		}
     }
 
-	[ServerRpc(RequireOwnership = false)]
-	private void RequestAnswersServerRpc(string jsonPayload)
-	{
-		Debug.Log("server rpc nr 1");
-		RequestAnswersClientRpc(jsonPayload);
-	}
+	//[ServerRpc(RequireOwnership = false)]
+	//private void RequestAnswersServerRpc(string jsonPayload)
+	//{
+	//	Debug.Log("server rpc nr 1");
+	//	RequestAnswersClientRpc(jsonPayload);
+	//}
 
-	[ClientRpc]
-	private void RequestAnswersClientRpc(string jsonPayload)
-	{
-		Debug.Log("client rpc nr 1");
-		//Debug.Log("client");
-		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		tempSyncArrayList.Add(inputAnswerCXRoomA);
-		tempSyncArrayList.Add(inputAnswerCYRoomA);
-		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
-		GatherAnswersServerRpc(jsonPayloadTwo);
-	}
+	//[ClientRpc]
+	//private void RequestAnswersClientRpc(string jsonPayload)
+	//{
+	//	Debug.Log("client rpc nr 1");
+	//	//Debug.Log("client");
+	//	//ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
+	//	//tempSyncArrayList.Add(inputAnswerCXRoomA);
+	//	//tempSyncArrayList.Add(inputAnswerCYRoomA);
+	//	//string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
+	//	GatherAnswersServerRpc(jsonPayloadTwo);
+	//}
 
 	[ServerRpc(RequireOwnership = false)]
 	private void GatherAnswersServerRpc(string jsonPayloadTwo)
