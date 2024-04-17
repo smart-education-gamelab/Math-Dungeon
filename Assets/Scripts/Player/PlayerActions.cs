@@ -172,11 +172,11 @@ public class PlayerActions : NetworkBehaviour{
 
 
 
-		if(clientAnswers.Keys.ToArray().Length < 2)
+		/*if(clientAnswers.Keys.ToArray().Length < 2)
         {
 			Debug.Log("nee");
 			return;
-        }
+        }*/
 
 		bool isItGood = false;
 
