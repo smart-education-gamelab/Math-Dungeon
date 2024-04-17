@@ -131,23 +131,21 @@ public class PlayerActions : MonoBehaviour {
 					inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
 					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF.ToString();
 
-					RequestAnswersServerRpc();
+					ArrayList jsonPayloadAnswersList = new ArrayList();
+					jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
+					jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
+					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
+
+					RequestAnswersServerRpc(jsonPayload);
 				}
 			}
 		}
     }
 
 	[ServerRpc(RequireOwnership = false)]
-	private void RequestAnswersServerRpc()
+	private void RequestAnswersServerRpc(string jsonPayload)
 	{
 		Debug.Log("server rpc nr 1");
-		ArrayList jsonPayloadAnswersList = new ArrayList();
-		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
-		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
-		jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
-		jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
-		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
-
 		RequestAnswersClientRpc(jsonPayload);
 	}
 
@@ -157,8 +155,8 @@ public class PlayerActions : MonoBehaviour {
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		/*tempSyncArrayList.Add(inputAnswerCXRoomA);
-		tempSyncArrayList.Add(inputAnswerCYRoomA);*/
+		tempSyncArrayList.Add(inputAnswerCXRoomA);
+		tempSyncArrayList.Add(inputAnswerCYRoomA);
 		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
