@@ -137,10 +137,6 @@ public class PlayerActions : NetworkBehaviour {
 		}
     }
 
-	private void setTextbox(string value, TMP_InputField chosenField){
-		chosenField.text = value;
-    }
-
 	[ServerRpc(RequireOwnership = false)]
 	private void RequestAnswersServerRpc()
 	{
@@ -148,8 +144,8 @@ public class PlayerActions : NetworkBehaviour {
 		ArrayList jsonPayloadAnswersList = new ArrayList();
 		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
-		jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
-		jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
+		//jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
+		//jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
 		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
 		RequestAnswersClientRpc(jsonPayload);
@@ -161,31 +157,13 @@ public class PlayerActions : NetworkBehaviour {
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		/*tempSyncArrayList.Add(inputAnswerCXRoomA);
-		tempSyncArrayList.Add(inputAnswerCYRoomA);*/
+		tempSyncArrayList.Add(inputAnswerCXRoomA);
+		tempSyncArrayList.Add(inputAnswerCYRoomA);
 		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
-	//[ServerRpc(RequireOwnership = false)]
-	//private void RequestAnswersServerRpc(string jsonPayload)
-	//{
-	//	Debug.Log("server rpc nr 1");
-	//	RequestAnswersClientRpc(jsonPayload);
-	//}
 
-	//[ClientRpc]
-	//private void RequestAnswersClientRpc(string jsonPayload)
-	//{
-	//	Debug.Log("client rpc nr 1");
-	//	//Debug.Log("client");
-	//	//ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-	//	//tempSyncArrayList.Add(inputAnswerCXRoomA);
-	//	//tempSyncArrayList.Add(inputAnswerCYRoomA);
-	//	//string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
-	//	GatherAnswersServerRpc(jsonPayloadTwo);
-	//}
-
-	[ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
 	private void GatherAnswersServerRpc(string jsonPayloadTwo)
     {
 		Debug.Log("server rpc nr 2");
