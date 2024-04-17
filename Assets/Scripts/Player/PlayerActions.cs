@@ -163,7 +163,7 @@ public class PlayerActions : NetworkBehaviour{
 		string inAnswX = JsonConvert.DeserializeObject<string>(answersFromClient[0].ToString());
 		string inAnswY = JsonConvert.DeserializeObject<string>(answersFromClient[1].ToString());
 
-		clientAnswers.Add(clientID, answersFromClient);
+		clientAnswers[clientID] = answersFromClient;
 
 		if(clientAnswers.Keys.Count < 2)
         {
