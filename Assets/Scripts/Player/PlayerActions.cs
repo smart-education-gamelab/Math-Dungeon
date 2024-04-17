@@ -140,7 +140,7 @@ public class PlayerActions : MonoBehaviour {
 	[ServerRpc(RequireOwnership = false)]
 	private void RequestAnswersServerRpc()
 	{
-		
+		Debug.Log("server rpc nr 1");
 		ArrayList jsonPayloadAnswersList = new ArrayList();
 		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
@@ -152,7 +152,8 @@ public class PlayerActions : MonoBehaviour {
 	[ClientRpc]
 	private void RequestAnswersClientRpc(string jsonPayload)
 	{
-		Debug.Log("client");
+		Debug.Log("client rpc nr 1");
+		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
 		tempSyncArrayList.Add(inputAnswerCXRoomA);
 		tempSyncArrayList.Add(inputAnswerCYRoomA);
@@ -163,11 +164,14 @@ public class PlayerActions : MonoBehaviour {
 	[ServerRpc(RequireOwnership = false)]
 	private void GatherAnswersServerRpc(string jsonPayloadTwo)
     {
-		CheckAnswers(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
+		Debug.Log("server rpc nr 2");
+		CheckAnswersClientRpc(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
     }
 
 	[ClientRpc]
-	private void CheckAnswers(string jsonPayloadThree, string corAnswCX, string corAnswCY, string corAnswFX, string corAnswFY) {
+	private void CheckAnswersClientRpc(string jsonPayloadThree, string corAnswCX, string corAnswCY, string corAnswFX, string corAnswFY) {
+		Debug.Log("client rpc nr 2");
+
 		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
 		string inAnswCX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
 		string inAnswCY = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
@@ -190,7 +194,7 @@ public class PlayerActions : MonoBehaviour {
 		{
 			RoomACorrect = true;
 
-			Debug.Log("Hoeraaa!");
+			Debug.Log("Hoeraaa! Kamer A");
 		}
 
 		//Kamer B
@@ -198,11 +202,12 @@ public class PlayerActions : MonoBehaviour {
 		{
 			RoomBCorrect = true;
 
-			Debug.Log("Hoeraaa!");
+			Debug.Log("Hoeraaa! Kamer B");
 		}
 
 		if (RoomACorrect == true && RoomBCorrect == true)
 		{
+			Debug.Log("Hoeraaaaaaaaaaaaaaaaaaaaaaaaaa BOTH");
 			movingWallA.GetComponent<InteractableMechanism>().Activate();
 			movingWallB.GetComponent<InteractableMechanism>().Activate();
 		}
