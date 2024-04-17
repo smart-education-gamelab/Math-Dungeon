@@ -162,8 +162,10 @@ public class PlayerActions : NetworkBehaviour{
 	}
 
 	[ServerRpc(RequireOwnership = false)]
-	private void GatherAnswersServerRpc(string jsonPayloadTwo)
+	private void GatherAnswersServerRpc(string jsonPayloadTwo, ServerRpcParams serverRpcParams = default)
     {
+		Debug.Log(serverRpcParams.Receive.SenderClientId);
+
 		Debug.Log("server rpc nr 2");
 		CheckAnswersClientRpc(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
     }
