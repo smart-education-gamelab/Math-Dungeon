@@ -50,13 +50,10 @@ public class PickupObject : NetworkBehaviour
         }
 
         // Check if the player presses the pickup button
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
-            Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
+        if (Input.GetKeyDown(KeyCode.E)) {
+            /*Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
             Debug.Log(IsLocalPlayer);
-            Debug.Log("I CLICKED E");
-
+            Debug.Log("I CLICKED E");*/
 
             if (currentObject == null)
             {
@@ -81,8 +78,7 @@ public class PickupObject : NetworkBehaviour
             }
         }
 
-        if (currentObject != null)
-        {
+        if (currentObject != null) {
             // Update the position and rotation of the held object to match the object holder
             currentObject.transform.position = objectHolder.position;
             currentObject.transform.rotation = objectHolder.rotation;

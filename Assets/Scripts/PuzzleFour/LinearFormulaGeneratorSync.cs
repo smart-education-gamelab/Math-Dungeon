@@ -26,7 +26,7 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     Vector2 pointE = new Vector2(99, 99);
     Vector2 pointF = new Vector2(99, 99);
 
-    int[] xCoords = new int[4];
+    int[] xCoords = new int[6];
 
     [SerializeField]
     private TextMeshProUGUI textXA;
@@ -51,22 +51,22 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     [SerializeField]
     private TextMeshProUGUI textXF;
 
-    public int answerXC
+    public int AnswerXC
     {
         get => (int)pointC.x;
     }
 
-    public int answerYC
+    public int AnswerYC
     {
         get => (int)pointC.y;
     }
 
-    public int answerXF
+    public int AnswerXF
     {
         get => (int)pointF.x;
     }
 
-    public int answerYF
+    public int AnswerYF
     {
         get => (int)pointF.y;
     }
@@ -75,14 +75,14 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     // Start is called before the first frame update
     public override void OnNetworkSpawn()
     {
-        Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
+        //Debug.Log("Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
         CalculatePoints();
         base.OnNetworkSpawn();
     }
 
     public void CalculatePoints()
     {
-        Debug.Log("2 Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
+        //Debug.Log("2 Am I client? " + IsClient + "Am I host? " + IsHost + "Am I server? " + IsServer);
         if (IsServer || IsOwner)
         {
             xCoords = XPointsOnGraph();
@@ -137,21 +137,24 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
             string jsonPayload = JsonConvert.SerializeObject(jsonPayloadList);
 
             UpdatePointsTextServerRpc(jsonPayload);
+        } else
+        {
+            return;
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
     private void UpdatePointsTextServerRpc(string jsonPayload)
     {
-        Debug.Log(jsonPayload);
+        Debug.Log(jsonPayload + " SERVER RPC LINFORGENSYN");
         UpdatePointsTextClientRpc(jsonPayload);
     }
 
     [ClientRpc]
     private void UpdatePointsTextClientRpc(string jsonPayload)
     {
-        Debug.Log("client");
-        Debug.Log(jsonPayload);
+        //Debug.Log("client");
+        Debug.Log(jsonPayload + "  CLIENT RPC LINFORGENSYN");
 
         ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
         string pointAX = JsonConvert.DeserializeObject<string>(syncArrayList[0].ToString());
@@ -192,18 +195,10 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
     private Vector2 GenerateAAndB()
     {
         int valueA = 0;
-        while (valueA == 0)
-        {
-            valueA = Random.Range(minValue, maxValue);
-        }
+        valueA = Random.Range(minValue, maxValue);
 
         int valueB = 0;
-        while (valueB == 0)
-        {
-            valueB = Random.Range(minValue, maxValue);
-        }
-
-        //later de 0 weer toe staan
+        valueB = Random.Range(minValue, maxValue);
 
         Vector2 returnValue = new Vector2(valueA, valueB);
 
@@ -235,7 +230,6 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
             {
                 xPoints[i] = Random.Range(minValue, maxValue);
             }
-            //Debug.Log("Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
 
             for (int j = 0; j < xPoints.Length; j++)
             {
@@ -247,7 +241,6 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
                     }
                 }
             }
-            //Debug.Log("Na dubbel check. Nr. " + i.ToString() + " value: " + xPoints[i].ToString());
         }
 
         return xPoints;

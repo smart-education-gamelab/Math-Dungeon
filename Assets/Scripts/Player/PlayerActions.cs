@@ -121,15 +121,15 @@ public class PlayerActions : MonoBehaviour {
 				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf) {
 					//Kamer A
 					inputAnswerCXRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerXCTag").GetComponent<TMP_InputField>().text;
-					correctAnswerCXRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerXC.ToString();
+					correctAnswerCXRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXC.ToString();
 					inputAnswerCYRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYCTag").GetComponent<TMP_InputField>().text;
-					correctAnswerCYRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYC.ToString();
+					correctAnswerCYRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYC.ToString();
 
 					//Kamer B
 					inputAnswerFXRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerXFTag").GetComponent<TMP_InputField>().text;
-					correctAnswerFXRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerXF.ToString();
+					correctAnswerFXRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXF.ToString();
 					inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
-					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYF.ToString();
+					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF.ToString();
 
 					RequestAnswersServerRpc();
 				}
