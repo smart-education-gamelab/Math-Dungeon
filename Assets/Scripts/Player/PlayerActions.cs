@@ -144,6 +144,8 @@ public class PlayerActions : MonoBehaviour {
 		ArrayList jsonPayloadAnswersList = new ArrayList();
 		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
 		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
+		jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
+		jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
 		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
 		RequestAnswersClientRpc(jsonPayload);
@@ -155,8 +157,8 @@ public class PlayerActions : MonoBehaviour {
 		Debug.Log("client rpc nr 1");
 		//Debug.Log("client");
 		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		tempSyncArrayList.Add(inputAnswerCXRoomA);
-		tempSyncArrayList.Add(inputAnswerCYRoomA);
+		/*tempSyncArrayList.Add(inputAnswerCXRoomA);
+		tempSyncArrayList.Add(inputAnswerCYRoomA);*/
 		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
 		GatherAnswersServerRpc(jsonPayloadTwo);
 	}
