@@ -13,6 +13,9 @@ public class PlayerActions : MonoBehaviour {
 	private GameObject cauldronCanvasA;
 	private GameObject cauldronCanvasB;
 
+	private bool isNearLever;
+
+
 	private GameObject potionControllerRef;
 
 	[SerializeField]
@@ -40,6 +43,12 @@ public class PlayerActions : MonoBehaviour {
 		get => canvasName;
 		set => canvasName = value;
 	}
+
+	public bool IsNearLever
+    {
+		get => isNearLever;
+		set => isNearLever = value;
+    }
 
 	//Kamer A
 	public GameObject CauldronCanvasA {
@@ -86,6 +95,7 @@ public class PlayerActions : MonoBehaviour {
 
 		IsNearActivationBall = false;
 		IsNearCauldron = false;
+		IsNearLever = false;
 
 		movingWallA = GameObject.Find("DoorA");
 		movingWallB = GameObject.Find("DoorB");
@@ -136,7 +146,7 @@ public class PlayerActions : MonoBehaviour {
 					inputAnswerDRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYDTag").GetComponent<TMP_InputField>().text;
 					correctAnswerDRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().answerYD.ToString();
 
-					RequestAnswersServerRpc();
+					
 /*
 					Debug.Log("Kamer A Geg. Antw. A: " + inputAnswerARoomA);
 					Debug.Log("Kamer A Cor. Antw. A: " + correctAnswerARoomA);
@@ -171,6 +181,8 @@ public class PlayerActions : MonoBehaviour {
 					}*/
 
 				}
+			} else if(IsNearLever){
+				RequestAnswersServerRpc();
 			}
 		}
     }
