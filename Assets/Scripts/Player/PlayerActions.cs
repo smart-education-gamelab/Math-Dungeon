@@ -138,12 +138,36 @@ public class PlayerActions : MonoBehaviour {
 					jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
 					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 
-					GatherAnswersServerRpc(jsonPayload);
+					SyncAnswersServerRpc(jsonPayload);
 				}
 			}
 		}
     }
 
+	private void setTextbox(string value, TMP_InputField chosenField){
+		chosenField.text = value;
+    }
+
+	[ServerRpc(RequireOwnership = false)]
+	private void SyncAnswersServerRpc(string jsonPayload){
+
+		SyncAnswersClientRpc(jsonPayload);
+	}
+
+	[ClientRpc]
+	private void SyncAnswersClientRpc(string jsonPayload){
+
+		ArrayList jsonPayloadList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
+		string inAnswCX = JsonConvert.DeserializeObject<string>(jsonPayloadList[2].ToString());
+		string inAnswCY = JsonConvert.DeserializeObject<string>(jsonPayloadList[3].ToString());
+		string inAnswFX = JsonConvert.DeserializeObject<string>(jsonPayloadList[0].ToString());
+		string inAnswFY = JsonConvert.DeserializeObject<string>(jsonPayloadList[1].ToString());
+
+		setTextbox(inAnswCX, FindChildWithTag(cauldronCanvasA, "InputAnswerXCTag").GetComponent<TMP_InputField>());
+		setTextbox(inAnswCY, FindChildWithTag(cauldronCanvasA, "InputAnswerYCTag").GetComponent<TMP_InputField>());
+		setTextbox(inAnswFX, FindChildWithTag(CauldronCanvasB, "InputAnswerXFTag").GetComponent<TMP_InputField>());
+		setTextbox(inAnswFY, FindChildWithTag(CauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>());
+	}
 	//[ServerRpc(RequireOwnership = false)]
 	//private void RequestAnswersServerRpc(string jsonPayload)
 	//{
