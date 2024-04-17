@@ -165,8 +165,10 @@ public class PlayerActions : NetworkBehaviour{
 
 		clientAnswers[clientID] = answersFromClient;
 
-		Debug.Log("clients: " + clientAnswers.Keys);
+		Debug.Log("Client ID: " + clientID);
+		Debug.Log("clients: " + clientAnswers.Keys.ToString());
 		Debug.Log("aantal clients: " + clientAnswers.Keys.Count);
+
 
 		if(clientAnswers.Keys.Count < 2)
         {
