@@ -5,7 +5,7 @@ using TMPro;
 using Unity.Netcode;
 using Newtonsoft.Json;
 
-public class PlayerActions : MonoBehaviour {
+public class PlayerActions : NetworkBehaviour {
     private bool isNearActivationBall;
     private GameObject ballThatIsNear;
 
