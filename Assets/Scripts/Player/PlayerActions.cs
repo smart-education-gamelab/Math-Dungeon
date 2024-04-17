@@ -170,8 +170,6 @@ public class PlayerActions : NetworkBehaviour{
 		Debug.Log("clients: " + clientAnswers.Keys.ToArray());
 		Debug.Log("aantal clients: " + clientAnswers.Keys.ToArray().Length);
 
-
-
 		/*if(clientAnswers.Keys.ToArray().Length < 2)
         {
 			Debug.Log("nee");
