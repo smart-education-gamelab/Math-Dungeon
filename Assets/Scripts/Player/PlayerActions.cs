@@ -73,15 +73,15 @@ public class PlayerActions : NetworkBehaviour{
     {
 		//Kamer A
 		inputAnswerCXRoomA = "666";
-		correctAnswerCXRoomA = "666";
-		inputAnswerCYRoomA = "666";
-		correctAnswerCYRoomA = "666";
+		correctAnswerCXRoomA = "667";
+		inputAnswerCYRoomA = "668";
+		correctAnswerCYRoomA = "669";
 
 		//Kamer B
-		inputAnswerFXRoomB = "666";
-		correctAnswerFXRoomB = "666";
-		inputAnswerFYRoomB = "666";
-		correctAnswerFYRoomB = "666";
+		inputAnswerFXRoomB = "670";
+		correctAnswerFXRoomB = "671";
+		inputAnswerFYRoomB = "672";
+		correctAnswerFYRoomB = "673";
 
 
 		IsNearActivationBall = false;

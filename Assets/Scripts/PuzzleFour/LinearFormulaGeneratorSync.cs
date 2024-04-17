@@ -226,6 +226,8 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
 
         for (int i = 0; i < xPoints.Length; i++)
         {
+            xPoints[i] = Random.Range(minValue, maxValue);
+
             while (xPoints[i] == 0)
             {
                 xPoints[i] = Random.Range(minValue, maxValue);
