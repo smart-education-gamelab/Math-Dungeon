@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Unity.Netcode;
 using Newtonsoft.Json;
+using System.Linq;
 
 public class PlayerActions : NetworkBehaviour{
     private bool isNearActivationBall;
@@ -166,11 +167,12 @@ public class PlayerActions : NetworkBehaviour{
 		clientAnswers[clientID] = answersFromClient;
 
 		Debug.Log("Client ID: " + clientID);
-		Debug.Log("clients: " + clientAnswers.Keys.ToString());
-		Debug.Log("aantal clients: " + clientAnswers.Keys.Count);
+		Debug.Log("clients: " + clientAnswers.Keys.ToArray());
+		Debug.Log("aantal clients: " + clientAnswers.Keys.ToArray().Length);
 
 
-		if(clientAnswers.Keys.Count < 2)
+
+		if(clientAnswers.Keys.ToArray().Length < 2)
         {
 			Debug.Log("nee");
 			return;
