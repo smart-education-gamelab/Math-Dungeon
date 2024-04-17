@@ -72,16 +72,16 @@ public class PlayerActions : NetworkBehaviour{
 	void Start()
     {
 		//Kamer A
-		inputAnswerCXRoomA = "aap";
-		correctAnswerCXRoomA = "noot";
-		inputAnswerCYRoomA = "mies";
-		correctAnswerCYRoomA = "hond";
+		inputAnswerCXRoomA = "666";
+		correctAnswerCXRoomA = "666";
+		inputAnswerCYRoomA = "666";
+		correctAnswerCYRoomA = "666";
 
 		//Kamer B
-		inputAnswerFXRoomB = "paa";
-		correctAnswerFXRoomB = "toon";
-		inputAnswerFYRoomB = "seim";
-		correctAnswerFYRoomB = "dnoh";
+		inputAnswerFXRoomB = "666";
+		correctAnswerFXRoomB = "666";
+		inputAnswerFYRoomB = "666";
+		correctAnswerFYRoomB = "666";
 
 
 		IsNearActivationBall = false;
