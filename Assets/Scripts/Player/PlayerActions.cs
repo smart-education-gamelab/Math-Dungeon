@@ -150,13 +150,13 @@ public class PlayerActions : MonoBehaviour {
 
 	[ServerRpc(RequireOwnership = false)]
 	private void SyncAnswersServerRpc(string jsonPayload){
-
+		Debug.Log("HELLOP 1: " + jsonPayload);
 		SyncAnswersClientRpc(jsonPayload);
 	}
 
 	[ClientRpc]
 	private void SyncAnswersClientRpc(string jsonPayload){
-
+		Debug.Log("HELOOP 2: " + jsonPayload);
 		ArrayList jsonPayloadList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
 		string inAnswCX = JsonConvert.DeserializeObject<string>(jsonPayloadList[2].ToString());
 		string inAnswCY = JsonConvert.DeserializeObject<string>(jsonPayloadList[3].ToString());
