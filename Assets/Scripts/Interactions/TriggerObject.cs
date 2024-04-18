@@ -49,7 +49,10 @@ public class TriggerObject : InteractableMechanism {
 					canvasName= "B";
 					other.gameObject.GetComponent<PlayerActions>().CanvasName = canvasName;
                 }
-			}
+			} else if (this.gameObject.CompareTag("Lever"))
+            {
+				other.gameObject.GetComponent<PlayerActions>().IsNearLever = true;
+            }
 			//crosshairImage.color = Color.magenta;
 		}
 	}
