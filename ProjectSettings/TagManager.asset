@@ -18,6 +18,9 @@ TagManager:
   - InputAnswerYCTag
   - InputAnswerXFTag
   - InputAnswerYFTag
+  - InputAnswerYBTag
+  - InputAnswerYDTag
+  - Lever
   layers:
   - Default
   - TransparentFX

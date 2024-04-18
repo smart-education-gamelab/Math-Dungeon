@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnswerLever
       objectReference: {fileID: 0}
+    - target: {fileID: 192424, guid: 86fe03ab8ed5ac74aa15ed7074970102, type: 3}
+      propertyPath: m_TagString
+      value: Lever
+      objectReference: {fileID: 0}
     - target: {fileID: 431570, guid: 86fe03ab8ed5ac74aa15ed7074970102, type: 3}
       propertyPath: m_RootOrder
       value: 12
