@@ -130,40 +130,37 @@ public class PlayerActions : NetworkBehaviour{
 					Cursor.lockState = CursorLockMode.Locked;
 					Cursor.visible = false;
                 }
-
-				if(!cauldronCanvasA.activeSelf || !cauldronCanvasB.activeSelf) {
-					//Kamer A
-					inputAnswerCXRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerXCTag").GetComponent<TMP_InputField>().text;
-					correctAnswerCXRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXC.ToString();
-					inputAnswerCYRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYCTag").GetComponent<TMP_InputField>().text;
-					correctAnswerCYRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYC.ToString();
-
-					//Kamer B
-					inputAnswerFXRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerXFTag").GetComponent<TMP_InputField>().text;
-					correctAnswerFXRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXF.ToString();
-					inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
-					correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF.ToString();
-
-					//RequestAnswersServerRpc();
-					ArrayList jsonPayloadAnswersList = new ArrayList();
-					if (inputAnswerCXRoomA == "0" && inputAnswerCYRoomA == "0")
-					{
-						Debug.Log("Kamer B antwoord x: " + inputAnswerFXRoomB);
-						Debug.Log("Kamer B antwoord y: " + inputAnswerFYRoomB);
-						jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
-						jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
-					} else
-                    {
-						Debug.Log("Kamer A antwoord x: " + inputAnswerCXRoomA);
-						Debug.Log("Kamer A antwoord y: " + inputAnswerCYRoomA);
-						jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
-						jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
-                    }
-					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
-					SendAnswersServerRpc(jsonPayload);
-				}
 			} else if(IsNearLever){
-				RequestAnswersServerRpc();
+				//Kamer A
+				inputAnswerCXRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerXCTag").GetComponent<TMP_InputField>().text;
+				correctAnswerCXRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXC.ToString();
+				inputAnswerCYRoomA = FindChildWithTag(cauldronCanvasA, "InputAnswerYCTag").GetComponent<TMP_InputField>().text;
+				correctAnswerCYRoomA = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYC.ToString();
+
+				//Kamer B
+				inputAnswerFXRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerXFTag").GetComponent<TMP_InputField>().text;
+				correctAnswerFXRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXF.ToString();
+				inputAnswerFYRoomB = FindChildWithTag(cauldronCanvasB, "InputAnswerYFTag").GetComponent<TMP_InputField>().text;
+				correctAnswerFYRoomB = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF.ToString();
+
+				//RequestAnswersServerRpc();
+				ArrayList jsonPayloadAnswersList = new ArrayList();
+				if (inputAnswerCXRoomA == "0" && inputAnswerCYRoomA == "0")
+				{
+					Debug.Log("Kamer B antwoord x: " + inputAnswerFXRoomB);
+					Debug.Log("Kamer B antwoord y: " + inputAnswerFYRoomB);
+					jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
+					jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
+				}
+				else
+				{
+					Debug.Log("Kamer A antwoord x: " + inputAnswerCXRoomA);
+					Debug.Log("Kamer A antwoord y: " + inputAnswerCYRoomA);
+					jsonPayloadAnswersList.Add(inputAnswerCXRoomA);
+					jsonPayloadAnswersList.Add(inputAnswerCYRoomA);
+				}
+				string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
+				SendAnswersServerRpc(jsonPayload);
 			}
 		}
     }
