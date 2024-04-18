@@ -48,6 +48,18 @@ public class LocalPlayerManager : NetworkBehaviour
     [SerializeField]
     private Quaternion spawnRotationPlayerTwo4;
 
+    [Header("Player one Necromancer")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerOneNec;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerOneNec;
+
+    [Header("Player two Necromancer")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerTwoNec;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerTwoNec;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +107,18 @@ public class LocalPlayerManager : NetworkBehaviour
             {
                 this.gameObject.transform.position = spawnPositionPlayerTwo4;
                 this.gameObject.transform.rotation = spawnRotationPlayerTwo4;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.Necromancer.ToString()))
+        {
+            if (IsHost)
+            {
+                this.gameObject.transform.position = spawnPositionPlayerOneNec;
+                this.gameObject.transform.rotation = spawnRotationPlayerOneNec;
+            }
+            else
+            {
+                this.gameObject.transform.position = spawnPositionPlayerTwoNec;
+                this.gameObject.transform.rotation = spawnRotationPlayerTwoNec;
             }
         }
 

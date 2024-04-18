@@ -276,6 +276,10 @@ MonoBehaviour:
   spawnRotationPlayerOne4: {x: 0, y: 0, z: 0, w: 0}
   spawnPositionPlayerTwo4: {x: 7, y: 0, z: -2}
   spawnRotationPlayerTwo4: {x: 0, y: 0, z: 0, w: 0}
+  spawnPositionPlayerOneNec: {x: -2.116588, y: 0.12698662, z: 22.83169}
+  spawnRotationPlayerOneNec: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  spawnPositionPlayerTwoNec: {x: 10.110821, y: 0.12698632, z: 23.725542}
+  spawnRotationPlayerTwoNec: {x: 0, y: 1, z: 0, w: -0.00000004371139}
 --- !u!54 &507616928691796153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -375,7 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3200d2822d7bb640919a298fc80910c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potionControllerRef: {fileID: 811774496876901988, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
+  movingWallA: {fileID: 0}
+  movingWallB: {fileID: 0}
 --- !u!114 &7964763029631065610
 MonoBehaviour:
   m_ObjectHideFlags: 0
