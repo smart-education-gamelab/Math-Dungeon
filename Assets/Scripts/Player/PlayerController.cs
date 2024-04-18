@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : NetworkBehaviour{
     [SerializeField]
@@ -85,15 +86,50 @@ public class PlayerController : NetworkBehaviour{
     [ServerRpc(RequireOwnership = false)]
     private void OnEndSceneServerRpc(ServerRpcParams serverRpcParams = default)
     {
-        Debug.ClearDeveloperConsole();
-        OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
-        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
-    }
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleOneDoors.ToString())
+        {
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 1");
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
+        {
+            Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 2");
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            Loader.LoadNetwork(Loader.Scene.Necromancer);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 3");
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
 
-    [ClientRpc]
+    }
+        [ClientRpc]
     private void OnEndSceneClientRpc(ulong clientId)
     {
-        Debug.ClearDeveloperConsole();
-        Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleOneDoors.ToString())
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 1");
+            Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleTwoGears.ToString()))
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 2");
+            Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 3");
+            Loader.LoadNetwork(Loader.Scene.Necromancer);
+        }
     }
 }

@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SetReady : NetworkBehaviour
 {
-
-
     public static SetReady Instance { get; private set; }
 
 
@@ -56,6 +54,7 @@ public class SetReady : NetworkBehaviour
 
             Loader.LoadNetwork(Loader.Scene.PuzzleOneDoors);
             //Loader.LoadNetwork(Loader.Scene.PuzzleTwoGears);
+            //Loader.LoadNetwork(Loader.Scene.PuzzleFourPotions);
         }
     }
 

@@ -6,11 +6,7 @@ using UnityEngine;
 
 public class GameManager : NetworkBehaviour
 {
-
-
     public static GameManager Instance { get; private set; }
-
-
 
     public event EventHandler OnStateChanged;
     public event EventHandler OnLocalGamePaused;
@@ -18,7 +14,6 @@ public class GameManager : NetworkBehaviour
     public event EventHandler OnMultiplayerGamePaused;
     public event EventHandler OnMultiplayerGameUnpaused;
     public event EventHandler OnLocalPlayerReadyChanged;
-
 
     private enum State
     {
@@ -28,9 +23,7 @@ public class GameManager : NetworkBehaviour
         GameOver,
     }
 
-
     [SerializeField] private Transform playerPrefab;
-
 
     private NetworkVariable<State> state = new NetworkVariable<State>(State.WaitingToStart);
     private bool isLocalPlayerReady;
@@ -39,7 +32,6 @@ public class GameManager : NetworkBehaviour
     private Dictionary<ulong, bool> playerReadyDictionary;
     private Dictionary<ulong, bool> playerPausedDictionary;
     private bool autoTestGamePausedState;
-
 
     private void Awake()
     {

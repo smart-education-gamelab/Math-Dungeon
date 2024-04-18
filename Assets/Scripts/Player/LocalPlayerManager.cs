@@ -36,6 +36,18 @@ public class LocalPlayerManager : NetworkBehaviour
     [SerializeField]
     private Quaternion spawnRotationPlayerTwo2;
 
+    [Header("Player one puzzle 4")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerOne4;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerOne4;
+
+    [Header("Player two puzzle 4")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerTwo4;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerTwo4;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +83,18 @@ public class LocalPlayerManager : NetworkBehaviour
             } else {
                 this.gameObject.transform.position = spawnPositionPlayerTwo2;
                 this.gameObject.transform.rotation = spawnRotationPlayerTwo2;
+            }
+        } else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
+        {
+            if (IsHost)
+            {
+                this.gameObject.transform.position = spawnPositionPlayerOne4;
+                this.gameObject.transform.rotation = spawnRotationPlayerOne4;
+            }
+            else
+            {
+                this.gameObject.transform.position = spawnPositionPlayerTwo4;
+                this.gameObject.transform.rotation = spawnRotationPlayerTwo4;
             }
         }
 

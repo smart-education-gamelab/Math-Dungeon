@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 369432122017233389}
   - component: {fileID: 2071222006018886935}
   - component: {fileID: 7964763029631065610}
+  - component: {fileID: -8375708135853646094}
   m_Layer: 6
   m_Name: Player_Connect
   m_TagString: Player
@@ -271,6 +272,10 @@ MonoBehaviour:
   spawnRotationPlayerOne2: {x: 0, y: 0, z: 0, w: 0}
   spawnPositionPlayerTwo2: {x: 15, y: 0, z: -2}
   spawnRotationPlayerTwo2: {x: 0, y: 0, z: 0, w: 0}
+  spawnPositionPlayerOne4: {x: -8, y: 0, z: -2}
+  spawnRotationPlayerOne4: {x: 0, y: 0, z: 0, w: 0}
+  spawnPositionPlayerTwo4: {x: 7, y: 0, z: -2}
+  spawnRotationPlayerTwo4: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &507616928691796153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -370,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3200d2822d7bb640919a298fc80910c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potionControllerRef: {fileID: 811774496876901988, guid: d78b6f2846268c947b1466eda4ae5058, type: 3}
 --- !u!114 &7964763029631065610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +399,18 @@ MonoBehaviour:
   player: {fileID: 4016622022606588640}
   currentObject: {fileID: 0}
   rayLength: 2
+--- !u!114 &-8375708135853646094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8472752916567889920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7304571994173084772
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,6 +10,17 @@ TagManager:
   - Item
   - Crosshair
   - EndLevel
+  - Ball
+  - Cauldron A
+  - Cauldron B
+  - PotionController
+  - InputAnswerXCTag
+  - InputAnswerYCTag
+  - InputAnswerXFTag
+  - InputAnswerYFTag
+  - InputAnswerYBTag
+  - InputAnswerYDTag
+  - Lever
   layers:
   - Default
   - TransparentFX

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class LinearFormulaGenerator : MonoBehaviour {
@@ -21,6 +22,30 @@ public class LinearFormulaGenerator : MonoBehaviour {
 
     int[] xCoords = new int[4];
 
+    [SerializeField]
+    private TextMeshProUGUI textXA;
+    [SerializeField]
+    private TextMeshProUGUI textXB;
+    [SerializeField]
+    private TextMeshProUGUI textYA;
+
+    [SerializeField]
+    private TextMeshProUGUI textXC;
+    [SerializeField]
+    private TextMeshProUGUI textXD;
+    [SerializeField]
+    private TextMeshProUGUI textYC;
+
+    public int answerYB {
+        get => (int) pointB.y;
+    }
+    
+    
+    public int answerYD {
+        get => (int) pointD.y;
+    }
+
+
     // Start is called before the first frame update
     void Start() {
         xCoords = XPointsOnGraph();
@@ -35,6 +60,9 @@ public class LinearFormulaGenerator : MonoBehaviour {
         pointB.x = xCoords[1];
         pointB.y = CalculateY((int) aAndBValue.x, (int) aAndBValue.y, (int) pointB.x);
         Debug.Log("Debug 4: Point B: (" + pointB.x.ToString() + ", " + pointB.y.ToString() + ").");
+        textXA.text = pointA.x.ToString();
+        textXB.text = pointB.x.ToString();
+        textYA.text = pointA.y.ToString();
 
         aAndBValueTwo = GenerateAAndB();
         Debug.Log("Debug 5: A: " + aAndBValueTwo.x.ToString() + ", B: " + aAndBValueTwo.y.ToString());
@@ -46,6 +74,9 @@ public class LinearFormulaGenerator : MonoBehaviour {
         pointD.x = xCoords[3];
         pointD.y = CalculateY((int) aAndBValueTwo.x, (int) aAndBValueTwo.y, (int) pointD.x);
         Debug.Log("Debug 8: Point D: (" + pointD.x.ToString() + ", " + pointD.y.ToString() + ").");
+        textXC.text = pointC.x.ToString();
+        textXD.text = pointD.x.ToString();
+        textYC.text = pointC.y.ToString();
     }
 
     // Update is called once per frame

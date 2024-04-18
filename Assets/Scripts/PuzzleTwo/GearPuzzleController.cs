@@ -67,10 +67,6 @@ public class GearPuzzleController : NetworkBehaviour {
 
     public string TMPText;
 
-    //private TextMeshProUGUI tmp;
-
-    //public NetworkVariable<string> myString = new NetworkVariable<string>();
-
     // Start is called before the first frame update
     private void Start() {
         amountOfSolved = 0;
@@ -179,6 +175,7 @@ public class GearPuzzleController : NetworkBehaviour {
             // Maak een instantie van het smallGearPrefab op de aangepaste positie
             GameObject newSmallGear = Instantiate(smallGearPrefab, spawnPosition, Quaternion.identity);
             newSmallGear.GetComponent<NetworkObject>().Spawn();
+            newSmallGear.transform.parent = gearParent.transform;
 
             // Pas de rotatie aan om de kleine gears verticaal te laten staan
             newSmallGear.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
@@ -225,7 +222,7 @@ public class GearPuzzleController : NetworkBehaviour {
         Debug.Log("client");
         Debug.Log(jsonPayload);
 
-        ArrayList syncArrayList = JsonConvert.DeserializeObject <ArrayList>(jsonPayload);
+        ArrayList syncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
         Dictionary<string, float[]> syncFormulasAndSolutions = JsonConvert.DeserializeObject<Dictionary<string, float[]>>(syncArrayList[0].ToString());
         //Debug.Log("1 " + syncArrayList[0].ToString());
         //Debug.Log("2 " + syncArrayList[1].ToString());
