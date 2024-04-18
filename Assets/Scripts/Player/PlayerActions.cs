@@ -14,6 +14,9 @@ public class PlayerActions : NetworkBehaviour{
 	private GameObject cauldronCanvasA;
 	private GameObject cauldronCanvasB;
 
+	private bool isNearLever;
+
+
 	private GameObject potionControllerRef;
 
 	[SerializeField]
@@ -41,6 +44,12 @@ public class PlayerActions : NetworkBehaviour{
 		get => canvasName;
 		set => canvasName = value;
 	}
+
+	public bool IsNearLever
+    {
+		get => isNearLever;
+		set => isNearLever = value;
+    }
 
 	//Kamer A
 	public GameObject CauldronCanvasA {
@@ -89,6 +98,7 @@ public class PlayerActions : NetworkBehaviour{
 
 		IsNearActivationBall = false;
 		IsNearCauldron = false;
+		IsNearLever = false;
 
 		movingWallA = GameObject.Find("DoorA");
 		movingWallB = GameObject.Find("DoorB");
@@ -152,6 +162,8 @@ public class PlayerActions : NetworkBehaviour{
 					string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 					SendAnswersServerRpc(jsonPayload);
 				}
+			} else if(IsNearLever){
+				RequestAnswersServerRpc();
 			}
 		}
     }
@@ -216,86 +228,6 @@ public class PlayerActions : NetworkBehaviour{
 
         }
     }
-
-	/*[ServerRpc(RequireOwnership = false)]
-	private void RequestAnswersServerRpc(ServerRpcParams serverRpcParams = default)
-	{
-		Debug.Log(serverRpcParams.Receive.SenderClientId);
-
-		Debug.Log("server rpc nr 1");
-		ArrayList jsonPayloadAnswersList = new ArrayList();
-		jsonPayloadAnswersList.Add(inputAnswerFXRoomB);
-		jsonPayloadAnswersList.Add(inputAnswerFYRoomB);
-		string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
-
-		RequestAnswersClientRpc(jsonPayload);
-	}
-
-	[ClientRpc]
-	private void RequestAnswersClientRpc(string jsonPayload, ClientRpcParams clientRpcParams = default)
-	{
-		Debug.Log("client rpc nr 1");
-		//Debug.Log("client");
-		ArrayList tempSyncArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayload);
-		tempSyncArrayList.Add(inputAnswerCXRoomA);
-		tempSyncArrayList.Add(inputAnswerCYRoomA);
-		string jsonPayloadTwo = JsonConvert.SerializeObject(tempSyncArrayList);
-		GatherAnswersServerRpc(jsonPayloadTwo);
-	}
-
-	[ServerRpc(RequireOwnership = false)]
-	private void GatherAnswersServerRpc(string jsonPayloadTwo, ServerRpcParams serverRpcParams = default)
-    {
-		Debug.Log(serverRpcParams.Receive.SenderClientId);
-
-		Debug.Log("server rpc nr 2");
-		CheckAnswersClientRpc(jsonPayloadTwo, correctAnswerCXRoomA, correctAnswerCYRoomA, correctAnswerFXRoomB, correctAnswerFYRoomB);
-    }
-
-	[ClientRpc]
-	private void CheckAnswersClientRpc(string jsonPayloadThree, string corAnswCX, string corAnswCY, string corAnswFX, string corAnswFY) {
-		Debug.Log("client rpc nr 2");
-
-		ArrayList allAnswersArrayList = JsonConvert.DeserializeObject<ArrayList>(jsonPayloadThree);
-		string inAnswCX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[2].ToString());
-		string inAnswCY = JsonConvert.DeserializeObject<string>(allAnswersArrayList[3].ToString());
-		string inAnswFX = JsonConvert.DeserializeObject<string>(allAnswersArrayList[0].ToString());
-		string inAnswFY = JsonConvert.DeserializeObject<string>(allAnswersArrayList[1].ToString());
-
-
-		Debug.Log("Kamer A Geg. Antw. X van punt C: " + inAnswCX);
-		Debug.Log("Kamer A Cor. Antw. X van punt C: " + corAnswCX);
-		Debug.Log("Kamer A Geg. Antw. Y van punt C: " + inAnswCY);
-		Debug.Log("Kamer A Cor. Antw. Y van punt C: " + corAnswCY);
-
-		Debug.Log("Kamer B Geg. Antw. X van punt F: " + inAnswFX);
-		Debug.Log("Kamer B Cor. Antw. X van punt F: " + corAnswFX);
-		Debug.Log("Kamer B Geg. Antw. Y van punt F: " + inAnswFY);
-		Debug.Log("Kamer B Cor. Antw. Y van punt F: " + corAnswFY);
-
-		//Kamer A
-		if (inAnswCX == corAnswCX && inAnswCY == corAnswCY)
-		{
-			RoomACorrect = true;
-
-			Debug.Log("Hoeraaa! Kamer A");
-		}
-
-		//Kamer B
-		if (inAnswFX == corAnswFX && inAnswFY == corAnswFY)
-		{
-			RoomBCorrect = true;
-
-			Debug.Log("Hoeraaa! Kamer B");
-		}
-
-		if (RoomACorrect == true && RoomBCorrect == true)
-		{
-			Debug.Log("Hoeraaaaaaaaaaaaaaaaaaaaaaaaaa BOTH");
-			movingWallA.GetComponent<InteractableMechanism>().Activate();
-			movingWallB.GetComponent<InteractableMechanism>().Activate();
-		}
-	}*/
 
 	GameObject FindChildWithTag(GameObject parent, string tag)
 	{
