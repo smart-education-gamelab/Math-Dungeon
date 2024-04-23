@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PickupObject : NetworkBehaviour
 {
@@ -9,6 +10,9 @@ public class PickupObject : NetworkBehaviour
     public LayerMask pickupLayer; // The layer of the objects that can be picked up
     public LayerMask snapLayer; // The layer of snapping points
     public Camera cam;
+
+    public AudioClip grabbedClip;
+    public AudioSource grabbedSource;
 
     [SerializeField]
     private NetworkObject player;
@@ -28,7 +32,12 @@ public class PickupObject : NetworkBehaviour
     private void Start() {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
         // Verkrijg een referentie naar de GearPuzzleController
-        gearPuzzleController = FindObjectOfType<GearPuzzleController>();
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleTwoGears.ToString())
+        {
+            gearPuzzleController = FindObjectOfType<GearPuzzleController>();
+        }
+
+        grabbedSource.clip = grabbedClip;
     }
 
 	private void Update()
@@ -49,43 +58,53 @@ public class PickupObject : NetworkBehaviour
             crosshairImage.color = Color.white;
         }
 
-        // Check if the player presses the pickup button
-        if (Input.GetKeyDown(KeyCode.E)) {
-            /*Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
-            Debug.Log(IsLocalPlayer);
-            Debug.Log("I CLICKED E");*/
-
-            if (currentObject == null)
+        if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleTwoGears.ToString())
+        {
+            // Check if the player presses the pickup button
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("CURRENT OBJECT IS 0");
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer))
+                /*Debug.Log("Am I client? " + IsClient + " " + "Am I host? " + IsHost + " " + "Am I server? " + IsServer);
+                Debug.Log(IsLocalPlayer);
+                Debug.Log("I CLICKED E");*/
+
+                if (currentObject == null)
                 {
-                    // Send an RPC to the server to pick up the object
-                    PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
-                    Debug.Log("PICKED UP");
+                    Debug.Log("CURRENT OBJECT IS 0");
+                    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer))
+                    {
+                        grabbedSource.Play();
+                        Debug.Log(grabbedSource.isPlaying);
+                        // Send an RPC to the server to pick up the object
+                        PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
+                        Debug.Log("PICKED UP");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Whoops");
+                    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer))
+                    {
+                        currentSnapPoint = hit.transform.gameObject;
+                        SnapObjectServerRpc(hit.transform.position);
+                    }
+                    else
+                    {
+                        // Send an RPC to the server to drop the object
+                        DropObjectServerRpc(currentObject.NetworkObjectId);
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("Whoops");
-                if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
-                    currentSnapPoint = hit.transform.gameObject;
-                    SnapObjectServerRpc(hit.transform.position);
-                } else {
-                    // Send an RPC to the server to drop the object
-                    DropObjectServerRpc(currentObject.NetworkObjectId);
-                }
-            }
-        }
 
-        if (currentObject != null) {
-            // Update the position and rotation of the held object to match the object holder
-            currentObject.transform.position = objectHolder.position;
-            currentObject.transform.rotation = objectHolder.rotation;
+            if (currentObject != null)
+            {
+                // Update the position and rotation of the held object to match the object holder
+                currentObject.transform.position = objectHolder.position;
+                currentObject.transform.rotation = objectHolder.rotation;
+            }
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = false)]
     private void PickUpObjectServerRpc(ulong objectId, ServerRpcParams serverRpcParams = default)
     {
         if (currentObject != null)
