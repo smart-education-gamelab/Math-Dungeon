@@ -1302,6 +1302,10 @@ PrefabInstance:
       propertyPath: color
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3266711413743767627, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3515210318071401708, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
       propertyPath: KeyHintImage
       value: 
@@ -1389,6 +1393,10 @@ PrefabInstance:
     - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
       propertyPath: m_Name
       value: Ball trigger blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
@@ -1561,6 +1569,10 @@ PrefabInstance:
     - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
       propertyPath: m_Name
       value: Ball trigger yellow
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
@@ -1878,6 +1890,10 @@ PrefabInstance:
     - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
       propertyPath: m_Name
       value: Ball trigger blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
@@ -4041,6 +4057,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ball trigger pink
       objectReference: {fileID: 0}
+    - target: {fileID: 4421285054525458550, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 631c07b9c553d134c9d168625997d0a6, type: 3}
 --- !u!1001 &6275916954866482816
@@ -4052,7 +4072,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 529044374, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 529044374, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
+      propertyPath: m_TagString
+      value: Crosshair
       objectReference: {fileID: 0}
     - target: {fileID: 6275916955684100936, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_Name
@@ -4140,6 +4164,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275916955684100940, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275916955883520668, guid: e8ecc01ba36dc1644b0f77361d91096d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

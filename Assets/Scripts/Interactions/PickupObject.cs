@@ -9,6 +9,8 @@ public class PickupObject : NetworkBehaviour
     public Transform objectHolder; // The Transform that represents the position of the object holder
     public LayerMask pickupLayer; // The layer of the objects that can be picked up
     public LayerMask snapLayer; // The layer of snapping points
+    public LayerMask activationLayer;
+
     public Camera cam;
 
     public AudioClip grabbedClip;
@@ -49,12 +51,20 @@ public class PickupObject : NetworkBehaviour
         Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 100f);
         RaycastHit hit;
 
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer)) {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer))
+        {
             crosshairImage.color = Color.green;
             Debug.Log(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
-        } else if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, Mathf.Infinity, snapLayer)) {
+        }
+        else if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, snapLayer))
+        {
             crosshairImage.color = Color.magenta;
-        } else {
+        }
+        else if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, activationLayer))
+        {
+            crosshairImage.color = Color.blue;
+        } else
+        {
             crosshairImage.color = Color.white;
         }
 

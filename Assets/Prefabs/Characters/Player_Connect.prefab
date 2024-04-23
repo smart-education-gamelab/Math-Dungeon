@@ -401,6 +401,9 @@ MonoBehaviour:
   snapLayer:
     serializedVersion: 2
     m_Bits: 128
+  activationLayer:
+    serializedVersion: 2
+    m_Bits: 256
   cam: {fileID: 8472752916285374732}
   grabbedClip: {fileID: 8300000, guid: bb46c8e57922d194a827401caf00aa72, type: 3}
   grabbedSource: {fileID: -4558460096643537696}
