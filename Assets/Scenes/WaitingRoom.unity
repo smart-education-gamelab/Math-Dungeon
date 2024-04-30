@@ -134,18 +134,102 @@ PrefabInstance:
       propertyPath: m_text
       value: 'Lobby Code: Code'
       objectReference: {fileID: 0}
+    - target: {fileID: 3217635605297704616, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217635605297704616, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2be7b70e984b51444aca9c12ae4723a7, type: 3}
+    - target: {fileID: 3217635605297704616, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217635605297704616, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217635605297704616, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702767762017576825, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702767762017576825, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2be7b70e984b51444aca9c12ae4723a7, type: 3}
+    - target: {fileID: 3702767762017576825, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702767762017576825, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702767762017576825, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4262886428127044038, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_text
-      value: LOBBY
+      value: Main menu
       objectReference: {fileID: 0}
+    - target: {fileID: 4262886428127044038, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a011730c3ed5efa44adf61254120abba, type: 2}
+    - target: {fileID: 4262886428127044038, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_fontStyle
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 4262886428127044038, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6126778185384203842, guid: a011730c3ed5efa44adf61254120abba, type: 2}
+    - target: {fileID: 4280365893044456885, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280365893044456885, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d6a1673a31851fd4395c287261da36e4, type: 3}
     - target: {fileID: 5453632967320456568, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_Name
       value: WaitingCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5718422699452226596, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5718422699452226596, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d6a1673a31851fd4395c287261da36e4, type: 3}
     - target: {fileID: 7449389245594989585, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_text
       value: 'Lobby Naam: LobbyNaam'
       objectReference: {fileID: 0}
+    - target: {fileID: 7775661906397654648, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_text
+      value: Klaar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775661906397654648, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a011730c3ed5efa44adf61254120abba, type: 2}
+    - target: {fileID: 7775661906397654648, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_fontStyle
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775661906397654648, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6126778185384203842, guid: a011730c3ed5efa44adf61254120abba, type: 2}
     - target: {fileID: 9065511499760258041, guid: 50ef98f1485c05149b33b1a079744ff4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
