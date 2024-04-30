@@ -29,7 +29,7 @@ public class CharacterSelectUI : MonoBehaviour {
     {
         Lobby lobby = TestLobby.Instance.GetLobby();
 
-        lobbyNameText.text = "Lobby Naam: " + lobby.Name;
-        lobbyCodeText.text = "Lobby Code: " + lobby.LobbyCode;
+        lobbyNameText.text = "Lobbynaam: " + lobby.Name;
+        lobbyCodeText.text = "Lobbycode: " + lobby.LobbyCode;
     }
 }
