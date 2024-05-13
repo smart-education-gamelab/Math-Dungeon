@@ -7,6 +7,7 @@ public class MainMenuUI : MonoBehaviour
 
     [SerializeField] private Button playMultiplayerButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button creditsButton;
 
 
     private void Awake()
@@ -17,7 +18,10 @@ public class MainMenuUI : MonoBehaviour
         quitButton.onClick.AddListener(() => {
             Application.Quit();
         });
-
+        creditsButton.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.Credits);
+        });
         //Time.timeScale = 1f;
     }
 
