@@ -41,7 +41,7 @@ public class SlopeController : NetworkBehaviour
     {
         // Assuming the line starts at (0,0) and ends at (1, slope)
         Vector3[] positions = new Vector3[2];
-        positions[0] = new Vector3(0, 0, 0);
+        positions[0] = new Vector3(6.5f, 1, 0);
         positions[1] = new Vector3(1, slope, 0);
         lineRenderer.SetPositions(positions);
     }
