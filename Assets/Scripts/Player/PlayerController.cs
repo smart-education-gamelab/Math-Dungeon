@@ -53,6 +53,13 @@ public class PlayerController : NetworkBehaviour{
                 motor.RotateCamera(new Vector3(-mouseDelta.y, 0f, 0f));
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("Player reached end of level!");
+            // Hier kun je code toevoegen om acties uit te voeren wanneer de speler het einde van het level bereikt.
+            OnEndSceneServerRpc();
+        }
     }
 
     void FixedUpdate() {

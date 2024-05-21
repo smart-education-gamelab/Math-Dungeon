@@ -13,7 +13,8 @@ public static class Loader
         PuzzleOneDoors,
         PuzzleTwoGears,
         PuzzleFourPotions,
-        Necromancer
+        Necromancer,
+        Credits
         
     }
 
