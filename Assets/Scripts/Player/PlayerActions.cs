@@ -16,6 +16,8 @@ public class PlayerActions : NetworkBehaviour{
 
 	private bool isNearLever;
 
+	private bool isNearPipeLever;
+	private GameObject sliderCanvas;
 
 	private GameObject potionControllerRef;
 
@@ -50,6 +52,18 @@ public class PlayerActions : NetworkBehaviour{
 		get => isNearLever;
 		set => isNearLever = value;
     }
+
+	public bool IsNearPipeLever
+	{
+		get => isNearPipeLever;
+		set => isNearPipeLever = value;
+	}
+
+	public GameObject SliderCanvas
+	{
+		get => sliderCanvas;
+		set => sliderCanvas = value;
+	}
 
 	//Kamer A
 	public GameObject CauldronCanvasA {
@@ -161,6 +175,22 @@ public class PlayerActions : NetworkBehaviour{
 				}
 				string jsonPayload = JsonConvert.SerializeObject(jsonPayloadAnswersList);
 				SendAnswersServerRpc(jsonPayload);
+			} else if(IsNearPipeLever)
+            {
+				sliderCanvas.SetActive(!sliderCanvas.activeSelf);
+
+				this.gameObject.GetComponent<PlayerMotor>().CanWalk = !this.gameObject.GetComponent<PlayerMotor>().CanWalk;
+
+				if (Cursor.lockState == CursorLockMode.Locked)
+				{
+					Cursor.lockState = CursorLockMode.None;
+					Cursor.visible = true;
+				}
+				else
+				{
+					Cursor.lockState = CursorLockMode.Locked;
+					Cursor.visible = false;
+				}
 			}
 		}
     }

@@ -9,6 +9,8 @@ public class TriggerObject : InteractableMechanism {
 	[SerializeField] private GameObject cauldronCanvasLinkA;
 	[SerializeField] private GameObject cauldronCanvasLinkB;
 
+	[SerializeField] private GameObject sliderCanvas;
+
 	private string canvasName;
 
 	//private Image crosshairImage; // Referentie naar de image component van de crosshair
@@ -52,7 +54,11 @@ public class TriggerObject : InteractableMechanism {
 			} else if (this.gameObject.CompareTag("Lever"))
             {
 				other.gameObject.GetComponent<PlayerActions>().IsNearLever = true;
-            }
+            } else if(this.gameObject.CompareTag("PipeLever"))
+            {
+				other.gameObject.GetComponent<PlayerActions>().IsNearPipeLever = true;
+				other.gameObject.GetComponent<PlayerActions>().SliderCanvas = sliderCanvas;
+			}
 			//crosshairImage.color = Color.magenta;
 		}
 	}

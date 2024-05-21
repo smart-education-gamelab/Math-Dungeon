@@ -21,6 +21,7 @@ TagManager:
   - InputAnswerYBTag
   - InputAnswerYDTag
   - Lever
+  - PipeLever
   layers:
   - Default
   - TransparentFX
