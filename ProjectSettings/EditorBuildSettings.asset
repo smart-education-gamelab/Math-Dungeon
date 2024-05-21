@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/PuzzleFourPotions.unity
     guid: 0f69f36be180c1946a50fa0cd61043a3
   - enabled: 1
+    path: Assets/Scenes/PuzzleFivePipes.unity
+    guid: 765a1a2869f1ee84fa01a2f263cf1f17
+  - enabled: 1
     path: Assets/Scenes/Necromancer.unity
     guid: 915319f5f0791854ea80b6e6bd174a1a
   - enabled: 1

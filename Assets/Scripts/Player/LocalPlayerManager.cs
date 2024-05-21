@@ -48,6 +48,18 @@ public class LocalPlayerManager : NetworkBehaviour
     [SerializeField]
     private Quaternion spawnRotationPlayerTwo4;
 
+    [Header("Player one puzzle 5")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerOne5;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerOne5;
+
+    [Header("Player two puzzle 5")]
+    [SerializeField]
+    private Vector3 spawnPositionPlayerTwo5;
+    [SerializeField]
+    private Quaternion spawnRotationPlayerTwo5;
+
     [Header("Player one Necromancer")]
     [SerializeField]
     private Vector3 spawnPositionPlayerOneNec;
@@ -108,6 +120,18 @@ public class LocalPlayerManager : NetworkBehaviour
                 this.gameObject.transform.position = spawnPositionPlayerTwo4;
                 this.gameObject.transform.rotation = spawnRotationPlayerTwo4;
             }
+        } else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFivePipes.ToString()))
+        {
+            if (IsHost)
+            {
+                this.gameObject.transform.position = spawnPositionPlayerOne5;
+                this.gameObject.transform.rotation = spawnRotationPlayerOne5;
+            }
+            else
+            {
+                this.gameObject.transform.position = spawnPositionPlayerTwo5;
+                this.gameObject.transform.rotation = spawnRotationPlayerTwo5;
+            }
         } else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.Necromancer.ToString()))
         {
             if (IsHost)
@@ -120,7 +144,7 @@ public class LocalPlayerManager : NetworkBehaviour
                 this.gameObject.transform.position = spawnPositionPlayerTwoNec;
                 this.gameObject.transform.rotation = spawnRotationPlayerTwoNec;
             }
-        }
+        };
 
 
     }
