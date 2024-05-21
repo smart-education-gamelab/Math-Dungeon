@@ -109,9 +109,16 @@ public class PlayerController : NetworkBehaviour{
         }
         else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFourPotions.ToString()))
         {
-            Loader.LoadNetwork(Loader.Scene.Necromancer);
+            Loader.LoadNetwork(Loader.Scene.PuzzleFivePipes);
             Debug.ClearDeveloperConsole();
             Debug.Log("Scene 3");
+            OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFivePipes.ToString()))
+        {
+            Loader.LoadNetwork(Loader.Scene.Necromancer);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Scene 4");
             OnEndSceneClientRpc(serverRpcParams.Receive.SenderClientId);
         }
 
@@ -136,7 +143,13 @@ public class PlayerController : NetworkBehaviour{
         {
             Debug.ClearDeveloperConsole();
             Debug.Log("Client: Scene 3");
+            Loader.LoadNetwork(Loader.Scene.PuzzleFivePipes);
+        }
+        else if (SceneManager.GetActiveScene().name.Equals(Loader.Scene.PuzzleFivePipes.ToString()))
+        {
             Loader.LoadNetwork(Loader.Scene.Necromancer);
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Client: Scene 4");
         }
     }
 }
