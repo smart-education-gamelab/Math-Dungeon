@@ -58,7 +58,7 @@ public class SlopeController : NetworkBehaviour
     private void UpdateLineRenderer(float slope)
     {
         // Define the fixed length of the line
-        float length = 2.0f;
+        float length = 1.0f;
 
         // Calculate the z component of the end point based on the fixed length and slope
         float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
