@@ -60,16 +60,12 @@ public class SlopeController : NetworkBehaviour
         // Define the fixed length of the line
         float length = 2.0f;
 
-        // Calculate the angle of the slope in radians
-        float angle = Mathf.Atan(slope);
-
-        // Calculate the x and y components of the end point based on the fixed length
-        float deltaX = length * Mathf.Cos(angle);
-        float deltaY = length * Mathf.Sin(angle);
+        // Calculate the z component of the end point based on the fixed length and slope
+        float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
 
         Vector3[] positions = new Vector3[2];
         positions[0] = new Vector3(6.5f, 1, 1); // Start point
-        positions[1] = new Vector3(6.5f + deltaX, 1 + deltaY, 3); // End point
+        positions[1] = new Vector3(6.5f, 1 + (slope * deltaZ), 1 + deltaZ); // End point
 
         lineRenderer.SetPositions(positions);
     }
