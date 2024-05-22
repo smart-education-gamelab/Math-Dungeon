@@ -64,8 +64,8 @@ public class SlopeController : NetworkBehaviour
         float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
 
         Vector3[] positions = new Vector3[2];
-        positions[0] = new Vector3(6.5f, 1, 1); // Start point
-        positions[1] = new Vector3(6.5f, 1 + (slope * deltaZ), 1 + deltaZ); // End point
+        positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
+        positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
 
         lineRenderer.SetPositions(positions);
     }
