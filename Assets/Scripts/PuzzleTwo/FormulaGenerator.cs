@@ -9,7 +9,7 @@ public class FormulaGenerator : MonoBehaviour {
     [SerializeField] 
     private int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
 
-    private int solutionCountPuzzleOne = 10; //Aantal oplossingen verdeeld over de formules
+    private int solutionCountPuzzleOne = 9; //Aantal oplossingen verdeeld over de formules
     private int[] solutions;
 
     private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden.

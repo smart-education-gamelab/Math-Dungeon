@@ -1472,7 +1472,7 @@ PrefabInstance:
       objectReference: {fileID: 946172447}
     - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: gearAmount
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4347173396072217152, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: gearParent
@@ -1525,6 +1525,10 @@ PrefabInstance:
     - target: {fileID: 4347173396095564779, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_Name
       value: Puzzel 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347173396099046248, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.496
       objectReference: {fileID: 0}
     - target: {fileID: 4376897002368997814, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_IsTrigger
