@@ -56,6 +56,9 @@ public class GearPuzzleController : NetworkBehaviour {
     [SerializeField]
     private GameObject gearParent;
 
+    [SerializeField]
+    private int gearAmount;
+
     // Dictionary om snap points te koppelen aan formules
     private Dictionary<GameObject, string> snapPointFormulas = new Dictionary<GameObject, string>();
 
@@ -142,7 +145,7 @@ public class GearPuzzleController : NetworkBehaviour {
         }
 
         // Loop om het gewenste aantal tandwielen te spawnen
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < gearAmount; i++) {
             // Pas de positie van het bigGearPrefab aan naar de positie van het gameobject
             Vector3 spawnPosition = spawnPoint.position;
 

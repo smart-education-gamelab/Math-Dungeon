@@ -9,7 +9,7 @@ public class FormulaGenerator : MonoBehaviour {
     [SerializeField] 
     private int maxCoefficient = 10; // Maximumwaarde voor de coëfficiënten in de vergelijking
 
-    private int solutionCountPuzzleOne = 6; //Aantal oplossingen verdeeld over de formules
+    private int solutionCountPuzzleOne = 10; //Aantal oplossingen verdeeld over de formules
     private int[] solutions;
 
     private Dictionary<string, float[]> formulasAndSolutions; // Dictionary om formules en bijbehorende oplossingen bij te houden.
@@ -66,7 +66,16 @@ public class FormulaGenerator : MonoBehaviour {
         string equationFive = BuildEquationFromSolutions(new float[] { solutions[4], solutions[5] });
         formulasAndSolutions.Add(equationFive, new float[] { solutions[4], solutions[5] });
 
-        foreach(KeyValuePair<string, float[]> formulaEntry in formulasAndSolutions) {
+        string equationSix = BuildEquationFromSolutions(new float[] { solutions[5], solutions[6] });
+        formulasAndSolutions.Add(equationSix, new float[] { solutions[5], solutions[6] });
+
+        string equationSeven = BuildEquationFromSolutions(new float[] { solutions[6], solutions[7] });
+        formulasAndSolutions.Add(equationSeven, new float[] { solutions[6], solutions[7] });
+
+        string equationEight = BuildEquationFromSolutions(new float[] { solutions[7], solutions[8] });
+        formulasAndSolutions.Add(equationEight, new float[] { solutions[7], solutions[8] });
+
+        foreach (KeyValuePair<string, float[]> formulaEntry in formulasAndSolutions) {
             Debug.Log("Formula: " + formulaEntry.Key);
             Debug.Log("Solutions:");
             foreach(float solution in formulaEntry.Value) {
