@@ -1,79 +1,67 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
-using System.Collections;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class LineRendererData
+{
+    public Slider slider;
+    public LineRenderer lineRenderer;
+}
 
 public class SlopeController : NetworkBehaviour
 {
-    public Slider slopeSlider;
-    public LineRenderer lineRenderer;
+    public List<LineRendererData> lineRendererDataList; // List of LineRendererData, each containing a Slider and a LineRenderer
     public GameObject door1; // Reference to door 1
     public GameObject door2; // Reference to door 2
     public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
-    // Networked variable to sync the slope value
-    private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
     private void Start()
     {
-        // Ensure the lineRenderer, slopeSlider, and doors are assigned
-        if (lineRenderer == null || slopeSlider == null || door1 == null || door2 == null)
+        // Ensure at least one LineRendererData is assigned
+        if (lineRendererDataList.Count == 0)
         {
-            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Doors.");
+            Debug.LogError("SlopeController: No LineRendererData assigned.");
             return;
         }
 
-        if (IsOwner)
+        // Initialize each LineRendererData
+        foreach (LineRendererData data in lineRendererDataList)
         {
-            slopeSlider.onValueChanged.AddListener(OnSliderValueChanged);
+            if (data.slider != null && data.lineRenderer != null)
+            {
+                data.slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(data); });
+                UpdateLineRenderer(data.lineRenderer, data.slider.value);
+            }
+            else
+            {
+                Debug.LogError("SlopeController: LineRendererData is missing Slider or LineRenderer.");
+            }
         }
-
-        // Initial update
-        UpdateLineRenderer(networkedSlope.Value);
-
-        // Listen for changes in the networked variable
-        networkedSlope.OnValueChanged += OnNetworkedSlopeChanged;
     }
 
     private void OnDestroy()
     {
         // Cleanup event listeners
-        if (IsOwner && slopeSlider != null)
+        foreach (LineRendererData data in lineRendererDataList)
         {
-            slopeSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
-        }
-
-        networkedSlope.OnValueChanged -= OnNetworkedSlopeChanged;
-    }
-
-    private void OnSliderValueChanged(float value)
-    {
-        if (IsOwner)
-        {
-            networkedSlope.Value = value;
-
-
-            if (value == 2)
+            if (data.slider != null)
             {
-                RequestOpenDoorsServerRpc();
+                data.slider.onValueChanged.RemoveAllListeners();
             }
         }
     }
 
-    private void OnNetworkedSlopeChanged(float oldValue, float newValue)
+    private void OnSliderValueChanged(LineRendererData data)
     {
-        UpdateLineRenderer(newValue);
-
-        
-        if (newValue == 2)
-        {
-            OpenDoors();
-        }
+        // Update the LineRenderer associated with the Slider
+        UpdateLineRenderer(data.lineRenderer, data.slider.value);
     }
 
-    private void UpdateLineRenderer(float slope)
+    private void UpdateLineRenderer(LineRenderer renderer, float slope)
     {
         // Define the fixed length of the line
         float length = 1.0f;
@@ -85,42 +73,6 @@ public class SlopeController : NetworkBehaviour
         positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
         positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
 
-        lineRenderer.SetPositions(positions);
-    }
-
-    [ServerRpc]
-    private void RequestOpenDoorsServerRpc()
-    {
-        // Open the doors on the server and notify all clients
-        OpenDoorsClientRpc();
-    }
-
-    [ClientRpc]
-    private void OpenDoorsClientRpc()
-    {
-        // Implement the logic to open both doors
-        OpenDoors();
-    }
-
-    private void OpenDoors()
-    {
-        // Start coroutines to open both doors smoothly
-        StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
-        StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
-    }
-
-    private IEnumerator OpenDoorSmoothly(GameObject door, Vector3 targetPosition)
-    {
-        float timeElapsed = 0f;
-        Vector3 startPosition = door.transform.localPosition;
-
-        while (timeElapsed < doorOpenSpeed)
-        {
-            door.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, timeElapsed / doorOpenSpeed);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        door.transform.localPosition = targetPosition;
+        renderer.SetPositions(positions);
     }
 }
