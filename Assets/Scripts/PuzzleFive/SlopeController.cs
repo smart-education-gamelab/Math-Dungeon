@@ -16,8 +16,6 @@ public class SlopeController : NetworkBehaviour
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    private const float Tolerance = 0.01f; // Tolerance value for float comparison
-
     private void Start()
     {
         // Ensure the lineRenderer, slopeSlider, and doors are assigned
@@ -57,7 +55,7 @@ public class SlopeController : NetworkBehaviour
             networkedSlope.Value = value;
 
             // Check if the slider value is approximately 1 (with a small tolerance) and request to open the doors if it is
-            if (Mathf.Abs(value - 1f) < Tolerance)
+            if (value == 1)
             {
                 RequestOpenDoorsServerRpc();
             }
@@ -69,7 +67,7 @@ public class SlopeController : NetworkBehaviour
         UpdateLineRenderer(newValue);
 
         // Check if the slider value is approximately 1 (with a small tolerance) and open the doors if it is
-        if (Mathf.Abs(newValue - 1f) < Tolerance)
+        if (newValue == 1)
         {
             OpenDoors();
         }
