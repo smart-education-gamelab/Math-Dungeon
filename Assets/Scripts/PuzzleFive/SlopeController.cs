@@ -2,159 +2,109 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 using System.Collections;
-using System.Collections.Generic;
-
-[System.Serializable]
-public class SliderLineRendererPair
-{
-    public Slider slider;
-    public LineRenderer lineRenderer;
-    public float targetValue; // Specifieke doelwaarde voor elke slider
-}
 
 public class SlopeController : NetworkBehaviour
 {
-    public List<SliderLineRendererPair> sliderLineRendererPairs; // Lijst van slider-LineRenderer paren
-    public GameObject door1; // Referentie naar deur 1
-    public GameObject door2; // Referentie naar deur 2
-    public Vector3 doorOpenPosition1; // De positie waarnaar deur 1 moet bewegen als deze opent
-    public Vector3 doorOpenPosition2; // De positie waarnaar deur 2 moet bewegen als deze opent
-    public float doorOpenSpeed = 2f; // Snelheid waarmee de deur opent
+    public Slider slopeSlider;
+    public LineRenderer lineRenderer;
+    public GameObject door1; // Reference to door 1
+    public GameObject door2; // Reference to door 2
+    public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
+    public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
+    public float doorOpenSpeed = 2f; // Speed at which the door opens
 
-    private List<NetworkVariable<float>> networkedSlopes = new List<NetworkVariable<float>>();
+    // Networked variable to sync the slope value
+    private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
-    public override void OnNetworkSpawn()
+    private void Start()
     {
-        base.OnNetworkSpawn();
-
-        // Zorg ervoor dat de lineRenderers, slopeSliders en deuren zijn toegewezen
-        if (sliderLineRendererPairs.Count == 0 || door1 == null || door2 == null)
+        // Ensure the lineRenderer, slopeSlider, and doors are assigned
+        if (lineRenderer == null || slopeSlider == null || door1 == null || door2 == null)
         {
-            Debug.LogError("SlopeController: Ontbrekende referenties naar LineRenderers, Sliders, of Deuren.");
+            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Doors.");
             return;
         }
 
-        for (int i = 0; i < sliderLineRendererPairs.Count; i++)
+        if (IsOwner)
         {
-            NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-            networkedSlopes.Add(networkedSlope);
-
-            if (IsOwner)
-            {
-                int index = i; // Index vastleggen voor gebruik in de lambda
-                sliderLineRendererPairs[i].slider.onValueChanged.AddListener(value => OnSliderValueChanged(index, value));
-            }
-
-            // Initiële update
-            UpdateLineRenderer(sliderLineRendererPairs[i].lineRenderer, networkedSlopes[i].Value);
-
-            // Luister naar veranderingen in de genetwerkte variabele
-            int capturedIndex = i; // Capture index for use in lambda
-            networkedSlopes[i].OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(capturedIndex, newValue);
+            slopeSlider.onValueChanged.AddListener(OnSliderValueChanged);
         }
+
+        // Initial update
+        UpdateLineRenderer(networkedSlope.Value);
+
+        // Listen for changes in the networked variable
+        networkedSlope.OnValueChanged += OnNetworkedSlopeChanged;
     }
 
     private void OnDestroy()
     {
-        // Opruimen van event listeners
-        if (IsOwner)
+        // Cleanup event listeners
+        if (IsOwner && slopeSlider != null)
         {
-            for (int i = 0; i < sliderLineRendererPairs.Count; i++)
-            {
-                sliderLineRendererPairs[i].slider.onValueChanged.RemoveAllListeners();
-            }
+            slopeSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
         }
 
-        for (int i = 0; i < networkedSlopes.Count; i++)
-        {
-            int index = i; // Index vastleggen voor gebruik in de lambda
-            networkedSlopes[i].OnValueChanged -= (oldValue, newValue) => OnNetworkedSlopeChanged(index, newValue);
-        }
+        networkedSlope.OnValueChanged -= OnNetworkedSlopeChanged;
     }
 
-    private void OnSliderValueChanged(int index, float value)
+    private void OnSliderValueChanged(float value)
     {
         if (IsOwner)
         {
-            if (index >= 0 && index < networkedSlopes.Count)
-            {
-                networkedSlopes[index].Value = value;
+            networkedSlope.Value = value;
 
-                // Controleer of alle sliders op hun doelwaarden staan en vraag om de deuren te openen als dat zo is
-                if (AllSlidersAtTargetValue())
-                {
-                    RequestOpenDoorsServerRpc();
-                }
-            }
-            else
+
+            if (value == 2)
             {
-                Debug.LogError("Index out of range in OnSliderValueChanged: " + index);
+                RequestOpenDoorsServerRpc();
             }
         }
     }
 
-    private void OnNetworkedSlopeChanged(int index, float newValue)
+    private void OnNetworkedSlopeChanged(float oldValue, float newValue)
     {
-        if (index >= 0 && index < sliderLineRendererPairs.Count)
-        {
-            UpdateLineRenderer(sliderLineRendererPairs[index].lineRenderer, newValue);
+        UpdateLineRenderer(newValue);
 
-            // Controleer of alle sliders op hun doelwaarden staan en open de deuren als dat zo is
-            if (AllSlidersAtTargetValue())
-            {
-                OpenDoors();
-            }
-        }
-        else
+
+        if (newValue == 2)
         {
-            Debug.LogError("Index out of range in OnNetworkedSlopeChanged: " + index);
+            OpenDoors();
         }
     }
 
-    private bool AllSlidersAtTargetValue()
+    private void UpdateLineRenderer(float slope)
     {
-        foreach (var pair in sliderLineRendererPairs)
-        {
-            if (Mathf.Abs(pair.slider.value - pair.targetValue) > 0.01f) // Gebruik een kleine drempel om rekening te houden met floating-point precisie
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void UpdateLineRenderer(LineRenderer renderer, float slope)
-    {
-        // Definieer de vaste lengte van de lijn
+        // Define the fixed length of the line
         float length = 1.0f;
 
-        // Bereken de z-component van het eindpunt op basis van de vaste lengte en helling
+        // Calculate the z component of the end point based on the fixed length and slope
         float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
 
         Vector3[] positions = new Vector3[2];
-        positions[0] = new Vector3(6.5f, 1.5f, 0); // Startpunt
-        positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // Eindpunt
+        positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
+        positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
 
-        renderer.SetPositions(positions);
+        lineRenderer.SetPositions(positions);
     }
 
     [ServerRpc]
     private void RequestOpenDoorsServerRpc()
     {
-        // Open de deuren op de server en verwittig alle clients
+        // Open the doors on the server and notify all clients
         OpenDoorsClientRpc();
     }
 
     [ClientRpc]
     private void OpenDoorsClientRpc()
     {
-        // Implementeer de logica om beide deuren te openen
+        // Implement the logic to open both doors
         OpenDoors();
     }
 
     private void OpenDoors()
     {
-        // Start coroutines om beide deuren soepel te openen
+        // Start coroutines to open both doors smoothly
         StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
         StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
     }
