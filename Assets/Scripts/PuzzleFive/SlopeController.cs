@@ -60,7 +60,6 @@ public class SlopeController : NetworkBehaviour
                 RequestOpenDoorsServerRpc();
             }
         }
-        Debug.Log(value.ToString());
     }
 
     private void OnNetworkedSlopeChanged(float oldValue, float newValue)
