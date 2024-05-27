@@ -21,6 +21,18 @@ public class SlopeController : NetworkBehaviour
 
     private List<NetworkVariable<float>> sliderValues;
 
+    private void Awake()
+    {
+        sliderValues = new List<NetworkVariable<float>>();
+
+        // Initialize NetworkVariables for each LineRendererData
+        for (int i = 0; i < lineRendererDataList.Count; i++)
+        {
+            var sliderValue = new NetworkVariable<float>(lineRendererDataList[i].slider.value);
+            sliderValues.Add(sliderValue);
+        }
+    }
+
     private void Start()
     {
         // Ensure at least one LineRendererData is assigned
@@ -30,24 +42,34 @@ public class SlopeController : NetworkBehaviour
             return;
         }
 
-        // Initialize NetworkVariables for each LineRendererData
-        sliderValues = new List<NetworkVariable<float>>();
+        // Set up listeners and initial states
         for (int i = 0; i < lineRendererDataList.Count; i++)
         {
-            var sliderValue = new NetworkVariable<float>(lineRendererDataList[i].slider.value);
-            sliderValues.Add(sliderValue);
-
             int index = i; // Capture the current index for the closure
-            sliderValue.OnValueChanged += (oldValue, newValue) => OnSliderValueChanged(index, newValue);
+
+            // Subscribe to value changes of the NetworkVariable
+            sliderValues[index].OnValueChanged += (oldValue, newValue) => OnSliderValueChanged(index, newValue);
 
             if (lineRendererDataList[i].slider != null && lineRendererDataList[i].lineRenderer != null)
             {
+                // Listen to local slider changes
                 lineRendererDataList[i].slider.onValueChanged.AddListener(delegate { OnLocalSliderValueChanged(index); });
+
+                // Update LineRenderer to initial value
                 UpdateLineRenderer(lineRendererDataList[i].lineRenderer, lineRendererDataList[i].slider.value);
             }
             else
             {
                 Debug.LogError("SlopeController: LineRendererData is missing Slider or LineRenderer.");
+            }
+        }
+
+        // Ensure the sliders are initialized correctly on clients
+        if (IsClient)
+        {
+            for (int i = 0; i < sliderValues.Count; i++)
+            {
+                OnSliderValueChanged(i, sliderValues[i].Value);
             }
         }
     }
@@ -87,6 +109,10 @@ public class SlopeController : NetworkBehaviour
     {
         // Update the LineRenderer associated with the Slider
         UpdateLineRenderer(lineRendererDataList[index].lineRenderer, newValue);
+        if (IsClient && lineRendererDataList[index].slider.value != newValue)
+        {
+            lineRendererDataList[index].slider.value = newValue;
+        }
     }
 
     private void UpdateLineRenderer(LineRenderer renderer, float slope)
