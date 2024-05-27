@@ -16,6 +16,8 @@ public class SlopeController : NetworkBehaviour
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    private const float Tolerance = 0.01f; // Tolerance value for float comparison
+
     private void Start()
     {
         // Ensure the lineRenderer, slopeSlider, and doors are assigned
@@ -54,8 +56,8 @@ public class SlopeController : NetworkBehaviour
         {
             networkedSlope.Value = value;
 
-            // Check if the slider value is exactly 1 and request to open the doors if it is
-            if (value == 1f)
+            // Check if the slider value is approximately 1 (with a small tolerance) and request to open the doors if it is
+            if (Mathf.Abs(value - 1f) < Tolerance)
             {
                 RequestOpenDoorsServerRpc();
             }
@@ -66,8 +68,8 @@ public class SlopeController : NetworkBehaviour
     {
         UpdateLineRenderer(newValue);
 
-        // Check if the slider value is exactly 1 and open the doors if it is
-        if (newValue == 1f)
+        // Check if the slider value is approximately 1 (with a small tolerance) and open the doors if it is
+        if (Mathf.Abs(newValue - 1f) < Tolerance)
         {
             OpenDoors();
         }
@@ -99,8 +101,7 @@ public class SlopeController : NetworkBehaviour
     private void OpenDoorsClientRpc()
     {
         // Implement the logic to open both doors
-        StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
-        StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
+        OpenDoors();
     }
 
     private void OpenDoors()
@@ -113,15 +114,15 @@ public class SlopeController : NetworkBehaviour
     private IEnumerator OpenDoorSmoothly(GameObject door, Vector3 targetPosition)
     {
         float timeElapsed = 0f;
-        Vector3 startPosition = door.transform.position;
+        Vector3 startPosition = door.transform.localPosition;
 
         while (timeElapsed < doorOpenSpeed)
         {
-            door.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / doorOpenSpeed);
+            door.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, timeElapsed / doorOpenSpeed);
             timeElapsed += Time.deltaTime;
             yield return null;
         }
 
-        door.transform.position = targetPosition;
+        door.transform.localPosition = targetPosition;
     }
 }
