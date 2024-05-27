@@ -11,7 +11,7 @@ public class SlopeController : NetworkBehaviour
     public GameObject door2; // Reference to door 2
     public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
-    public float doorOpenSpeed = 1f; // Speed at which the door opens
+    public float doorOpenSpeed = 2f; // Speed at which the door opens
 
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -55,7 +55,7 @@ public class SlopeController : NetworkBehaviour
             networkedSlope.Value = value;
 
             // Check if the slider value is exactly 1 and request to open the doors if it is
-            if (Mathf.Approximately(value, 1f))
+            if (value == 1f)
             {
                 RequestOpenDoorsServerRpc();
             }
@@ -67,7 +67,7 @@ public class SlopeController : NetworkBehaviour
         UpdateLineRenderer(newValue);
 
         // Check if the slider value is exactly 1 and open the doors if it is
-        if (Mathf.Approximately(newValue, 1f))
+        if (newValue == 1f)
         {
             OpenDoors();
         }
@@ -113,7 +113,7 @@ public class SlopeController : NetworkBehaviour
     private IEnumerator OpenDoorSmoothly(GameObject door, Vector3 targetPosition)
     {
         float timeElapsed = 0f;
-        Vector3 startPosition = door.transform.localPosition;
+        Vector3 startPosition = door.transform.position;
 
         while (timeElapsed < doorOpenSpeed)
         {
@@ -122,6 +122,6 @@ public class SlopeController : NetworkBehaviour
             yield return null;
         }
 
-        door.transform.localPosition = targetPosition;
+        door.transform.position = targetPosition;
     }
 }
