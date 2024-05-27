@@ -52,8 +52,8 @@ public class SlopeController : NetworkBehaviour
         {
             networkedSlope.Value = value;
 
-            // Check if the slider value is 1 and request to open the doors if it is
-            if (value == 1f)
+            // Check if the slider value is exactly 1 and request to open the doors if it is
+            if (Mathf.Approximately(value, 1f))
             {
                 RequestOpenDoorsServerRpc();
             }
@@ -64,8 +64,8 @@ public class SlopeController : NetworkBehaviour
     {
         UpdateLineRenderer(newValue);
 
-        // Check if the slider value is 1 and open the doors if it is
-        if (newValue == 1f)
+        // Check if the slider value is exactly 1 and open the doors if it is
+        if (Mathf.Approximately(newValue, 1f))
         {
             OpenDoors();
         }
