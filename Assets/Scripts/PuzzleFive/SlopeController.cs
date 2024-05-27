@@ -28,12 +28,12 @@ public class SlopeController : NetworkBehaviour
         // Initialize NetworkVariables for each LineRendererData
         for (int i = 0; i < lineRendererDataList.Count; i++)
         {
-            var sliderValue = new NetworkVariable<float>(lineRendererDataList[i].slider.value);
+            var sliderValue = new NetworkVariable<float>(0f);
             sliderValues.Add(sliderValue);
         }
     }
 
-    private void Start()
+    public override void OnNetworkSpawn()
     {
         // Ensure at least one LineRendererData is assigned
         if (lineRendererDataList.Count == 0)
@@ -55,21 +55,20 @@ public class SlopeController : NetworkBehaviour
                 // Listen to local slider changes
                 lineRendererDataList[i].slider.onValueChanged.AddListener(delegate { OnLocalSliderValueChanged(index); });
 
-                // Update LineRenderer to initial value
-                UpdateLineRenderer(lineRendererDataList[i].lineRenderer, lineRendererDataList[i].slider.value);
+                // If server, initialize the NetworkVariable with the current slider value
+                if (IsServer)
+                {
+                    sliderValues[index].Value = lineRendererDataList[i].slider.value;
+                }
+                else
+                {
+                    // Ensure clients update their LineRenderer and slider values to match the network state
+                    OnSliderValueChanged(index, sliderValues[index].Value);
+                }
             }
             else
             {
                 Debug.LogError("SlopeController: LineRendererData is missing Slider or LineRenderer.");
-            }
-        }
-
-        // Ensure the sliders are initialized correctly on clients
-        if (IsClient)
-        {
-            for (int i = 0; i < sliderValues.Count; i++)
-            {
-                OnSliderValueChanged(i, sliderValues[i].Value);
             }
         }
     }
