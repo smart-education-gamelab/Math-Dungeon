@@ -6,20 +6,20 @@ public class SlopeController : NetworkBehaviour
 {
     public Slider slopeSlider;
     public LineRenderer lineRenderer;
-    public GameObject door1; // Reference to the door object
-    public GameObject door2;
-    public Vector3 doorOpenPosition1; // The position to move the door to when it opens
-    public Vector3 doorOpenPosition2;
+    public GameObject door1; // Reference to door 1
+    public GameObject door2; // Reference to door 2
+    public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
+    public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
 
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
-        // Ensure the lineRenderer, slopeSlider, and door are assigned
+        // Ensure the lineRenderer, slopeSlider, and doors are assigned
         if (lineRenderer == null || slopeSlider == null || door1 == null || door2 == null)
         {
-            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Door.");
+            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Doors.");
             return;
         }
 
@@ -52,10 +52,10 @@ public class SlopeController : NetworkBehaviour
         {
             networkedSlope.Value = value;
 
-            // Check if the slider value is 1 and open the door if it is
+            // Check if the slider value is 1 and request to open the doors if it is
             if (value == 1f)
             {
-                OpenDoor();
+                RequestOpenDoorsServerRpc();
             }
         }
     }
@@ -64,10 +64,10 @@ public class SlopeController : NetworkBehaviour
     {
         UpdateLineRenderer(newValue);
 
-        // Check if the slider value is 1 and open the door if it is
+        // Check if the slider value is 1 and open the doors if it is
         if (newValue == 1f)
         {
-            OpenDoor();
+            OpenDoors();
         }
     }
 
@@ -86,11 +86,25 @@ public class SlopeController : NetworkBehaviour
         lineRenderer.SetPositions(positions);
     }
 
-    private void OpenDoor()
+    [ServerRpc]
+    private void RequestOpenDoorsServerRpc()
     {
-        // Implement the logic to open the door
+        // Open the doors on the server and notify all clients
+        OpenDoorsClientRpc();
+    }
+
+    [ClientRpc]
+    private void OpenDoorsClientRpc()
+    {
+        // Implement the logic to open both doors
+        OpenDoors();
+    }
+
+    private void OpenDoors()
+    {
+        // Implement the logic to open both doors
         door1.transform.position = doorOpenPosition1;
         door2.transform.position = doorOpenPosition2;
-        Debug.Log("Door opened!");
+        Debug.Log("Doors opened!");
     }
 }
