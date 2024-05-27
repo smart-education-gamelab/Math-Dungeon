@@ -6,16 +6,20 @@ public class SlopeController : NetworkBehaviour
 {
     public Slider slopeSlider;
     public LineRenderer lineRenderer;
+    public GameObject door1; // Reference to the door object
+    public GameObject door2;
+    public Vector3 doorOpenPosition1; // The position to move the door to when it opens
+    public Vector3 doorOpenPosition2;
 
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
-        // Ensure the lineRenderer and slopeSlider are assigned
-        if (lineRenderer == null || slopeSlider == null)
+        // Ensure the lineRenderer, slopeSlider, and door are assigned
+        if (lineRenderer == null || slopeSlider == null || door1 == null || door2 == null)
         {
-            Debug.LogError("SlopeController: Missing references to LineRenderer or Slider.");
+            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Door.");
             return;
         }
 
@@ -47,12 +51,24 @@ public class SlopeController : NetworkBehaviour
         if (IsOwner)
         {
             networkedSlope.Value = value;
+
+            // Check if the slider value is 1 and open the door if it is
+            if (value == 1f)
+            {
+                OpenDoor();
+            }
         }
     }
 
     private void OnNetworkedSlopeChanged(float oldValue, float newValue)
     {
         UpdateLineRenderer(newValue);
+
+        // Check if the slider value is 1 and open the door if it is
+        if (newValue == 1f)
+        {
+            OpenDoor();
+        }
     }
 
     private void UpdateLineRenderer(float slope)
@@ -68,5 +84,13 @@ public class SlopeController : NetworkBehaviour
         positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
 
         lineRenderer.SetPositions(positions);
+    }
+
+    private void OpenDoor()
+    {
+        // Implement the logic to open the door
+        door1.transform.position = doorOpenPosition1;
+        door2.transform.position = doorOpenPosition2;
+        Debug.Log("Door opened!");
     }
 }
