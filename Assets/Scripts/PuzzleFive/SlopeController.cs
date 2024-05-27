@@ -54,20 +54,21 @@ public class SlopeController : NetworkBehaviour
         {
             networkedSlope.Value = value;
 
-            // Check if the slider value is approximately 1 (with a small tolerance) and request to open the doors if it is
-            if (value == 1)
+
+            if (value == 2)
             {
                 RequestOpenDoorsServerRpc();
             }
         }
+        Debug.Log(value.ToString());
     }
 
     private void OnNetworkedSlopeChanged(float oldValue, float newValue)
     {
         UpdateLineRenderer(newValue);
 
-        // Check if the slider value is approximately 1 (with a small tolerance) and open the doors if it is
-        if (newValue == 1)
+        
+        if (newValue == 2)
         {
             OpenDoors();
         }
