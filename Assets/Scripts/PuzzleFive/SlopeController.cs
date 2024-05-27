@@ -19,6 +19,8 @@ public class SlopeController : NetworkBehaviour
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
+    private List<NetworkVariable<float>> sliderValues;
+
     private void Start()
     {
         // Ensure at least one LineRendererData is assigned
@@ -28,13 +30,20 @@ public class SlopeController : NetworkBehaviour
             return;
         }
 
-        // Initialize each LineRendererData
-        foreach (LineRendererData data in lineRendererDataList)
+        // Initialize NetworkVariables for each LineRendererData
+        sliderValues = new List<NetworkVariable<float>>();
+        for (int i = 0; i < lineRendererDataList.Count; i++)
         {
-            if (data.slider != null && data.lineRenderer != null)
+            var sliderValue = new NetworkVariable<float>(lineRendererDataList[i].slider.value);
+            sliderValues.Add(sliderValue);
+
+            int index = i; // Capture the current index for the closure
+            sliderValue.OnValueChanged += (oldValue, newValue) => OnSliderValueChanged(index, newValue);
+
+            if (lineRendererDataList[i].slider != null && lineRendererDataList[i].lineRenderer != null)
             {
-                data.slider.onValueChanged.AddListener(delegate { OnSliderValueChanged(data); });
-                UpdateLineRenderer(data.lineRenderer, data.slider.value);
+                lineRendererDataList[i].slider.onValueChanged.AddListener(delegate { OnLocalSliderValueChanged(index); });
+                UpdateLineRenderer(lineRendererDataList[i].lineRenderer, lineRendererDataList[i].slider.value);
             }
             else
             {
@@ -55,10 +64,29 @@ public class SlopeController : NetworkBehaviour
         }
     }
 
-    private void OnSliderValueChanged(LineRendererData data)
+    private void OnLocalSliderValueChanged(int index)
+    {
+        // Update the NetworkVariable with the new Slider value
+        if (IsServer)
+        {
+            sliderValues[index].Value = lineRendererDataList[index].slider.value;
+        }
+        else
+        {
+            SubmitSliderValueServerRpc(index, lineRendererDataList[index].slider.value);
+        }
+    }
+
+    [ServerRpc]
+    private void SubmitSliderValueServerRpc(int index, float value)
+    {
+        sliderValues[index].Value = value;
+    }
+
+    private void OnSliderValueChanged(int index, float newValue)
     {
         // Update the LineRenderer associated with the Slider
-        UpdateLineRenderer(data.lineRenderer, data.slider.value);
+        UpdateLineRenderer(lineRendererDataList[index].lineRenderer, newValue);
     }
 
     private void UpdateLineRenderer(LineRenderer renderer, float slope)
