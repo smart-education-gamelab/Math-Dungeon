@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
+using System.Collections;
 
 public class SlopeController : NetworkBehaviour
 {
@@ -10,6 +11,7 @@ public class SlopeController : NetworkBehaviour
     public GameObject door2; // Reference to door 2
     public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
+    public float doorOpenSpeed = 1f; // Speed at which the door opens
 
     // Networked variable to sync the slope value
     private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -97,14 +99,29 @@ public class SlopeController : NetworkBehaviour
     private void OpenDoorsClientRpc()
     {
         // Implement the logic to open both doors
-        OpenDoors();
+        StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
+        StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
     }
 
     private void OpenDoors()
     {
-        // Implement the logic to open both doors
-        door1.transform.position = doorOpenPosition1;
-        door2.transform.position = doorOpenPosition2;
-        Debug.Log("Doors opened!");
+        // Start coroutines to open both doors smoothly
+        StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
+        StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
+    }
+
+    private IEnumerator OpenDoorSmoothly(GameObject door, Vector3 targetPosition)
+    {
+        float timeElapsed = 0f;
+        Vector3 startPosition = door.transform.localPosition;
+
+        while (timeElapsed < doorOpenSpeed)
+        {
+            door.transform.position = Vector3.Lerp(startPosition, targetPosition, timeElapsed / doorOpenSpeed);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        door.transform.localPosition = targetPosition;
     }
 }
