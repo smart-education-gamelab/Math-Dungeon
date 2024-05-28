@@ -165,6 +165,8 @@ public class PlayerActions : NetworkBehaviour
                     y = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYC
                 };
 
+                Debug.Log($"Kamer A correct answers: X = {correctAnswerCRoomA.x}, Y = {correctAnswerCRoomA.y}");
+
                 // Kamer B
                 inputAnswerFRoomB = new PointData
                 {
@@ -176,6 +178,8 @@ public class PlayerActions : NetworkBehaviour
                     x = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerXF,
                     y = potionControllerRef.GetComponent<LinearFormulaGeneratorSync>().AnswerYF
                 };
+
+                Debug.Log($"Kamer B correct answers: X = {correctAnswerFRoomB.x}, Y = {correctAnswerFRoomB.y}");
 
                 PointData answerToSend;
                 if (inputAnswerCRoomA.x == 0 && inputAnswerCRoomA.y == 0)
@@ -229,6 +233,7 @@ public class PlayerActions : NetworkBehaviour
 
         if (clientID == 1)
         {
+            Debug.Log($"Checking answers for Client 1 against correct answers: X = {correctAnswerCRoomA.x}, Y = {correctAnswerCRoomA.y}");
             if (answersFromClient.x == correctAnswerCRoomA.x && answersFromClient.y == correctAnswerCRoomA.y)
             {
                 isItGood = true;
@@ -236,6 +241,7 @@ public class PlayerActions : NetworkBehaviour
         }
         else
         {
+            Debug.Log($"Checking answers for Client {clientID} against correct answers: X = {correctAnswerFRoomB.x}, Y = {correctAnswerFRoomB.y}");
             if (answersFromClient.x == correctAnswerFRoomB.x && answersFromClient.y == correctAnswerFRoomB.y)
             {
                 isItGood = true;
