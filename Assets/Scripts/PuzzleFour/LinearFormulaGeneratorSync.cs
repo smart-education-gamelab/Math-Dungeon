@@ -104,7 +104,6 @@ public class LinearFormulaGeneratorSync : NetworkBehaviour
         textXE.text = pointE.Value.x.ToString();
         textYE.text = pointE.Value.y.ToString();
         textXF.text = pointF.Value.x.ToString();
-        textXF.text = pointF.Value.y.ToString();
     }
 
     public void CalculatePoints()
