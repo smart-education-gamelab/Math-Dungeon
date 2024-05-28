@@ -3,13 +3,12 @@ using Unity.Netcode;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 
 public class PickupObject : NetworkBehaviour
 {
-    public Transform objectHolder; // The Transform that represents the position of the object holder
-    public LayerMask pickupLayer; // The layer of the objects that can be picked up
-    public LayerMask snapLayer; // The layer of snapping points
+    public Transform objectHolder;
+    public LayerMask pickupLayer;
+    public LayerMask snapLayer;
     public LayerMask activationLayer;
 
     public Camera cam;
@@ -21,11 +20,11 @@ public class PickupObject : NetworkBehaviour
     private NetworkObject player;
 
     [SerializeField]
-    private NetworkObject currentObject; // The current picked-up object
+    private NetworkObject currentObject;
 
-    private GameObject currentSnapPoint; // The current snap-point in use
+    private GameObject currentSnapPoint;
 
-    private Image crosshairImage; // Reference to the image component of the crosshair
+    private Image crosshairImage;
 
     private GearPuzzleController gearPuzzleController;
 
@@ -35,7 +34,6 @@ public class PickupObject : NetworkBehaviour
     private void Start()
     {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
-        // Get a reference to the GearPuzzleController
         if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleTwoGears.ToString())
         {
             gearPuzzleController = FindObjectOfType<GearPuzzleController>();
@@ -49,7 +47,6 @@ public class PickupObject : NetworkBehaviour
         if (!IsLocalPlayer)
             return;
 
-        // Raycast to select and pick up an object
         Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 100f);
         RaycastHit hit;
 
@@ -73,7 +70,6 @@ public class PickupObject : NetworkBehaviour
 
         if (SceneManager.GetActiveScene().name == Loader.Scene.PuzzleTwoGears.ToString())
         {
-            // Check if the player presses the pickup button
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (currentObject == null)
@@ -81,7 +77,6 @@ public class PickupObject : NetworkBehaviour
                     if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, rayLength, pickupLayer))
                     {
                         grabbedSource.Play();
-                        // Send an RPC to the server to pick up the object
                         PickUpObjectServerRpc(hit.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId);
                     }
                 }
@@ -94,7 +89,6 @@ public class PickupObject : NetworkBehaviour
                     }
                     else
                     {
-                        // Send an RPC to the server to drop the object
                         DropObjectServerRpc(currentObject.NetworkObjectId);
                     }
                 }
@@ -102,7 +96,6 @@ public class PickupObject : NetworkBehaviour
 
             if (currentObject != null)
             {
-                // Update the position and rotation of the held object to match the object holder
                 currentObject.transform.position = objectHolder.position;
                 currentObject.transform.rotation = objectHolder.rotation;
             }
@@ -121,16 +114,14 @@ public class PickupObject : NetworkBehaviour
         {
             if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
             {
-                // Mark the object as picked up
                 pickedObject.ChangeOwnership(clientId);
                 currentObject = pickedObject;
 
                 currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
-                // Enable ClientNetworkTransform for smooth movement
-                currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
+                // Enable SmoothNetworkTransform for smooth movement
+                currentObject.GetComponent<SmoothNetworkTransform>().enabled = true;
 
-                // Send an RPC to all clients to synchronize the changes in the picked-up object
                 PickUpObjectClientRpc(currentObject.NetworkObjectId);
             }
             else
@@ -143,13 +134,11 @@ public class PickupObject : NetworkBehaviour
     [ClientRpc]
     private void PickUpObjectClientRpc(ulong objectId)
     {
-        // Mark the object as picked up
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject pickedObject))
         {
             currentObject = pickedObject;
             currentObject.GetComponent<Rigidbody>().isKinematic = true;
-            // Enable ClientNetworkTransform for smooth movement
-            currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
+            currentObject.GetComponent<SmoothNetworkTransform>().enabled = true;
         }
     }
 
@@ -163,12 +152,10 @@ public class PickupObject : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.ContainsKey(clientId))
         {
-            // Unmark the object as picked up and let it drop
             currentObject.GetComponent<Rigidbody>().isKinematic = false;
-            currentObject.GetComponent<ClientNetworkTransform>().enabled = false;
+            currentObject.GetComponent<SmoothNetworkTransform>().enabled = false;
             currentObject.RemoveOwnership();
 
-            // Send an RPC to all clients to synchronize the changes in the picked-up object
             DropObjectClientRpc(currentObject.NetworkObjectId);
 
             currentObject = null;
@@ -178,11 +165,10 @@ public class PickupObject : NetworkBehaviour
     [ClientRpc]
     private void DropObjectClientRpc(ulong objectId)
     {
-        // Unmark the object as picked up and let it drop
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             obj.GetComponent<Rigidbody>().isKinematic = false;
-            obj.GetComponent<ClientNetworkTransform>().enabled = false;
+            obj.GetComponent<SmoothNetworkTransform>().enabled = false;
             currentObject = null;
         }
     }
@@ -197,7 +183,6 @@ public class PickupObject : NetworkBehaviour
 
         if (gearPuzzleController.CheckSnapPointFormula(currentSnapPoint, currentObject.GetComponentInChildren<TextMeshProUGUI>().text))
         {
-            // Perform actions for correctly placed gears
             currentObject.transform.position = snapPointTransform;
             currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
             Debug.Log("GOEDZO 1");
@@ -212,7 +197,6 @@ public class PickupObject : NetworkBehaviour
             didItWork = false;
         }
 
-        // Send an RPC to all clients to synchronize the changes in the picked-up object
         SnapObjectClientRpc(snapPointTransform, currentObject.NetworkObjectId, didItWork);
 
         currentObject = null;
@@ -221,12 +205,10 @@ public class PickupObject : NetworkBehaviour
     [ClientRpc]
     private void SnapObjectClientRpc(Vector3 snapPointTransform, ulong objectId, bool didItWork)
     {
-        // Unmark the object as picked up and let it drop
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             if (didItWork)
             {
-                // Perform actions for correctly placed gears
                 obj.transform.position = snapPointTransform;
                 obj.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
                 obj.gameObject.layer = 0;
