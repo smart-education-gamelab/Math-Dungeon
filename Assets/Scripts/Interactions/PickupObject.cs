@@ -32,12 +32,6 @@ public class PickupObject : NetworkBehaviour
     [SerializeField]
     private float rayLength;
 
-    private Vector3 lastServerPosition;
-    private Quaternion lastServerRotation;
-
-    private float serverPositionUpdateTime = 0.1f;
-    private float timeSinceLastUpdate = 0f;
-
     private void Start()
     {
         crosshairImage = GameObject.FindWithTag("Crosshair").GetComponent<Image>();
@@ -109,19 +103,8 @@ public class PickupObject : NetworkBehaviour
             if (currentObject != null)
             {
                 // Update the position and rotation of the held object to match the object holder
-                currentObject.transform.position = Vector3.Lerp(currentObject.transform.position, objectHolder.position, Time.deltaTime * 10f);
-                currentObject.transform.rotation = Quaternion.Lerp(currentObject.transform.rotation, objectHolder.rotation, Time.deltaTime * 10f);
-            }
-        }
-
-        // Periodically update the server with the client's predicted position and rotation
-        if (currentObject != null)
-        {
-            timeSinceLastUpdate += Time.deltaTime;
-            if (timeSinceLastUpdate >= serverPositionUpdateTime)
-            {
-                timeSinceLastUpdate = 0f;
-                UpdateObjectPositionServerRpc(currentObject.transform.position, currentObject.transform.rotation);
+                currentObject.transform.position = objectHolder.position;
+                currentObject.transform.rotation = objectHolder.rotation;
             }
         }
     }
@@ -145,14 +128,7 @@ public class PickupObject : NetworkBehaviour
                 currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
                 // Enable ClientNetworkTransform for smooth movement
-                var cnt = currentObject.GetComponent<ClientNetworkTransform>();
-                if (cnt != null)
-                {
-                    cnt.enabled = true;
-                }
-
-                lastServerPosition = currentObject.transform.position;
-                lastServerRotation = currentObject.transform.rotation;
+                currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
 
                 // Send an RPC to all clients to synchronize the changes in the picked-up object
                 PickUpObjectClientRpc(currentObject.NetworkObjectId);
@@ -173,14 +149,7 @@ public class PickupObject : NetworkBehaviour
             currentObject = pickedObject;
             currentObject.GetComponent<Rigidbody>().isKinematic = true;
             // Enable ClientNetworkTransform for smooth movement
-            var cnt = currentObject.GetComponent<ClientNetworkTransform>();
-            if (cnt != null)
-            {
-                cnt.enabled = true;
-            }
-
-            lastServerPosition = currentObject.transform.position;
-            lastServerRotation = currentObject.transform.rotation;
+            currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
         }
     }
 
@@ -196,11 +165,7 @@ public class PickupObject : NetworkBehaviour
         {
             // Unmark the object as picked up and let it drop
             currentObject.GetComponent<Rigidbody>().isKinematic = false;
-            var cnt = currentObject.GetComponent<ClientNetworkTransform>();
-            if (cnt != null)
-            {
-                cnt.enabled = false;
-            }
+            currentObject.GetComponent<ClientNetworkTransform>().enabled = false;
             currentObject.RemoveOwnership();
 
             // Send an RPC to all clients to synchronize the changes in the picked-up object
@@ -217,11 +182,7 @@ public class PickupObject : NetworkBehaviour
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             obj.GetComponent<Rigidbody>().isKinematic = false;
-            var cnt = obj.GetComponent<ClientNetworkTransform>();
-            if (cnt != null)
-            {
-                cnt.enabled = false;
-            }
+            obj.GetComponent<ClientNetworkTransform>().enabled = false;
             currentObject = null;
         }
     }
@@ -277,29 +238,6 @@ public class PickupObject : NetworkBehaviour
                 obj.GetComponent<Rigidbody>().isKinematic = false;
                 Debug.Log("FOUTZO 2");
             }
-        }
-    }
-
-    [ServerRpc]
-    private void UpdateObjectPositionServerRpc(Vector3 position, Quaternion rotation)
-    {
-        if (currentObject != null)
-        {
-            currentObject.transform.position = position;
-            currentObject.transform.rotation = rotation;
-            lastServerPosition = position;
-            lastServerRotation = rotation;
-            UpdateObjectPositionClientRpc(position, rotation);
-        }
-    }
-
-    [ClientRpc]
-    private void UpdateObjectPositionClientRpc(Vector3 position, Quaternion rotation)
-    {
-        if (currentObject != null && !IsOwner)
-        {
-            currentObject.transform.position = position;
-            currentObject.transform.rotation = rotation;
         }
     }
 }
