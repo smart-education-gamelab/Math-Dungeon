@@ -17,8 +17,11 @@ public class SlopeController : NetworkBehaviour
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
+    [SerializeField]
     private float answerOne = 2f;
+    [SerializeField]
     private float answerTwo = -1f;
+    [SerializeField]
     private float answerThree = -2f;
 
     // Networked variables to sync the slope values
