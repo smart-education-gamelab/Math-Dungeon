@@ -5,35 +5,29 @@ using System.Collections;
 
 public class SlopeController : NetworkBehaviour
 {
-    public Slider[] slopeSliders;
-    public LineRenderer[] lineRenderers;
+    public Slider slopeSlider1;
+    public Slider slopeSlider2;
+    public Slider slopeSlider3;
+    public LineRenderer lineRenderer1;
+    public LineRenderer lineRenderer2;
+    public LineRenderer lineRenderer3;
     public GameObject door1; // Reference to door 1
     public GameObject door2; // Reference to door 2
     public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
-    private NetworkVariable<float>[] networkedSlopes;
-    private float[] targetValues = { 1f, 1.5f, 2f }; // Target values for sliders
-
-    private void Awake()
-    {
-        if (slopeSliders.Length != lineRenderers.Length)
-        {
-            Debug.LogError("The number of sliders must match the number of line renderers.");
-            return;
-        }
-
-        networkedSlopes = new NetworkVariable<float>[slopeSliders.Length];
-        for (int i = 0; i < slopeSliders.Length; i++)
-        {
-            networkedSlopes[i] = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-        }
-    }
+    // Networked variables to sync the slope values
+    private NetworkVariable<float> networkedSlope1 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> networkedSlope2 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> networkedSlope3 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
-        if (lineRenderers.Length == 0 || slopeSliders.Length == 0 || door1 == null || door2 == null)
+        // Ensure the lineRenderers, slopeSliders, and doors are assigned
+        if (lineRenderer1 == null || lineRenderer2 == null || lineRenderer3 == null ||
+            slopeSlider1 == null || slopeSlider2 == null || slopeSlider3 == null ||
+            door1 == null || door2 == null)
         {
             Debug.LogError("SlopeController: Missing references to LineRenderers, Sliders, or Doors.");
             return;
@@ -41,72 +35,88 @@ public class SlopeController : NetworkBehaviour
 
         if (IsOwner)
         {
-            for (int i = 0; i < slopeSliders.Length; i++)
-            {
-                int index = i; // Local copy of the loop variable for the lambda expression
-                slopeSliders[i].onValueChanged.AddListener(value => OnSliderValueChanged(index, value));
-            }
+            slopeSlider1.onValueChanged.AddListener(value => OnSliderValueChanged(1, value));
+            slopeSlider2.onValueChanged.AddListener(value => OnSliderValueChanged(2, value));
+            slopeSlider3.onValueChanged.AddListener(value => OnSliderValueChanged(3, value));
         }
 
-        for (int i = 0; i < lineRenderers.Length; i++)
-        {
-            UpdateLineRenderer(lineRenderers[i], networkedSlopes[i].Value);
-            int index = i; // Local copy for the lambda
-            networkedSlopes[i].OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(index, newValue);
-        }
+        // Initial update
+        UpdateLineRenderer(lineRenderer1, networkedSlope1.Value);
+        UpdateLineRenderer(lineRenderer2, networkedSlope2.Value);
+        UpdateLineRenderer(lineRenderer3, networkedSlope3.Value);
+
+        // Listen for changes in the networked variables
+        networkedSlope1.OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(1, newValue);
+        networkedSlope2.OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(2, newValue);
+        networkedSlope3.OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(3, newValue);
     }
 
     private void OnDestroy()
     {
+        // Cleanup event listeners
         if (IsOwner)
         {
-            for (int i = 0; i < slopeSliders.Length; i++)
-            {
-                slopeSliders[i].onValueChanged.RemoveAllListeners();
-            }
+            slopeSlider1.onValueChanged.RemoveAllListeners();
+            slopeSlider2.onValueChanged.RemoveAllListeners();
+            slopeSlider3.onValueChanged.RemoveAllListeners();
         }
 
-        for (int i = 0; i < networkedSlopes.Length; i++)
-        {
-            networkedSlopes[i].OnValueChanged -= (oldValue, newValue) => OnNetworkedSlopeChanged(i, newValue);
-        }
+        networkedSlope1.OnValueChanged -= (oldValue, newValue) => OnNetworkedSlopeChanged(1, newValue);
+        networkedSlope2.OnValueChanged -= (oldValue, newValue) => OnNetworkedSlopeChanged(2, newValue);
+        networkedSlope3.OnValueChanged -= (oldValue, newValue) => OnNetworkedSlopeChanged(3, newValue);
     }
 
-    private void OnSliderValueChanged(int index, float value)
+    private void OnSliderValueChanged(int sliderIndex, float value)
     {
         if (IsOwner)
         {
-            networkedSlopes[index].Value = value;
-
-            CheckAndRequestOpenDoors();
-        }
-    }
-
-    private void OnNetworkedSlopeChanged(int index, float newValue)
-    {
-        UpdateLineRenderer(lineRenderers[index], newValue);
-
-        CheckAndRequestOpenDoors();
-    }
-
-    private void CheckAndRequestOpenDoors()
-    {
-        // Check if all sliders are at their target values
-        for (int i = 0; i < networkedSlopes.Length; i++)
-        {
-            if (networkedSlopes[i].Value != targetValues[i])
+            switch (sliderIndex)
             {
-                return;
+                case 1:
+                    networkedSlope1.Value = value;
+                    break;
+                case 2:
+                    networkedSlope2.Value = value;
+                    break;
+                case 3:
+                    networkedSlope3.Value = value;
+                    break;
             }
         }
+    }
 
-        // All sliders are at their target values
-        RequestOpenDoorsServerRpc();
+    private void OnNetworkedSlopeChanged(int sliderIndex, float newValue)
+    {
+        switch (sliderIndex)
+        {
+            case 1:
+                UpdateLineRenderer(lineRenderer1, newValue);
+                break;
+            case 2:
+                UpdateLineRenderer(lineRenderer2, newValue);
+                break;
+            case 3:
+                UpdateLineRenderer(lineRenderer3, newValue);
+                break;
+        }
+
+        if (AllSlidersSetToTarget())
+        {
+            RequestOpenDoorsServerRpc();
+        }
+    }
+
+    private bool AllSlidersSetToTarget()
+    {
+        return networkedSlope1.Value == 2 && networkedSlope2.Value == 2 && networkedSlope3.Value == 2;
     }
 
     private void UpdateLineRenderer(LineRenderer lineRenderer, float slope)
     {
+        // Define the fixed length of the line
         float length = 1.0f;
+
+        // Calculate the z component of the end point based on the fixed length and slope
         float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
 
         Vector3[] positions = new Vector3[2];
@@ -119,17 +129,20 @@ public class SlopeController : NetworkBehaviour
     [ServerRpc]
     private void RequestOpenDoorsServerRpc()
     {
+        // Open the doors on the server and notify all clients
         OpenDoorsClientRpc();
     }
 
     [ClientRpc]
     private void OpenDoorsClientRpc()
     {
+        // Implement the logic to open both doors
         OpenDoors();
     }
 
     private void OpenDoors()
     {
+        // Start coroutines to open both doors smoothly
         StartCoroutine(OpenDoorSmoothly(door1, doorOpenPosition1));
         StartCoroutine(OpenDoorSmoothly(door2, doorOpenPosition2));
     }
