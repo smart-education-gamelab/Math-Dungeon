@@ -56,9 +56,9 @@ public class SlopeController : NetworkBehaviour
         }
 
         // Initial update
-        UpdateLineRenderer(lineRenderer1, networkedSlope1.Value);
-        UpdateLineRenderer(lineRenderer2, networkedSlope2.Value);
-        UpdateLineRenderer(lineRenderer3, networkedSlope3.Value);
+        UpdateLineRenderer(lineRenderer1, networkedSlope1.Value, 1);
+        UpdateLineRenderer(lineRenderer2, networkedSlope2.Value, 2);
+        UpdateLineRenderer(lineRenderer3, networkedSlope3.Value, 3);
 
         // Listen for changes in the networked variables
         networkedSlope1.OnValueChanged += (oldValue, newValue) => OnNetworkedSlopeChanged(1, newValue);
@@ -105,13 +105,13 @@ public class SlopeController : NetworkBehaviour
         switch (sliderIndex)
         {
             case 1:
-                UpdateLineRenderer(lineRenderer1, newValue);
+                UpdateLineRenderer(lineRenderer1, newValue, 1);
                 break;
             case 2:
-                UpdateLineRenderer(lineRenderer2, newValue);
+                UpdateLineRenderer(lineRenderer2, newValue, 2);
                 break;
             case 3:
-                UpdateLineRenderer(lineRenderer3, newValue);
+                UpdateLineRenderer(lineRenderer3, newValue, 3);
                 break;
         }
 
@@ -126,17 +126,30 @@ public class SlopeController : NetworkBehaviour
         return networkedSlope1.Value == answerOne && networkedSlope2.Value == answerTwo && networkedSlope3.Value == answerThree;
     }
 
-    private void UpdateLineRenderer(LineRenderer lineRenderer, float slope)
+    private void UpdateLineRenderer(LineRenderer lineRenderer, float slope, int lineIndex)
     {
-        // Define the fixed length of the line
         float length = 1.0f;
-
-        // Calculate the z component of the end point based on the fixed length and slope
-        float deltaZ = length / Mathf.Sqrt(1 + slope * slope);
-
+        float deltaZ, deltaY;
         Vector3[] positions = new Vector3[2];
-        positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
-        positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
+
+        switch (lineIndex)
+        {
+            case 1:
+                deltaZ = length / Mathf.Sqrt(1 + slope * slope);
+                positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
+                positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
+                break;
+            case 2:
+                deltaY = length / Mathf.Sqrt(1 + slope * slope);
+                positions[0] = new Vector3(8.8f, 1.5f, -5.65f); // Start point
+                positions[1] = new Vector3(8.8f, 1.5f + deltaY, -5.65f + (slope * deltaY)); // End point
+                break;
+            case 3:
+                deltaZ = length / Mathf.Sqrt(1 + slope * slope);
+                positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
+                positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
+                break;
+        }
 
         lineRenderer.SetPositions(positions);
     }
