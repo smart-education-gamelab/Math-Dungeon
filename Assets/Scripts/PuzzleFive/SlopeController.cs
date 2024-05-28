@@ -5,55 +5,70 @@ using System.Collections;
 
 public class SlopeController : NetworkBehaviour
 {
-    public Slider slopeSlider;
-    public LineRenderer lineRenderer;
+    public Slider slopeSlider1;
+    public Slider slopeSlider2;
+    public Slider slopeSlider3;
+    public LineRenderer lineRenderer1;
+    public LineRenderer lineRenderer2;
+    public LineRenderer lineRenderer3;
     public GameObject door1; // Reference to door 1
     public GameObject door2; // Reference to door 2
     public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
-    // Networked variable to sync the slope value
-    private NetworkVariable<float> networkedSlope = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    // Networked variables to sync the slope values
+    private NetworkVariable<float> networkedSlope1 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> networkedSlope2 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<float> networkedSlope3 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
-        // Ensure the lineRenderer, slopeSlider, and doors are assigned
-        if (lineRenderer == null || slopeSlider == null || door1 == null || door2 == null)
+        // Ensure the lineRenderers, slopeSliders, and doors are assigned
+        if (lineRenderer1 == null || lineRenderer2 == null || lineRenderer3 == null || slopeSlider1 == null || slopeSlider2 == null || slopeSlider3 == null || door1 == null || door2 == null)
         {
-            Debug.LogError("SlopeController: Missing references to LineRenderer, Slider, or Doors.");
+            Debug.LogError("SlopeController: Missing references to LineRenderers, Sliders, or Doors.");
             return;
         }
 
         if (IsOwner)
         {
-            slopeSlider.onValueChanged.AddListener(OnSliderValueChanged);
+            slopeSlider1.onValueChanged.AddListener(OnSlider1ValueChanged);
+            slopeSlider2.onValueChanged.AddListener(OnSlider2ValueChanged);
+            slopeSlider3.onValueChanged.AddListener(OnSlider3ValueChanged);
         }
 
         // Initial update
-        UpdateLineRenderer(networkedSlope.Value);
+        UpdateLineRenderer(lineRenderer1, networkedSlope1.Value);
+        UpdateLineRenderer(lineRenderer2, networkedSlope2.Value);
+        UpdateLineRenderer(lineRenderer3, networkedSlope3.Value);
 
-        // Listen for changes in the networked variable
-        networkedSlope.OnValueChanged += OnNetworkedSlopeChanged;
+        // Listen for changes in the networked variables
+        networkedSlope1.OnValueChanged += OnNetworkedSlope1Changed;
+        networkedSlope2.OnValueChanged += OnNetworkedSlope2Changed;
+        networkedSlope3.OnValueChanged += OnNetworkedSlope3Changed;
     }
 
     private void OnDestroy()
     {
         // Cleanup event listeners
-        if (IsOwner && slopeSlider != null)
+        if (IsOwner)
         {
-            slopeSlider.onValueChanged.RemoveListener(OnSliderValueChanged);
+            if (slopeSlider1 != null) slopeSlider1.onValueChanged.RemoveListener(OnSlider1ValueChanged);
+            if (slopeSlider2 != null) slopeSlider2.onValueChanged.RemoveListener(OnSlider2ValueChanged);
+            if (slopeSlider3 != null) slopeSlider3.onValueChanged.RemoveListener(OnSlider3ValueChanged);
         }
 
-        networkedSlope.OnValueChanged -= OnNetworkedSlopeChanged;
+        networkedSlope1.OnValueChanged -= OnNetworkedSlope1Changed;
+        networkedSlope2.OnValueChanged -= OnNetworkedSlope2Changed;
+        networkedSlope3.OnValueChanged -= OnNetworkedSlope3Changed;
     }
 
-    private void OnSliderValueChanged(float value)
+    private void OnSlider1ValueChanged(float value)
     {
         if (IsOwner)
         {
-            networkedSlope.Value = value;
-
+            networkedSlope1.Value = value;
 
             if (value == 2)
             {
@@ -62,10 +77,35 @@ public class SlopeController : NetworkBehaviour
         }
     }
 
-    private void OnNetworkedSlopeChanged(float oldValue, float newValue)
+    private void OnSlider2ValueChanged(float value)
     {
-        UpdateLineRenderer(newValue);
+        if (IsOwner)
+        {
+            networkedSlope2.Value = value;
 
+            if (value == 2)
+            {
+                RequestOpenDoorsServerRpc();
+            }
+        }
+    }
+
+    private void OnSlider3ValueChanged(float value)
+    {
+        if (IsOwner)
+        {
+            networkedSlope3.Value = value;
+
+            if (value == 2)
+            {
+                RequestOpenDoorsServerRpc();
+            }
+        }
+    }
+
+    private void OnNetworkedSlope1Changed(float oldValue, float newValue)
+    {
+        UpdateLineRenderer(lineRenderer1, newValue);
 
         if (newValue == 2)
         {
@@ -73,7 +113,27 @@ public class SlopeController : NetworkBehaviour
         }
     }
 
-    private void UpdateLineRenderer(float slope)
+    private void OnNetworkedSlope2Changed(float oldValue, float newValue)
+    {
+        UpdateLineRenderer(lineRenderer2, newValue);
+
+        if (newValue == 2)
+        {
+            OpenDoors();
+        }
+    }
+
+    private void OnNetworkedSlope3Changed(float oldValue, float newValue)
+    {
+        UpdateLineRenderer(lineRenderer3, newValue);
+
+        if (newValue == 2)
+        {
+            OpenDoors();
+        }
+    }
+
+    private void UpdateLineRenderer(LineRenderer lineRenderer, float slope)
     {
         // Define the fixed length of the line
         float length = 1.0f;
@@ -119,6 +179,11 @@ public class SlopeController : NetworkBehaviour
             door.transform.localPosition = Vector3.Lerp(startPosition, targetPosition, timeElapsed / doorOpenSpeed);
             timeElapsed += Time.deltaTime;
             yield return null;
+
+            if (Vector3.Distance(door.transform.localPosition, targetPosition) < 0.01f)
+            {
+                break;
+            }
         }
 
         door.transform.localPosition = targetPosition;
