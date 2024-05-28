@@ -6,23 +6,23 @@ using System.Collections;
 public class SlopeController : NetworkBehaviour
 {
     [Header("Slider references")]
-    public Slider slopeSlider1;
-    public Slider slopeSlider2;
-    public Slider slopeSlider3;
+    [SerializeField] private Slider slopeSlider1;
+    [SerializeField] private Slider slopeSlider2;
+    [SerializeField] private Slider slopeSlider3;
 
     [Header("LineRenderer references")]
-    public LineRenderer lineRenderer1;
-    public LineRenderer lineRenderer2;
-    public LineRenderer lineRenderer3;
+    [SerializeField] private LineRenderer lineRenderer1;
+    [SerializeField] private LineRenderer lineRenderer2;
+    [SerializeField] private LineRenderer lineRenderer3;
 
     [Header("Door gameobject references")]
-    public GameObject door1; // Reference to door 1
-    public GameObject door2; // Reference to door 2
+    [SerializeField] private GameObject door1; // Reference to door 1
+    [SerializeField] private GameObject door2; // Reference to door 2
 
     [Header("Door values")]
-    public Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
-    public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
-    public float doorOpenSpeed = 2f; // Speed at which the door opens
+    [SerializeField] private Vector3 doorOpenPosition1; // The position to move door 1 to when it opens
+    [SerializeField] private Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
+    [SerializeField] private float doorOpenSpeed = 2f; // Speed at which the door opens
 
     [Header("Answer values")]
     [SerializeField]
