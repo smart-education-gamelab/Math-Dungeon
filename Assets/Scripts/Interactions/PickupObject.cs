@@ -128,7 +128,11 @@ public class PickupObject : NetworkBehaviour
                 currentObject.GetComponent<Rigidbody>().isKinematic = true;
 
                 // Enable ClientNetworkTransform for smooth movement
-                currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
+                var cnt = currentObject.GetComponent<ClientNetworkTransform>();
+                if (cnt != null)
+                {
+                    cnt.enabled = true;
+                }
 
                 // Send an RPC to all clients to synchronize the changes in the picked-up object
                 PickUpObjectClientRpc(currentObject.NetworkObjectId);
@@ -149,7 +153,11 @@ public class PickupObject : NetworkBehaviour
             currentObject = pickedObject;
             currentObject.GetComponent<Rigidbody>().isKinematic = true;
             // Enable ClientNetworkTransform for smooth movement
-            currentObject.GetComponent<ClientNetworkTransform>().enabled = true;
+            var cnt = currentObject.GetComponent<ClientNetworkTransform>();
+            if (cnt != null)
+            {
+                cnt.enabled = true;
+            }
         }
     }
 
@@ -165,7 +173,11 @@ public class PickupObject : NetworkBehaviour
         {
             // Unmark the object as picked up and let it drop
             currentObject.GetComponent<Rigidbody>().isKinematic = false;
-            currentObject.GetComponent<ClientNetworkTransform>().enabled = false;
+            var cnt = currentObject.GetComponent<ClientNetworkTransform>();
+            if (cnt != null)
+            {
+                cnt.enabled = false;
+            }
             currentObject.RemoveOwnership();
 
             // Send an RPC to all clients to synchronize the changes in the picked-up object
@@ -182,7 +194,11 @@ public class PickupObject : NetworkBehaviour
         if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
         {
             obj.GetComponent<Rigidbody>().isKinematic = false;
-            obj.GetComponent<ClientNetworkTransform>().enabled = false;
+            var cnt = obj.GetComponent<ClientNetworkTransform>();
+            if (cnt != null)
+            {
+                cnt.enabled = false;
+            }
             currentObject = null;
         }
     }
