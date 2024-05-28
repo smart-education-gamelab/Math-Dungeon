@@ -17,6 +17,10 @@ public class SlopeController : NetworkBehaviour
     public Vector3 doorOpenPosition2; // The position to move door 2 to when it opens
     public float doorOpenSpeed = 2f; // Speed at which the door opens
 
+    private bool isAnswer1Correct = false;
+    private bool isAnswer2Correct = false;
+    private bool isAnswer3Correct = false;
+
     // Networked variables to sync the slope values
     private NetworkVariable<float> networkedSlope1 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<float> networkedSlope2 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -103,7 +107,7 @@ public class SlopeController : NetworkBehaviour
         }
     }
 
-    private void OnNetworkedSlope1Changed(float oldValue, float newValue)
+    /*private void OnNetworkedSlope1Changed(float oldValue, float newValue)
     {
         UpdateLineRenderer(lineRenderer1, newValue);
 
@@ -131,7 +135,7 @@ public class SlopeController : NetworkBehaviour
         {
             OpenDoors();
         }
-    }
+    }*/
 
     private void UpdateLineRenderer(LineRenderer lineRenderer, float slope)
     {
