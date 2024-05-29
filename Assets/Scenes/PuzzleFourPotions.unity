@@ -229,6 +229,7 @@ MonoBehaviour:
   keyHintImage: {fileID: 511026865}
   cauldronCanvasLinkA: {fileID: 0}
   cauldronCanvasLinkB: {fileID: 0}
+  sliderCanvas: {fileID: 0}
 --- !u!65 &31708101
 BoxCollider:
   m_ObjectHideFlags: 0
