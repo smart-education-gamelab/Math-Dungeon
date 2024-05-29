@@ -43,9 +43,6 @@ public class PickupObject : NetworkBehaviour
     private float syncInterval = 0.1f; // Interval in seconds to sync with the server
     private float lastSyncTime;
 
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
-
     private struct State
     {
         public float time;
@@ -146,6 +143,7 @@ public class PickupObject : NetworkBehaviour
     {
         if (currentObject != null)
         {
+            // Client-side prediction
             currentObject.transform.position = objectHolder.position;
             currentObject.transform.rotation = objectHolder.rotation;
 
@@ -300,7 +298,6 @@ public class PickupObject : NetworkBehaviour
             stateBuffer.Add(newState);
             if (stateBuffer.Count > 20) stateBuffer.RemoveAt(0); // Keep buffer size manageable
 
-            // Notify clients to update the position and rotation
             SyncObjectPositionClientRpc(position, rotation, Time.time);
         }
     }
@@ -310,7 +307,6 @@ public class PickupObject : NetworkBehaviour
     {
         if (currentObject != null)
         {
-            // Add new state to buffer for interpolation
             State newState = new State
             {
                 time = timestamp,
