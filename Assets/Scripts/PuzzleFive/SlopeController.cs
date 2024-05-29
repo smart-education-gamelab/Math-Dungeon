@@ -129,7 +129,7 @@ public class SlopeController : NetworkBehaviour
     private void UpdateLineRenderer(LineRenderer lineRenderer, float slope, int lineIndex)
     {
         float length = 1.0f;
-        float deltaZ, deltaY;
+        float deltaZ, deltaY, deltaX;
         Vector3[] positions = new Vector3[2];
 
         switch (lineIndex)
@@ -145,9 +145,9 @@ public class SlopeController : NetworkBehaviour
                 positions[1] = new Vector3(8.5f - deltaY, 1.2f + (slope * deltaY), -5.65f); // End point
                 break;
             case 3:
-                deltaZ = length / Mathf.Sqrt(1 + slope * slope);
-                positions[0] = new Vector3(6.5f, 1.5f, 0); // Start point
-                positions[1] = new Vector3(6.5f, 1.5f + (slope * deltaZ), 0 + deltaZ); // End point
+                deltaX = length / Mathf.Sqrt(1 + slope * slope);
+                positions[0] = new Vector3(14.8f, 2.4f, -5.65f); // Start point
+                positions[1] = new Vector3(14.8f - deltaX, 2.4f + (slope * deltaX), -5.65f); // End point
                 break;
         }
 
