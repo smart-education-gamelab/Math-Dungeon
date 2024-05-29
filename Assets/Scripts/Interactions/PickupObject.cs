@@ -3,48 +3,31 @@ using Unity.Netcode;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using System.Collections.Generic;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 
 public class PickupObject : NetworkBehaviour
 {
-    [SerializeField]
-    private Transform objectHolder; // The Transform that represents the position of the object holder
-    [SerializeField]
-    private LayerMask pickupLayer; // The layer of the objects that can be picked up
-    [SerializeField]
-    private LayerMask snapLayer; // The layer of snapping points
-    [SerializeField]
-    private LayerMask activationLayer; // The layer of activation points
+    [SerializeField] private Transform objectHolder;
+    [SerializeField] private LayerMask pickupLayer;
+    [SerializeField] private LayerMask snapLayer;
+    [SerializeField] private LayerMask activationLayer;
+    [SerializeField] private Camera cam;
+    [SerializeField] private AudioClip grabbedClip;
+    [SerializeField] private AudioSource grabbedSource;
 
-    [SerializeField]
-    private Camera cam;
+    [SerializeField] private NetworkObject player;
+    [SerializeField] private NetworkObject currentObject;
 
-    [SerializeField]
-    private AudioClip grabbedClip;
-    [SerializeField]
-    private AudioSource grabbedSource;
-
-    [SerializeField]
-    private NetworkObject player;
-
-    [SerializeField]
-    private NetworkObject currentObject; // The current picked-up object
-
-    private GameObject currentSnapPoint; // The current snap-point in use
-
-    private Image crosshairImage; // Reference to the image component of the crosshair
-
+    private GameObject currentSnapPoint;
+    private Image crosshairImage;
     private GearPuzzleController gearPuzzleController;
+    [SerializeField] private float rayLength;
 
-    [SerializeField]
-    private float rayLength;
+    [SerializeField] private float syncInterval = 0.1f; // Interval for syncing object position with server
+    [SerializeField] private int bufferSize = 20; // Size of the state buffer for interpolation
 
-    private float syncInterval = 0.1f; // Interval in seconds to sync with the server
     private float lastSyncTime;
-
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
 
     private struct State
     {
@@ -161,7 +144,7 @@ public class PickupObject : NetworkBehaviour
     {
         if (currentObject == null || stateBuffer.Count < 2) return;
 
-        float targetTime = Time.time - 0.1f; // Target time to interpolate towards
+        float targetTime = Time.time - 0.1f;
         State latestState = stateBuffer[stateBuffer.Count - 1];
         State previousState = stateBuffer[stateBuffer.Count - 2];
 
@@ -290,7 +273,6 @@ public class PickupObject : NetworkBehaviour
             currentObject.transform.position = position;
             currentObject.transform.rotation = rotation;
 
-            // Add new state to buffer for interpolation
             State newState = new State
             {
                 time = Time.time,
@@ -298,9 +280,8 @@ public class PickupObject : NetworkBehaviour
                 rotation = rotation
             };
             stateBuffer.Add(newState);
-            if (stateBuffer.Count > 20) stateBuffer.RemoveAt(0); // Keep buffer size manageable
+            if (stateBuffer.Count > bufferSize) stateBuffer.RemoveAt(0);
 
-            // Notify clients to update the position and rotation
             SyncObjectPositionClientRpc(position, rotation, Time.time);
         }
     }
@@ -310,7 +291,6 @@ public class PickupObject : NetworkBehaviour
     {
         if (currentObject != null)
         {
-            // Add new state to buffer for interpolation
             State newState = new State
             {
                 time = timestamp,
@@ -318,7 +298,7 @@ public class PickupObject : NetworkBehaviour
                 rotation = rotation
             };
             stateBuffer.Add(newState);
-            if (stateBuffer.Count > 20) stateBuffer.RemoveAt(0); // Keep buffer size manageable
+            if (stateBuffer.Count > bufferSize) stateBuffer.RemoveAt(0);
         }
     }
 }
