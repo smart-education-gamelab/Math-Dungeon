@@ -146,8 +146,8 @@ public class SlopeController : NetworkBehaviour
                 break;
             case 3:
                 deltaX = length / Mathf.Sqrt(1 + slope * slope);
-                positions[0] = new Vector3(14.8f, 2.4f, -5.65f); // Start point
-                positions[1] = new Vector3(14.8f - deltaX, 2.4f + (slope * deltaX), -5.65f); // End point
+                positions[0] = new Vector3(14.2f, 2.5f, -5.65f); // Start point
+                positions[1] = new Vector3(14.2f - deltaX, 2.5f + (slope * deltaX), -5.65f); // End point
                 break;
         }
 
