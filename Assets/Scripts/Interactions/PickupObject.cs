@@ -24,7 +24,9 @@ public class PickupObject : NetworkBehaviour
     private GearPuzzleController gearPuzzleController;
     [SerializeField] private float rayLength;
 
-    private float syncInterval = 0.1f;
+    [SerializeField] private float syncInterval = 0.1f; // Interval for syncing object position with server
+    [SerializeField] private int bufferSize = 20; // Size of the state buffer for interpolation
+
     private float lastSyncTime;
 
     private struct State
@@ -278,7 +280,7 @@ public class PickupObject : NetworkBehaviour
                 rotation = rotation
             };
             stateBuffer.Add(newState);
-            if (stateBuffer.Count > 20) stateBuffer.RemoveAt(0);
+            if (stateBuffer.Count > bufferSize) stateBuffer.RemoveAt(0);
 
             SyncObjectPositionClientRpc(position, rotation, Time.time);
         }
@@ -296,7 +298,7 @@ public class PickupObject : NetworkBehaviour
                 rotation = rotation
             };
             stateBuffer.Add(newState);
-            if (stateBuffer.Count > 20) stateBuffer.RemoveAt(0);
+            if (stateBuffer.Count > bufferSize) stateBuffer.RemoveAt(0);
         }
     }
 }
