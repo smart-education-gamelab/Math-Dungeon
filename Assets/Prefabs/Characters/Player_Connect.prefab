@@ -270,9 +270,9 @@ MonoBehaviour:
   spawnPositionPlayerTwo: {x: 10, y: 0, z: -2}
   spawnRotationPlayerTwo: {x: 0, y: 0, z: 0, w: 0}
   spawnPositionPlayerOne2: {x: -6, y: 0, z: -2}
-  spawnRotationPlayerOne2: {x: 0, y: 0, z: 0, w: 0}
+  spawnRotationPlayerOne2: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   spawnPositionPlayerTwo2: {x: 15, y: 0, z: -2}
-  spawnRotationPlayerTwo2: {x: 0, y: 0, z: 0, w: 0}
+  spawnRotationPlayerTwo2: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
   spawnPositionPlayerOne4: {x: 0, y: 0, z: -2}
   spawnRotationPlayerOne4: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   spawnPositionPlayerTwo4: {x: 12, y: 0, z: -2}
