@@ -37,6 +37,9 @@ public class SlopeController : NetworkBehaviour
     private NetworkVariable<float> networkedSlope2 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<float> networkedSlope3 = new NetworkVariable<float>(0.5f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    [Header("Particle systems")]
+    public ParticleSystem[] particleSystems;
+
     private void Start()
     {
         // Ensure the lineRenderers, slopeSliders, and doors are assigned
@@ -118,6 +121,11 @@ public class SlopeController : NetworkBehaviour
         if (AllSlidersSetToTarget())
         {
             RequestOpenDoorsServerRpc();
+
+            foreach (ParticleSystem ps in particleSystems)
+            {
+                ps.Play();
+            }
         }
     }
 
