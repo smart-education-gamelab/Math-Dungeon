@@ -232,7 +232,6 @@ public class PickupObject : NetworkBehaviour
 
         if (isSuccess)
         {
-            currentObject.GetComponent<Rigidbody>().isKinematic = true;
             currentObject.transform.position = snapPointTransform;
             currentObject.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
             currentObject.gameObject.layer = 0;
@@ -254,7 +253,6 @@ public class PickupObject : NetworkBehaviour
         {
             if (isSuccess)
             {
-                obj.GetComponent<Rigidbody>().isKinematic = true;
                 obj.transform.position = snapPointTransform;
                 obj.transform.rotation = Quaternion.Euler(270f, 0f, 0f);
                 obj.gameObject.layer = 0;
