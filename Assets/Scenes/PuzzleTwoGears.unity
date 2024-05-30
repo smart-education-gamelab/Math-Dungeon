@@ -1540,6 +1540,22 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 631786624039205085, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Size.x
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 631786624039205085, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Size.z
+      value: 5.174379
+      objectReference: {fileID: 0}
+    - target: {fileID: 631786624039205085, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Center.y
+      value: 0.050000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 631786624039205085, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
+      propertyPath: m_Center.z
+      value: 2.5871882
+      objectReference: {fileID: 0}
     - target: {fileID: 2322822295256512780, guid: c8cdc5a4e7d3c0f43b54c8489c0bafe3, type: 3}
       propertyPath: m_IsActive
       value: 0
